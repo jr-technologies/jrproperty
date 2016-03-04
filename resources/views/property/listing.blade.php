@@ -113,9 +113,7 @@
             <th width="12%">Size</th>
             <th width="12%">Price</th>
             <th width="10%">Status</th>
-            @if(Request::route()->getName() == 'my-properties')
-                <th width="10%">Actions</th>
-            @endif
+            <th width="10%">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -147,18 +145,20 @@
                 <td>{{ $property->price . ' ' . ucfirst($property->price_unit) }}</td>
                 <td>{{ $data['status'][$property->sold] }}</td>
 
-                @if(Request::route()->getName() == 'my-properties')
                     <td>
-                        @if($user->can('update','property',$property))
-                            <a href="{{ route('property/edit', $property->id) }}" class="btn btn-info btn-xs">Update</a>
+                        @if(Request::route()->getName() == 'my-properties')
+
+                            @if($user->can('update','property',$property))
+                                <a href="{{ route('property/edit', $property->id) }}" class="btn btn-info btn-xs">Update</a>
+                            @endif
+                            @if($user->can('delete','property',$property))
+                                    {!! Form::open(array('route' => array('staff.properties.destroy', $property->id), 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return window.confirm(\'Are you sure, you want to delete this record?\')')) !!}
+                                    {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
+                                    {!! Form::close() !!}
+                            @endif
                         @endif
-                        @if($user->can('delete','property',$property))
-                                {!! Form::open(array('route' => array('staff.properties.destroy', $property->id), 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return window.confirm(\'Are you sure, you want to delete this record?\')')) !!}
-                                {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
-                                {!! Form::close() !!}
-                        @endif
+                        <a href="{{route('staff.properties.show', $property->id)}}">Detail</a>
                     </td>
-                @endif
             </tr>
             @endforeach
             </tbody>
