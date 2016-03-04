@@ -171,7 +171,6 @@ function set_property_type(v)
         $('#div_estate_name').attr('style', 'display:none!important;');
         $('#div_estate_name').removeAttr('required');
     }
-
 }
 
 function societyChangedInPropertySearch(){
