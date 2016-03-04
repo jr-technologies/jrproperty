@@ -364,7 +364,7 @@ class PropertyController extends AdminController
     {
         Property::destroy($id);
         Flash::success('Property deleted successfully.');
-        return redirect::route('admin.properties.index');
+        return redirect::route('all-properties');
     }
 
 }

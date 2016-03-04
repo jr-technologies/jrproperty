@@ -239,7 +239,7 @@ class PropertyController extends StaffController
     {
         Property::destroy($id);
         Flash::success('Property deleted successfully.');
-        return redirect::route('staff.properties.index');
+        return redirect::route('my-properties');
     }
 
 

@@ -153,7 +153,7 @@
                             <a href="{{ route('property/edit', $property->id) }}" class="btn btn-info btn-xs">Update</a>
                         @endif
                         @if($user->can('delete','property',$property))
-                                {!! Form::open(array('route' => array('admin.properties.destroy', $property->id), 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return window.confirm(\'Are you sure, you want to delete this record?\')')) !!}
+                                {!! Form::open(array('route' => array('staff.properties.destroy', $property->id), 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return window.confirm(\'Are you sure, you want to delete this record?\')')) !!}
                                 {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
                                 {!! Form::close() !!}
                         @endif
