@@ -117,6 +117,7 @@ class PropertyController extends StaffController
     public function store()
     {
        $newPropertyInfo = $this->getNewPropertyInfo();
+
        if(!Property::create($newPropertyInfo))
             return redirect()->back()->withInputs();
 
@@ -266,7 +267,7 @@ class PropertyController extends StaffController
             'phone' => ($this->request->get('lead_type') != '')?$this->request->get('owner_phone'):null,
             'mobile' =>($this->request->get('lead_type') != '')? $this->request->get('owner_mobile'):null,
             'address' =>($this->request->get('lead_type') != '')? $this->request->get('owner_address'):null,
-            'share_contact_info'=>$this->request->get('share_contact_info'),
+            'share_contact_info'=>($this->request->get('share_contact_info') != null)?$this->request->get('share_contact_info'):'N',
             'sold'=>$this->request->get('sold'),
             'share_property'=>$this->request->get('share_property'),
         ];
