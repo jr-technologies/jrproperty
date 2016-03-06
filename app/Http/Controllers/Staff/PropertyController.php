@@ -117,7 +117,6 @@ class PropertyController extends StaffController
     public function store()
     {
        $newPropertyInfo = $this->getNewPropertyInfo();
-
        if(!Property::create($newPropertyInfo))
             return redirect()->back()->withInputs();
 
@@ -148,8 +147,8 @@ class PropertyController extends StaffController
 
         if($this->user->id != $property->user_id && $property->share_property == 'N')
         {
-            Flash::error('You are not authorized to view this property.');
-            return redirect('home');
+            /*Flash::error('You are not authorized to view this property.');
+            return redirect('home');*/
         }
 
         $status = ['Y' => 'Sold', 'N' => 'Available'];
@@ -268,8 +267,8 @@ class PropertyController extends StaffController
             'mobile' =>($this->request->get('lead_type') != '')? $this->request->get('owner_mobile'):null,
             'address' =>($this->request->get('lead_type') != '')? $this->request->get('owner_address'):null,
             'share_contact_info'=>($this->request->get('share_contact_info') != null)?$this->request->get('share_contact_info'):'N',
-            'sold'=>$this->request->get('sold'),
-            'share_property'=>$this->request->get('share_property'),
+            'sold'=>($this->request->get('sold') != null)?$this->request->get('sold'):'N',
+            'share_property'=>($this->request->get('share_property') != null)?$this->request->get('share_property'):'N',
         ];
 
         return $propertyInfo;

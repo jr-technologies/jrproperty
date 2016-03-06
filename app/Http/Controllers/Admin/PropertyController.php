@@ -223,8 +223,8 @@ class PropertyController extends AdminController
 
         if($this->user->id != $property->user_id && $property->share_property == 'N')
         {
-            Flash::error('You are not authorized to view this property.');
-            return redirect('home');
+            /*Flash::error('You are not authorized to view this property.');
+            return redirect('home');*/
         }
 
         $status = ['Y' => 'Sold', 'N' => 'Available'];

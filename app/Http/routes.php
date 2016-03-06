@@ -13,6 +13,17 @@
 error_reporting(0);
 
 
+Route::get('where-to-go-after-login', [
+    'middleware' => ['auth'],function(){
+        $user = Auth::user();
+        if($user->type == 'admin')
+            return redirect('all-properties');
+        else
+            return redirect('my-properties');
+    },
+    'as' => 'where-to-go-after-login'
+]);
+
 Route::post('property/store', [
     'middleware' => ['auth'],
     'uses' => 'Staff\PropertyController@store',
@@ -65,7 +76,7 @@ Route::get('properties', ['uses' => 'HomeController@properties', 'as' => 'home.p
 Route::get('propertieslist', ['uses' => 'HomeController@propertieslist', 'as' => 'home.propertieslist']);
 Route::post('store', ['uses' => 'HomeController@store', 'as' => 'store']);
 Route::get('/', function(){
-    return redirect('all-properties');
+    return redirect('where-to-go-after-login');
 });
 
 
