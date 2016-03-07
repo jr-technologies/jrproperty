@@ -3,7 +3,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\AdminController;
 
 use App\User;
+use Illuminate\Support\Facades\Validator;
 use Request;
+use Illuminate\Http\Request as MyRequest;
 use \Redirect;
 use Laracasts\Flash\Flash;
 
@@ -41,9 +43,18 @@ class UserController extends AdminController
      *
      * @return Response
      */
-    public function store()
+    public function store(MyRequest $request)
     {
-        $input = Request::all();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+        ]);
+
+        if($validator->fails())
+            return redirect()->back()->withErrors($validator->errors());
+
+        $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         User::create($input);
         Flash::success('Staff member created successfully.');
