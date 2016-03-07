@@ -107,7 +107,7 @@ class PropertyController extends AdminController
                         'non-corner' => 'Non-Corner',
                         'facing-park' => 'Facing Park',
                         'main-boulevard' => 'Main Boulevard',
-                        'average-plot' => 'Average Plot'
+                        'average' => 'Average'
                     ];
         //$societies = $blocks = ['' => 'Please Select ...'];
 
