@@ -11,6 +11,7 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="{{public_path()}}/css/dropdowns-enhancement.min.css" rel="stylesheet" type="text/css">
     <link href="{{url('/')}}/css/styles.css" rel="stylesheet" type="text/css">
+	<link href="{{url('/')}}/css/property_search.css" rel="stylesheet" type="text/css">
     <script src="{{url('/')}}/js/dropdowns-enhancement.js"></script>
     <script src="{{url('/')}}/js/scripts.js"></script>
   </head>

@@ -1,19 +1,29 @@
 @extends('app')
 @section('content')
         <!-- Modal -->
+	<style>
+
+
+
+</style>	
+
 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    
+	
+	<div class="modal-dialog">
+		
+			<div class="modal-content">
+	       <div class="search-parent-container">
             {!! Form::open(array('route' => 'search-properties', 'method' => 'get')) !!}
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Search Property</h4>
-            </div>
-
-
-            <div class="modal-body">
-
-                <?php $form_data = $previousSearch; ?>
+            <div class="search-tabs">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Search Your Desired Property</h4>
+				</div>
+			</div>
+			<div class="search-body">
+				<div class="modal-body">
+					<?php $form_data = $previousSearch; ?>
                 <div class="form-group">
                     {!! Form::label('society', 'Society:') !!}
                     {!! Form::select('society', Helper::prependArray([''=>'Select All...'],$data['societies']), $form_data['society'], ['class'=>'form-control', 'onchange' => 'updateBlock(this.value, \'block_id\')', 'required']) !!}
@@ -74,18 +84,23 @@
                 {!! Form::hidden('search', 'yes') !!}
 
 
-            </div>
-
-
+				</div>
+			</div>
 
             <div class="modal-footer">
-                <div class="col-xs-12">
+                <div class="col-xs-12" >
+				<div class="search-footer navbar-default">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="this.form.submit();">Start Search</button>
-                </div>
+				</div>				
+			   </div>
+				
+				
             </div>
             {!! Form::close() !!}
-        </div>
+        
+		</div>
+		</div>
     </div>
 </div>
 <div class="pull-left" style="padding-bottom: 10px;">

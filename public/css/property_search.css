@@ -1,0 +1,17 @@
+.search-parent-container .modal-title{
+	
+	color:#058d2b;
+	font-size:16px;
+	font-weight:bold;
+	background:#fff;
+	text-align:center;
+
+}
+
+
+.search-body{
+	height:400px;
+	overflow:auto;
+	
+}
+
