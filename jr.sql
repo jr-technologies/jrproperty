@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2016 at 02:03 PM
+-- Generation Time: Mar 07, 2016 at 07:32 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -279,7 +279,7 @@ CREATE TABLE `properties` (
   `purpose` enum('sale','rent','wanted') COLLATE utf8_unicode_ci NOT NULL,
   `size` int(10) UNSIGNED NOT NULL,
   `size_unit` enum('marla','kanal') COLLATE utf8_unicode_ci NOT NULL,
-  `location` enum('corner','non-corner','facing-park','main-boulevard','average-plot') COLLATE utf8_unicode_ci NOT NULL,
+  `location` enum('corner','non-corner','facing-park','main-boulevard','average') COLLATE utf8_unicode_ci NOT NULL,
   `price` int(10) UNSIGNED NOT NULL,
   `price_unit` enum('lakh','thousand','crore') COLLATE utf8_unicode_ci NOT NULL,
   `price_converted` int(10) UNSIGNED NOT NULL,
@@ -303,14 +303,13 @@ INSERT INTO `properties` (`id`, `category_id`, `city_id`, `society_id`, `block_i
 (1, 2, 10, 16, 98, 3, NULL, 'direct', 'residential', NULL, '', '', '', NULL, '130', 'sale', 10, 'marla', 'corner', 0, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-02 15:23:28', '2016-03-02 15:23:28'),
 (2, 1, 10, 16, 98, 3, NULL, 'direct', 'commercial', NULL, '', '', '', NULL, '130', 'sale', 10, 'marla', 'corner', 2, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-02 15:38:53', '2016-03-02 15:38:53'),
 (3, 2, 10, 16, 98, 3, NULL, 'direct', 'commercial', NULL, '', '', '', NULL, '130', 'sale', 10, 'marla', 'corner', 2, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-01-02 15:39:14', '2016-03-02 15:39:14'),
-(4, 2, 10, 16, 98, 4, NULL, 'direct', 'commercial', NULL, 'kljljkl', '9890808', '09808', '908098', '130', 'sale', 10, 'marla', 'corner', 2, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-01-02 17:34:16', '2016-03-04 07:30:17'),
 (7, 2, 5, 16, 98, 1, NULL, 'direct', 'commercial', NULL, NULL, NULL, NULL, NULL, '120', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-01-01 20:13:14', '2016-03-02 20:13:14'),
 (9, 1, 10, 10, 98, 3, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, '10', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 05:04:06', '2016-03-04 05:04:06'),
 (10, 1, 10, 10, 98, 3, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, '10', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 05:05:18', '2016-03-04 05:05:18'),
 (11, 1, 10, 10, 98, 3, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, '10', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 05:07:01', '2016-03-04 05:07:01'),
 (12, 1, 10, 10, 98, 3, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, '10', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 05:09:04', '2016-03-04 05:09:04'),
 (13, 1, 10, 10, 98, 3, NULL, 'indirect', NULL, NULL, 'waqas', NULL, '01232520', NULL, '10', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 05:10:00', '2016-03-04 05:10:00'),
-(14, 2, 10, 10, 28, 4, NULL, 'indirect', 'residential', 'dsfdsf', '980980', '0980980', '098098', 'klj klj klj', '140', 'sale', 10, 'marla', 'non-corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 07:53:38', '2016-03-04 07:59:36');
+(15, 2, 10, 15, 92, 4, NULL, 'indirect', 'residential', 'JR Properoetytg', '22222', '111111111111111', '7455465', '64-Q', '25', 'sale', 10, 'marla', 'corner', 252000, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', '', '', '2016-03-04 08:17:53', '2016-03-04 08:18:53');
 
 -- --------------------------------------------------------
 
@@ -460,7 +459,7 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT for table `properties`
 --
 ALTER TABLE `properties`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `societies`
 --
@@ -470,7 +469,7 @@ ALTER TABLE `societies`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- Constraints for dumped tables
 --
