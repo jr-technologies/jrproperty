@@ -20,21 +20,30 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('group', 'Property Type:') !!}
-                    {!! Form::select('group', Helper::prependArray([''=>'Select All...'],$data['group']), $form_data['group'], ['class'=>'form-control', 'required']) !!}
+                    {!! Form::select('group', Helper::prependArray([''=>'Select All...'],$data['group']), ($form_data['group'] == null)?'residential':$form_data['group'], ['class'=>'form-control', 'required']) !!}
+                </div>
+				   <div class="form-group">
+                    {!! Form::label('Land', 'Land Area:') !!}
+                    {!! Form::select('land',Helper::prependArray([''=>'Select All...'], ['marla'=>'marla','knal'=>'Kanal']),$form_data['land'],['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('location', 'Location:') !!}
-                    {!! Form::select('location', Helper::prependArray([''=>'Select All...'],$data['location']), $form_data['location'],['class'=>'form-control', 'required']) !!}
-                </div>
-                <div class="form-group">
+                    <div class="col-sm-12">
+                        {!! Form::text('size_from', $form_data['size_from'], ['class'=>'col-xs-6', 'placeholder'=>'From']) !!}
+                        {!! Form::text('size_to',  $form_data['size_to'], ['class'=>'col-xs-6', 'placeholder'=>'To']) !!}
+                    </div>
+					
+					      <div class="form-group">
                     {!! Form::label('block_id', 'Block:') !!}
                     {!! Form::select('block', Helper::prependArray([''=>'Select All...'], []), $form_data['block'], ['class' => 'form-control', 'required' => 'required', 'id'=>'block_id']) !!}
                 </div>
-
-                <div class="form-group">
+				<div class="form-group">
                     {!! Form::label('category', 'Property Category:') !!}
-                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), $form_data['category'],['class'=>'form-control', 'required', 'onchange' => 'show_house_options(this.value);']) !!}
+                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), ($form_data['category'] == null)?2:$form_data['category'],['class'=>'form-control', 'required', 'onchange' => 'show_house_options(this.value);']) !!}
                 </div>
+                    <div class="form-group">
+                        {!! Form::label('location', 'Location:') !!}
+                        {!! Form::select('location', Helper::prependArray([''=>'Select All...'],$data['location']), ($form_data['location'] == null)?'average':$form_data['location'],['class'=>'form-control', 'required']) !!}
+                    </div>
                 <div class="form-group">
                     {!! Form::label('lead', 'Lead Type:') !!}
                     {!! Form::select('lead', Helper::prependArray([''=>'Select All...'],$data['lead_type']), $form_data['lead'],['class'=>'form-control', 'required', 'onchange' => 'show_house_options(this.value);']) !!}
@@ -48,15 +57,7 @@
                     {{--{!! Form::label('user', 'Staff:') !!}--}}
                     {{--{!! Form::select('user', Helper::prependArray([''=>'Select All...'],$data['users']), $form_data['user'], ['class'=>'form-control']) !!}--}}
                 {{--</div>--}}
-                <div class="form-group">
-                    {!! Form::label('Land', 'Land Area:') !!}
-                    {!! Form::select('land',Helper::prependArray([''=>'Select All...'], ['marla'=>'marla','knal'=>'Kanal']),$form_data['land'],['class'=>'form-control']) !!}
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        {!! Form::text('size_from', $form_data['size_from'], ['class'=>'col-xs-6', 'placeholder'=>'From']) !!}
-                        {!! Form::text('size_to',  $form_data['size_to'], ['class'=>'col-xs-6', 'placeholder'=>'To']) !!}
-                    </div>
+             
                 </div>
 
                 <div class="form-group">

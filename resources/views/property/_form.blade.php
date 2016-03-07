@@ -17,24 +17,27 @@
             {!! Form::label('purpose', 'Purpose:') !!}
             {!! Form::select('purpose', $purpose, null,['class'=>'form-control', 'required']) !!}
         </div>
+		
+		 <div class="form-group">
+            {!! Form::label('society', 'Society:') !!}
+            {!! Form::select('society', $societies, 16,['class'=>'form-control', 'onchange' => 'property_data(this.value, \'block_id\')', 'required','id'=>'society_id']) !!}
+        </div>
+
+		
 		<div class="form-group">
         {!! Form::label('group', 'Property Type:') !!}
-        {!! Form::select('type', $group, null, ['class'=>'form-control', 'required']) !!}
+        {!! Form::select('type', $group, 'residential', ['class'=>'form-control', 'required']) !!}
 		</div>
 
 
 	   <div class="form-group">
         {!! Form::label('location', 'Location:') !!}
-        {!! Form::select('location', $location, null,['class'=>'form-control', 'required']) !!}
+        {!! Form::select('location', $location, 'average',['class'=>'form-control', 'required']) !!}
 		</div>
 
             {!! Form::hidden('city', 10, null,['class'=>'form-control', 'onchange' => 'property_data(this.value, \'society_id\')', 'required','city'=>'city_id']) !!}
 
-        <div class="form-group">
-            {!! Form::label('society', 'Society:') !!}
-            {!! Form::select('society', $societies, null,['class'=>'form-control', 'onchange' => 'property_data(this.value, \'block_id\')', 'required','id'=>'society_id']) !!}
-        </div>
-
+       
 		<div class="form-group" id="div_block_container">
         {!! Form::label('block_id', 'Block:') !!}
         {!! Form::select('block', $blocks, null, ['class' => 'form-control', 'required' => 'required','id'=>'block_id']) !!}
@@ -43,7 +46,7 @@
 
 		    <div class="form-group">
         {!! Form::label('category_id', 'Property Category:') !!}
-        {!! Form::select('category', $categories, null,['class'=>'form-control', 'required', 'onchange' => '
+        {!! Form::select('category', $categories, 2,['class'=>'form-control', 'required', 'onchange' => '
         (this.value);']) !!}
 			</div>
 
@@ -69,10 +72,10 @@
         {!! Form::text('owner_estate', null,['class'=>'form-control']) !!}
     </div>
 
-    <div class="form-group">
+    <!--<div class="form-group">
         {!! Form::label('picture', 'Picture:') !!}
         {!! Form::file('picture', null,['class'=>'form-control']) !!}
-    </div>
+    </div>-->
 
     <div class="form-group">
         {!! Form::label('contact_person', 'Contact Person:') !!}
