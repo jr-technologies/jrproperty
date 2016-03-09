@@ -15,3 +15,30 @@
 	
 }
 
+.marquee{
+	font-size:30px;
+    color:#fff;
+	border:2px solid #fff;
+	margin:0 auto;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	background-color: #337ab7;
+  	
+}
+.marquue ul{
+	margin:0;
+	padding: 0;
+	float:left;
+}
+.marquee ul li{
+
+	float:left;
+    margin-left:50px;
+}
+
+
+.lock{
+	color:#B0BEC5 !important;
+	font-size:12px;
+
+}
