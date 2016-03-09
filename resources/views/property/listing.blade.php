@@ -1,6 +1,11 @@
 @extends('app')
 @section('content')
-
+        <!-- Modal -->
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 
 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     
@@ -43,16 +48,16 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('category', 'Property Category:') !!}
-                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), ($form_data['category'] == null)?2:$form_data['category'],['class'=>'form-control', 'required', 'id'=>'category_id']) !!}
+                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), ($form_data['category'] == null)?2:$form_data['category'],['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
                 </div>
                     <div class="form-group" id="apartment_features">
                         {!! Form::label('bedrooms', 'Bedrooms:') !!}
-                        <input type="number" class="form-control" id="bedrooms" name="bedrooms" value="<?= $form_data['bedrooms'] ?>">
+                        <input name="bedrooms" type="number" class="form-control" max="5" value="<?= $form_data['bedrooms'] ?>" id="bedrooms" >
                     </div>
-                <div class="form-group">
-                    {!! Form::label('location', 'Location:') !!}
-                    {!! Form::select('location', Helper::prependArray([''=>'Select All...'],$data['location']), ($form_data['location'] == null)?'average':$form_data['location'],['class'=>'form-control', 'required']) !!}
-                </div>
+                    <div class="form-group">
+                        {!! Form::label('location', 'Location:') !!}
+                        {!! Form::select('location', Helper::prependArray([''=>'Select All...'],$data['location']), ($form_data['location'] == null)?'average':$form_data['location'],['class'=>'form-control', 'required']) !!}
+                    </div>
                 <div class="form-group">
                     {!! Form::label('lead', 'Lead Type:') !!}
                     {!! Form::select('lead', Helper::prependArray([''=>'Select All...'],$data['lead_type']), $form_data['lead'],['class'=>'form-control', 'required', 'onchange' => 'show_house_options(this.value);']) !!}
@@ -164,11 +169,9 @@
             <tr class="{{$updateAble}}">
                 <td>
                     @if($property->is_secure())
-                        <span data-toggle="tooltip" data-placement="top" title="Private Property">
-                            <span class="lock glyphicon glyphicon-lock"></span>
-                        </span>
+                    <span data-toggle="tooltip" data-placement="top" title="Property is Lock"> <span class="lock glyphicon glyphicon-lock"></span> </span>
                     @endif
-                    {{ $property->user_name }}
+                        {{ $property->user_name }}
                 </td>
                 <td>{{ $property->society_name }}</td>
                 <td>
@@ -189,7 +192,7 @@
                 <td>{{ $data['status'][$property->sold] }}</td>
 
                     <td>
-                        {{--@if(Request::route()->getName() == 'my-properties')--}}
+                        @if(Request::route()->getName() == 'my-properties')
 
                             @if($user->can('update','property',$property))
                                 <a href="{{ route('property/edit', $property->id) }}" class="btn btn-info btn-xs">Update</a>
@@ -199,7 +202,7 @@
                                     {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
                                     {!! Form::close() !!}
                             @endif
-                       {{-- @endif--}}
+                        @endif
                         <a href="{{route('staff.properties.show', $property->id)}}">Detail</a>
                     </td>
             </tr>
@@ -220,10 +223,8 @@
 <script>
     $(document).ready(function(){
         societyChangedInPropertySearch();
-        $('[data-toggle="tooltip"]').tooltip();
-        category_changed();
+        category_changed()
     });
-
     $(document).on('change','#category_id',function(){
         category_changed();
     });

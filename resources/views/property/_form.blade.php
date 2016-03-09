@@ -48,6 +48,10 @@
         {!! Form::label('category_id', 'Property Category:') !!}
         {!! Form::select('category', $categories, 2,['class'=>'form-control', 'required', 'id'=>'category_id']) !!}
 			</div>
+        <div id="apartment_features" class="form-group">
+            <label for="">Beds</label>
+            <input id="bedrooms" name="bedrooms" class="form-control form-control-lg" type="number" max="5" placeholder="Number of rooms. for-example(2,3)">
+        </div>
 
 		<div class="form-group">
         {!! Form::label('property_no', 'Property Number:') !!}

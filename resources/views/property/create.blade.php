@@ -19,6 +19,7 @@
 
         $(document).ready(function(){
             societyChangedInPropertySearch('society_id');
+            category_changed();
         });
 
         $(document).on('change','#category_id',function(){

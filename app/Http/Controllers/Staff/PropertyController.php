@@ -256,7 +256,7 @@ class PropertyController extends StaffController
     {
         $propertyInfo = [
             'category_id'=>$this->request->get('category'),
-            'bedrooms' =>($this->request->get('bedrooms') == 3)? $this->request->get('bedrooms'):null,
+            'bedrooms' =>($this->request->get('category') == 3)? $this->request->get('bedrooms'):null,
             'city_id'=>$this->request->get('city'),
             'society_id'=>$this->request->get('society'),
             'block_id'=>$this->request->get('block'),
