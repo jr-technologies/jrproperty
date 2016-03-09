@@ -52,7 +52,11 @@ class PropertyController extends StaffController
     public function index()
     {
         $properties = Property::search($this->createSearchParams())->orderBy('properties.id','DESC')->get();
-        return view('property.listing', ['heading'=>'All Properties'])
+
+        $view = 'property.listing';
+        if($this->request->get('print') == true)
+            $view = 'print.property.listing';
+        return view($view, ['heading'=>'All Properties'])
             ->with('properties',$properties)
             ->with('data',$this->computeData())
             ->with('previousSearch', $this->request->all());
@@ -62,7 +66,10 @@ class PropertyController extends StaffController
     {
         $properties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))->orderBy('properties.id','DESC')->get();
 
-        return view('property.listing', ['heading'=>'All Properties'])
+        $view = 'property.listing';
+        if($this->request->get('print') == true)
+            $view = 'print.property.listing';
+        return view($view, ['heading'=>'My Properties'])
             ->with('properties',$properties)
             ->with('data',$this->computeData())
             ->with('previousSearch', $this->request->all());
@@ -70,7 +77,11 @@ class PropertyController extends StaffController
 
     public function search(){
         $properties = Property::search($this->createSearchParams($this->request->all()))->orderBy('properties.id','DESC')->get();
-        return view('property.listing', ['heading'=>'All Properties'])
+
+        $view = 'property.listing';
+        if($this->request->get('print') == true)
+            $view = 'print.property.listing';
+        return view($view, ['heading'=>'Searched Properties'])
             ->with('properties',$properties)
             ->with('data',$this->computeData())
             ->with('previousSearch', $this->request->all());

@@ -108,12 +108,7 @@
     </div>
 </div>
 
-
-
-
-<?php
-
-?>
+@if(sizeof($notifications) > 0)
     <div class="col-md-12">
         <div class="marquee">
             <marquee direction="left" behavior="scroll" scrollamount="5">
@@ -128,6 +123,7 @@
 
         </div>
     </div>
+@endif
 
 <div class="pull-left" style="padding-bottom: 10px;">
     <a href="{{ route('my-properties') }}" class="{{(Request::route()->getName() == 'my-properties')?'active':''}} btn btn-default btn-xs">My Listings &nbsp;</a>
