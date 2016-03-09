@@ -162,7 +162,7 @@
                 <td>{{ $data['status'][$property->sold] }}</td>
 
                     <td>
-                        @if(Request::route()->getName() == 'my-properties')
+                        {{--@if(Request::route()->getName() == 'my-properties')--}}
 
                             @if($user->can('update','property',$property))
                                 <a href="{{ route('property/edit', $property->id) }}" class="btn btn-info btn-xs">Update</a>
@@ -172,7 +172,7 @@
                                     {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
                                     {!! Form::close() !!}
                             @endif
-                        @endif
+                       {{-- @endif--}}
                         <a href="{{route('staff.properties.show', $property->id)}}">Detail</a>
                     </td>
             </tr>

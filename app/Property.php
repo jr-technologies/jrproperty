@@ -35,8 +35,8 @@ class Property extends Model {
         ->leftJoin('blocks', 'properties.block_id', '=', 'blocks.id')
         ->leftJoin('cities', 'properties.city_id', '=', 'cities.id')
         ->leftJoin('categories', 'properties.category_id', '=', 'categories.id')
-
-        ->applySearchConditions($params);
+        ->applySearchConditions($params)
+        ->authorizeSearch($params['authenticated_user']);
 
         return $query;
     }
@@ -68,6 +68,22 @@ class Property extends Model {
             $query = $query->where('properties.price', '<=', $params['price_to']);
        if($params['lead']!= null || $params['lead'] !='')
             $query = $query->where('properties.type' ,'=',$params['lead'] );
+
+        return $query;
+    }
+
+    public static function scopeAuthorizeSearch($query, $authenticated_user){
+
+        $query = $query->where(function($query) use ($authenticated_user)
+                {
+                    $query->where('user_id','=',$authenticated_user->id)
+                        ->orWhere(function($query) use ($authenticated_user)
+                        {
+                            $query->where('user_id','!=', $authenticated_user->id)
+                                ->where('share_property','=','Y');
+                        });
+                });
+
 
         return $query;
     }
