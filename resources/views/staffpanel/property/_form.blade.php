@@ -27,11 +27,13 @@
         {!! Form::select('group', $group, null, ['class'=>'form-control', 'required']) !!}
     </div>
 
+
     <div class="form-group">
         {!! Form::label('category_id', 'Property Category:') !!}
         {!! Form::select('category_id', $categories, null,['class'=>'form-control', 'required', 'onchange' => '
         (this.value);']) !!}
     </div>
+
 
     <div class="form-group">
             {!! Form::label('purpose', 'Purpose:') !!}
@@ -47,6 +49,8 @@
         {!! Form::label('society_id', 'Society:') !!}
         {!! Form::select('society_id', $societies, null,['class'=>'form-control', 'onchange' => 'property_data(this.value, \'block_id\')', 'required']) !!}
     </div>
+
+
 
     <div class="form-group" id="div_block_container">
         {!! Form::label('block_id', 'Block:') !!}

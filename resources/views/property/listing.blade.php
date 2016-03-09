@@ -1,11 +1,7 @@
 @extends('app')
 @section('content')
         <!-- Modal -->
-<script>
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
+
 
 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     
@@ -108,13 +104,13 @@
 
 
 
-    <div class="col-md-12">
+
         <div class="marquee">
-        <marquee direction="left" behavior="scroll" scrollamount="5">
-            <ul>
+        <marquee direction="left" behavior="scroll" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
+            <ul class="marquee-list">
                 <li>
                 DHA Phase 9, 5 Marla File Rate 78 Lac
-                </li>
+                </li>***
                 <li>
                     DHA Phase 9, 5 Marla File Rate 78 Lac
                 </li>
@@ -122,7 +118,7 @@
         </marquee>
 
         </div>
-        </div>
+
 
 <div class="pull-left" style="padding-bottom: 10px;">
     <a href="{{ route('my-properties') }}" class="{{(Request::route()->getName() == 'my-properties')?'active':''}} btn btn-default btn-xs">My Listings &nbsp;</a>
@@ -214,6 +210,13 @@
 <script>
     $(document).ready(function(){
         societyChangedInPropertySearch();
+        $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
+
+
+
+
+
+
 @stop
