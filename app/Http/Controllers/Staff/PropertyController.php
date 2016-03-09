@@ -4,6 +4,7 @@ use App\Http\Controllers\StaffController;
 use App\Block;
 use App\Category;
 use App\City;
+use App\Notifications;
 use App\Society;
 use App\Property;
 use App\User;

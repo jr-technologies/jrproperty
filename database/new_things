@@ -1,0 +1,7 @@
+added a new table
+    name: notifications
+    Columns:
+        id
+        notification
+        created_at
+        updated_at

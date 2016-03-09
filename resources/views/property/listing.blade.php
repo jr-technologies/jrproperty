@@ -111,17 +111,18 @@
 
 
 
+<?php
 
+?>
     <div class="col-md-12">
         <div class="marquee">
             <marquee direction="left" behavior="scroll" scrollamount="5">
                 <ul>
-                    <li>
-                        DHA Phase 9, 5 Marla File Rate 78 Lac
-                    </li>
-                    <li>
-                        DHA Phase 9, 5 Marla File Rate 78 Lac
-                    </li>
+                    @foreach ($notifications as $notification)
+                        <li>
+                            {{$notification->notification}}
+                        </li>
+                    @endforeach
                 </ul>
             </marquee>
 
