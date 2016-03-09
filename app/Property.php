@@ -68,6 +68,9 @@ class Property extends Model {
             $query = $query->where('properties.price', '<=', $params['price_to']);
        if($params['lead']!= null || $params['lead'] !='')
             $query = $query->where('properties.type' ,'=',$params['lead'] );
+        if($params['bedrooms']!= null || $params['bedrooms'] !='')
+            $query = $query->where('bedrooms' ,'=',$params['bedrooms'] );
+
 
         return $query;
     }
@@ -103,5 +106,12 @@ class Property extends Model {
 
         $result = $this->with('users')->get();
         dd($result);
+    }
+
+    public function is_secure(){
+        if($this->share_property == 'N'){
+            return true;
+        }
+        return false;
     }
 }

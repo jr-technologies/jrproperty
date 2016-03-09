@@ -46,8 +46,7 @@
 
 		    <div class="form-group">
         {!! Form::label('category_id', 'Property Category:') !!}
-        {!! Form::select('category', $categories, 2,['class'=>'form-control', 'required', 'onchange' => '
-        (this.value);']) !!}
+        {!! Form::select('category', $categories, 2,['class'=>'form-control', 'required', 'id'=>'category_id']) !!}
 			</div>
 
 		<div class="form-group">
