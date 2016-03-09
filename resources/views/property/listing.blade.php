@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('group', 'Property Type:') !!}
-                    {!! Form::select('group', Helper::prependArray([''=>'Select All...'],$data['group']), ($form_data['group'] == null)?'residential':$form_data['group'], ['class'=>'form-control', 'required']) !!}
+                    {!! Form::select('group', Helper::prependArray([''=>'Select All...'],$data['group']), (isset($_GET['group']))?(($_GET['group'] != '')?$form_data['group']:''):'residential', ['class'=>'form-control', 'required']) !!}
                 </div>
 				   <div class="form-group">
                     {!! Form::label('Land', 'Land Area:') !!}
@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('category', 'Property Category:') !!}
-                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), ($form_data['category'] == null)?2:$form_data['category'],['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
+                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), (isset($_GET['category']))?(($_GET['category'] != '')?$form_data['category']:''):2,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
                 </div>
                     <div class="form-group" id="apartment_features">
                         {!! Form::label('bedrooms', 'Bedrooms:') !!}
@@ -56,7 +56,7 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('location', 'Location:') !!}
-                        {!! Form::select('location', Helper::prependArray([''=>'Select All...'],$data['location']), ($form_data['location'] == null)?'average':$form_data['location'],['class'=>'form-control', 'required']) !!}
+                        {!! Form::select('location', Helper::prependArray([''=>'Select All...'],$data['location']), (isset($_GET['location']))?(($_GET['location'] != '')?$form_data['location']:''):'average',['class'=>'form-control', 'required']) !!}
                     </div>
                 <div class="form-group">
                     {!! Form::label('lead', 'Lead Type:') !!}
@@ -169,7 +169,7 @@
             <tr class="{{$updateAble}}">
                 <td>
                     @if($property->is_secure())
-                    <span data-toggle="tooltip" data-placement="top" title="Property is Lock"> <span class="lock glyphicon glyphicon-lock"></span> </span>
+                    <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
                     @endif
                         {{ $property->user_name }}
                 </td>
