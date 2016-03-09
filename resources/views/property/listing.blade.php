@@ -1,11 +1,11 @@
 @extends('app')
 @section('content')
         <!-- Modal -->
-	<style>
-
-
-
-</style>	
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 
 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     
@@ -103,6 +103,27 @@
 		</div>
     </div>
 </div>
+
+
+
+
+
+    <div class="col-md-12">
+        <div class="marquee">
+        <marquee direction="left" behavior="scroll" scrollamount="5">
+            <ul>
+                <li>
+                DHA Phase 9, 5 Marla File Rate 78 Lac
+                </li>
+                <li>
+                    DHA Phase 9, 5 Marla File Rate 78 Lac
+                </li>
+            </ul>
+        </marquee>
+
+        </div>
+        </div>
+
 <div class="pull-left" style="padding-bottom: 10px;">
     <a href="{{ route('my-properties') }}" class="{{(Request::route()->getName() == 'my-properties')?'active':''}} btn btn-default btn-xs">My Listings &nbsp;</a>
     <a href="{{ route('all-properties') }}" class="{{(Request::route()->getName() == 'all-properties')?'active':''}} btn btn-default btn-xs">ALL Listings &nbsp;</a>
@@ -142,7 +163,7 @@
             ?>
 
             <tr class="{{$updateAble}}">
-                <td>{{ $property->user_name }}</td>
+                <td><span data-toggle="tooltip" data-placement="top" title="Property is Lock"> <span class="lock glyphicon glyphicon-lock"></span> </span> {{ $property->user_name }}  </td>
                 <td>{{ $property->society_name }}</td>
                 <td>
                     @if($property->category_id == 4)
