@@ -1,7 +1,11 @@
 @extends('app')
 @section('content')
         <!-- Modal -->
-
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 
 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     
@@ -42,10 +46,14 @@
                     {!! Form::label('block_id', 'Block:') !!}
                     {!! Form::select('block', Helper::prependArray([''=>'Select All...'], []), $form_data['block'], ['class' => 'form-control', 'required' => 'required', 'id'=>'block_id']) !!}
                 </div>
-				<div class="form-group">
+                <div class="form-group">
                     {!! Form::label('category', 'Property Category:') !!}
-                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), ($form_data['category'] == null)?2:$form_data['category'],['class'=>'form-control', 'required', 'onchange' => 'show_house_options(this.value);']) !!}
+                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), ($form_data['category'] == null)?2:$form_data['category'],['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
                 </div>
+                    <div class="form-group" id="apartment_features">
+                        {!! Form::label('bedrooms', 'Bedrooms:') !!}
+                        <input name="bedrooms" type="number" class="form-control" max="5" value="<?= $form_data['bedrooms'] ?>" id="bedrooms" >
+                    </div>
                     <div class="form-group">
                         {!! Form::label('location', 'Location:') !!}
                         {!! Form::select('location', Helper::prependArray([''=>'Select All...'],$data['location']), ($form_data['location'] == null)?'average':$form_data['location'],['class'=>'form-control', 'required']) !!}
@@ -104,13 +112,13 @@
 
 
 
-
+    <div class="col-md-12">
         <div class="marquee">
-        <marquee direction="left" behavior="scroll" scrollamount="6" onmouseover="this.stop();" onmouseout="this.start();">
-            <ul class="marquee-list">
+        <marquee direction="left" behavior="scroll" scrollamount="5">
+            <ul>
                 <li>
                 DHA Phase 9, 5 Marla File Rate 78 Lac
-                </li>***
+                </li>
                 <li>
                     DHA Phase 9, 5 Marla File Rate 78 Lac
                 </li>
@@ -118,7 +126,7 @@
         </marquee>
 
         </div>
-
+        </div>
 
 <div class="pull-left" style="padding-bottom: 10px;">
     <a href="{{ route('my-properties') }}" class="{{(Request::route()->getName() == 'my-properties')?'active':''}} btn btn-default btn-xs">My Listings &nbsp;</a>
@@ -159,7 +167,12 @@
             ?>
 
             <tr class="{{$updateAble}}">
-                <td><span data-toggle="tooltip" data-placement="top" title="Property is Lock"> <span class="lock glyphicon glyphicon-lock"></span> </span> {{ $property->user_name }}  </td>
+                <td>
+                    @if($property->is_secure())
+                    <span data-toggle="tooltip" data-placement="top" title="Property is Lock"> <span class="lock glyphicon glyphicon-lock"></span> </span>
+                    @endif
+                        {{ $property->user_name }}
+                </td>
                 <td>{{ $property->society_name }}</td>
                 <td>
                     @if($property->category_id == 4)
@@ -210,13 +223,10 @@
 <script>
     $(document).ready(function(){
         societyChangedInPropertySearch();
-        $('[data-toggle="tooltip"]').tooltip();
+        category_changed()
+    });
+    $(document).on('change','#category_id',function(){
+        category_changed();
     });
 </script>
-
-
-
-
-
-
 @stop

@@ -50,7 +50,7 @@ class PropertyController extends StaffController
     }
     public function index()
     {
-        $properties = Property::search()->orderBy('properties.id','DESC')->get();
+        $properties = Property::search($this->getSearchParams())->orderBy('properties.id','DESC')->get();
         return view('property.listing', ['heading'=>'All Properties'])
             ->with('properties',$properties)
             ->with('data',$this->computeData())
@@ -59,7 +59,7 @@ class PropertyController extends StaffController
 
     public function myProperties()
     {
-        $properties = Property::search(['user'=>$this->authenticatedUser->id])->orderBy('properties.id','DESC')->get();
+        $properties = Property::search($this->getSearchParams(['user'=>$this->authenticatedUser->id]))->orderBy('properties.id','DESC')->get();
 
         return view('property.listing', ['heading'=>'All Properties'])
             ->with('properties',$properties)
@@ -68,13 +68,21 @@ class PropertyController extends StaffController
     }
 
     public function search(){
-        $properties = Property::search($this->request->all())->orderBy('properties.id','DESC')->get();
+        $properties = Property::search($this->getSearchParams($this->request->all()))->orderBy('properties.id','DESC')->get();
         return view('property.listing', ['heading'=>'All Properties'])
             ->with('properties',$properties)
             ->with('data',$this->computeData())
             ->with('previousSearch', $this->request->all());
     }
 
+    private function getSearchParams($params = [])
+    {
+        $searchParams = $params;
+        $searchParams['bedrooms'] =($this->request->get('bedrooms') == 3)? $this->request->get('bedrooms'):null;
+
+        $searchParams['authenticated_user'] = $this->authenticatedUser;
+        return $searchParams;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -248,6 +256,7 @@ class PropertyController extends StaffController
     {
         $propertyInfo = [
             'category_id'=>$this->request->get('category'),
+            'bedrooms' =>($this->request->get('category') == 3)? $this->request->get('bedrooms'):null,
             'city_id'=>$this->request->get('city'),
             'society_id'=>$this->request->get('society'),
             'block_id'=>$this->request->get('block'),
