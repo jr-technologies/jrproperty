@@ -114,19 +114,19 @@
 
     <div class="col-md-12">
         <div class="marquee">
-        <marquee direction="left" behavior="scroll" scrollamount="5">
-            <ul>
-                <li>
-                DHA Phase 9, 5 Marla File Rate 78 Lac
-                </li>
-                <li>
-                    DHA Phase 9, 5 Marla File Rate 78 Lac
-                </li>
-            </ul>
-        </marquee>
+            <marquee direction="left" behavior="scroll" scrollamount="5">
+                <ul>
+                    <li>
+                        DHA Phase 9, 5 Marla File Rate 78 Lac
+                    </li>
+                    <li>
+                        DHA Phase 9, 5 Marla File Rate 78 Lac
+                    </li>
+                </ul>
+            </marquee>
 
         </div>
-        </div>
+    </div>
 
 <div class="pull-left" style="padding-bottom: 10px;">
     <a href="{{ route('my-properties') }}" class="{{(Request::route()->getName() == 'my-properties')?'active':''}} btn btn-default btn-xs">My Listings &nbsp;</a>
@@ -212,9 +212,8 @@
 
     <div class="text-center">
         <?php
-       if(sizeof($properties) == 0)
-           echo "<b style='color:#ff3920' >No record Found!</b>"
-
+           if(sizeof($properties) == 0)
+               echo "<b style='color:#ff3920' >No record Found!</b>"
          ?>
     </div>
 

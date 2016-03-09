@@ -50,7 +50,7 @@ class PropertyController extends StaffController
     }
     public function index()
     {
-        $properties = Property::search($this->getSearchParams())->orderBy('properties.id','DESC')->get();
+        $properties = Property::search($this->createSearchParams())->orderBy('properties.id','DESC')->get();
         return view('property.listing', ['heading'=>'All Properties'])
             ->with('properties',$properties)
             ->with('data',$this->computeData())
@@ -59,7 +59,7 @@ class PropertyController extends StaffController
 
     public function myProperties()
     {
-        $properties = Property::search($this->getSearchParams(['user'=>$this->authenticatedUser->id]))->orderBy('properties.id','DESC')->get();
+        $properties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))->orderBy('properties.id','DESC')->get();
 
         return view('property.listing', ['heading'=>'All Properties'])
             ->with('properties',$properties)
@@ -68,14 +68,14 @@ class PropertyController extends StaffController
     }
 
     public function search(){
-        $properties = Property::search($this->getSearchParams($this->request->all()))->orderBy('properties.id','DESC')->get();
+        $properties = Property::search($this->createSearchParams($this->request->all()))->orderBy('properties.id','DESC')->get();
         return view('property.listing', ['heading'=>'All Properties'])
             ->with('properties',$properties)
             ->with('data',$this->computeData())
             ->with('previousSearch', $this->request->all());
     }
 
-    private function getSearchParams($params = [])
+    private function createSearchParams($params = [])
     {
         $searchParams = $params;
         $searchParams['bedrooms'] =($this->request->get('bedrooms') == 3)? $this->request->get('bedrooms'):null;
@@ -152,6 +152,8 @@ class PropertyController extends StaffController
             ->where('properties.id', $id)
             ->orderBy('created_at', 'desc')
             ->first();
+
+        $property = Property::search($this->createSearchParams(['property_id'=>$id]))->get()->first();
 
         if($this->user->id != $property->user_id && $property->share_property == 'N')
         {
