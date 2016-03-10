@@ -4,6 +4,7 @@ use App\Http\Controllers\StaffController;
 use App\Block;
 use App\Category;
 use App\City;
+use App\Notifications;
 use App\Society;
 use App\Property;
 use App\User;
@@ -50,8 +51,12 @@ class PropertyController extends StaffController
     }
     public function index()
     {
-        $properties = Property::search()->orderBy('properties.id','DESC')->get();
-        return view('property.listing', ['heading'=>'All Properties'])
+        $properties = Property::search($this->createSearchParams())->orderBy('properties.id','DESC')->get();
+
+        $view = 'property.listing';
+        if($this->request->get('print') == true)
+            $view = 'print.property.listing';
+        return view($view, ['heading'=>'All Properties'])
             ->with('properties',$properties)
             ->with('data',$this->computeData())
             ->with('previousSearch', $this->request->all());
@@ -59,22 +64,37 @@ class PropertyController extends StaffController
 
     public function myProperties()
     {
-        $properties = Property::search(['user'=>$this->authenticatedUser->id])->orderBy('properties.id','DESC')->get();
+        $properties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))->orderBy('properties.id','DESC')->get();
 
-        return view('property.listing', ['heading'=>'All Properties'])
+        $view = 'property.listing';
+        if($this->request->get('print') == true)
+            $view = 'print.property.listing';
+        return view($view, ['heading'=>'My Properties'])
             ->with('properties',$properties)
             ->with('data',$this->computeData())
             ->with('previousSearch', $this->request->all());
     }
 
     public function search(){
-        $properties = Property::search($this->request->all())->orderBy('properties.id','DESC')->get();
-        return view('property.listing', ['heading'=>'All Properties'])
+        $properties = Property::search($this->createSearchParams($this->request->all()))->orderBy('properties.id','DESC')->get();
+
+        $view = 'property.listing';
+        if($this->request->get('print') == true)
+            $view = 'print.property.listing';
+        return view($view, ['heading'=>'Searched Properties'])
             ->with('properties',$properties)
             ->with('data',$this->computeData())
             ->with('previousSearch', $this->request->all());
     }
 
+    private function createSearchParams($params = [])
+    {
+        $searchParams = $params;
+        $searchParams['bedrooms'] =($this->request->get('bedrooms') == 3)? $this->request->get('bedrooms'):null;
+
+        $searchParams['authenticated_user'] = $this->authenticatedUser;
+        return $searchParams;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -144,6 +164,8 @@ class PropertyController extends StaffController
             ->where('properties.id', $id)
             ->orderBy('created_at', 'desc')
             ->first();
+
+        $property = Property::search($this->createSearchParams(['property_id'=>$id]))->get()->first();
 
         if($this->user->id != $property->user_id && $property->share_property == 'N')
         {
@@ -248,6 +270,7 @@ class PropertyController extends StaffController
     {
         $propertyInfo = [
             'category_id'=>$this->request->get('category'),
+            'bedrooms' =>($this->request->get('category') == 3)? $this->request->get('bedrooms'):null,
             'city_id'=>$this->request->get('city'),
             'society_id'=>$this->request->get('society'),
             'block_id'=>$this->request->get('block'),

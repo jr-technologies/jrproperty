@@ -35,13 +35,15 @@ class Property extends Model {
         ->leftJoin('blocks', 'properties.block_id', '=', 'blocks.id')
         ->leftJoin('cities', 'properties.city_id', '=', 'cities.id')
         ->leftJoin('categories', 'properties.category_id', '=', 'categories.id')
-
-        ->applySearchConditions($params);
+        ->applySearchConditions($params)
+        ->authorizeSearch($params['authenticated_user']);
 
         return $query;
     }
 
     public static function scopeApplySearchConditions($query, $params){
+        if($params['property_id'] != null || $params['property_id'] != '')
+            $query = $query->where('properties.id', '=', $params['property_id']);
         if($params['user'] != null || $params['user'] != '')
             $query = $query->where('user_id', '=', $params['user']);
         if($params['location'] != null || $params['location'] != '')
@@ -68,6 +70,25 @@ class Property extends Model {
             $query = $query->where('properties.price', '<=', $params['price_to']);
        if($params['lead']!= null || $params['lead'] !='')
             $query = $query->where('properties.type' ,'=',$params['lead'] );
+        if($params['bedrooms']!= null || $params['bedrooms'] !='')
+            $query = $query->where('bedrooms' ,'=',$params['bedrooms'] );
+
+
+        return $query;
+    }
+
+    public static function scopeAuthorizeSearch($query, $authenticated_user){
+
+        $query = $query->where(function($query) use ($authenticated_user)
+                {
+                    $query->where('user_id','=',$authenticated_user->id)
+                        ->orWhere(function($query) use ($authenticated_user)
+                        {
+                            $query->where('user_id','!=', $authenticated_user->id)
+                                ->where('share_property','=','Y');
+                        });
+                });
+
 
         return $query;
     }
@@ -87,5 +108,12 @@ class Property extends Model {
 
         $result = $this->with('users')->get();
         dd($result);
+    }
+
+    public function is_secure(){
+        if($this->share_property == 'N'){
+            return true;
+        }
+        return false;
     }
 }

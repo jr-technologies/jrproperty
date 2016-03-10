@@ -12,6 +12,48 @@
 .search-body{
 	height:400px;
 	overflow:auto;
-	
+
+}
+
+.marquee{
+
+	font-size:15px;
+    color:#fff;
+	border:2px solid #fff;
+	margin:0 auto;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	background-color: #337ab7;
+	overflow: hidden;
+
+}
+.marquue ul{
+	margin:0;
+	padding: 0;
+
+}
+.marquee-list{
+
+margin:0;
+padding:0;
+}
+
+.marquee ul li{
+	padding: 0;
+	display: inline-block;
+
+
+}
+@keyframes scrollme {
+	to {margin-left: -173em;}
+	/* 173em = 18 list items * 10.5em - 16em
+    (10.5em = 10em width + 2*.25em paddings left and right)
+    (16em = half the width of the wrapper) */
+}
+
+.lock{
+	color:#B0BEC5 !important;
+	font-size:12px;
+
 }
 

@@ -25,7 +25,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">JR Property</a>
+				<a class="navbar-brand" href="{{url('/')}}">JR Property</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -41,7 +41,7 @@
 						<li @if($section == 'society') class="active" @endif><a href="{{ url('admin/societies') }}">Manage Societies</a></li>
 						<li @if($section == 'block') class="active" @endif><a href="{{ url('admin/blocks') }}">Manage Blocks</a></li>
 						<li @if($section == 'category') class="active" @endif><a href="{{ url('admin/categories') }}">Manage Property Types</a></li>
-						<li @if($section == 'property') class="active" @endif><a href="{{ url('admin/properties') }}">Manage Property Listings</a></li>
+						{{--<li @if($section == 'property') class="active" @endif><a href="{{ url('admin/properties') }}">Manage Property Listings</a></li>--}}
 						<li @if($section == 'staff') class="active" @endif><a href="{{ url('admin/staff') }}">Manage Staff</a></li>
 					@endif
 				</ul>
@@ -49,7 +49,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
 						<li><a href="{{ url('/auth/login') }}">Login</a></li>
-						<li><a href="{{ url('/auth/register') }}">Register</a></li>
+					<!--	<li><a href="{{ url('/auth/register') }}">Register</a></li>-->
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>

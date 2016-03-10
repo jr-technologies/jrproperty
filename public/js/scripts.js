@@ -173,8 +173,22 @@ function set_property_type(v)
     }
 }
 
-function societyChangedInPropertySearch(){
-    var value = $( "#society option:selected" ).val();
+function category_changed(category_id, feature_id){
+    var category_id = (category_id === undefined)?'category_id':category_id;
+    var feature_id = (feature_id === undefined)?'apartment_features':feature_id;
+    var category = $( "#"+category_id+" option:selected" ).val();
+
+    if(category == 3){
+        $('#'+feature_id).attr('style', 'display:block!important;');
+        $('#bedrooms').attr('required', 'required');
+    }else{
+        $('#'+feature_id).attr('style', 'display:none!important;');
+        $('#bedrooms').removeAttr('required');
+    }
+}
+function societyChangedInPropertySearch(societies_id){
+    var societies_id = (societies_id === undefined)?'society':societies_id;
+    var value = $( "#"+societies_id+" option:selected" ).val();
     updateBlock(value, 'block_id');
 }
 

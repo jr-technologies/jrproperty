@@ -45,8 +45,11 @@
 
     <div class="form-group">
         {!! Form::label('category_id', 'Property Category:') !!}
-        {!! Form::select('category', $categories, $property->category_id,['class'=>'form-control', 'required', 'onchange' => '
-        (this.value);']) !!}
+        {!! Form::select('category', $categories, $property->category_id,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
+    </div>
+    <div id="apartment_features" class="form-group">
+        <label for="">Type Beds</label>
+        <input id="bedrooms" value="<?= $property->bedrooms ?>" name="bedrooms" class="form-control form-control-lg" type="number" max="5" placeholder="Number of bedrooms for-example(2,3)">
     </div>
 
     <div class="form-group">
@@ -253,6 +256,12 @@
 
         });
 
+        $(document).ready(function () {
+            category_changed();
+        });
+        $(document).on('change','#category_id',function(){
+            category_changed();
+        });
     </script>
 
 @stop
