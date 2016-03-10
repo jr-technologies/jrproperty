@@ -110,7 +110,7 @@ class Property extends Model {
         dd($result);
     }
 
-    public function is_secure(){
+    public function isPrivate(){
         if($this->share_property == 'N'){
             return true;
         }

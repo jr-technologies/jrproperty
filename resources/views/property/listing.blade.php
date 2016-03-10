@@ -165,7 +165,7 @@
 
             <tr class="{{$updateAble}}">
                 <td>
-                    @if($property->is_secure())
+                    @if($property->isPrivate())
                     <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
                     @endif
                         {{ $property->user_name }}
@@ -189,7 +189,7 @@
                 <td>{{ $data['status'][$property->sold] }}</td>
 
                     <td>
-                        @if(Request::route()->getName() == 'my-properties')
+                        {{--@if(Request::route()->getName() == 'my-properties')--}}
 
                             @if($user->can('update','property',$property))
                                 <a href="{{ route('property/edit', $property->id) }}" class="btn btn-info btn-xs">Update</a>
@@ -199,7 +199,7 @@
                                     {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
                                     {!! Form::close() !!}
                             @endif
-                        @endif
+                        {{--@endif--}}
                         <a href="{{route('staff.properties.show', $property->id)}}">Detail</a>
                     </td>
             </tr>
@@ -207,6 +207,15 @@
             </tbody>
     </table>
 
+    <?php
+        $print_params = Request::all();
+        $print_params['print'] = 'true';
+    ?>
+    <a href="javascript:void(0);" class="btn btn-primary"
+       NAME="Print Properties"  title=" Print Properties "
+       onClick=window.open("{{Request::url()}}?<?= http_build_query($print_params); ?>","Ratting","width=850,height=670,0,status=0,");>
+       Print
+    </a>
     <div class="text-center">
         <?php
            if(sizeof($properties) == 0)
