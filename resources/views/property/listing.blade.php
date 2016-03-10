@@ -6,7 +6,11 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
-
+<style>
+    .buttons a{
+        float: left;
+    }
+</style>
 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     
 	
@@ -108,122 +112,134 @@
     </div>
 </div>
 
-@if(sizeof($notifications) > 0)
-    <div class="col-md-12">
-        <div class="marquee">
-            <marquee direction="left" behavior="scroll" scrollamount="5">
-                <ul>
-                    @foreach ($notifications as $notification)
-                        <li>
-                            {{$notification->notification}}
-                        </li>
-                    @endforeach
-                </ul>
-            </marquee>
+    <div class="col-md-12 notifications">
+        @if(sizeof($notifications) > 0)
+            <div class="">
+                <div class="marquee">
+                    <marquee direction="left" behavior="scroll" scrollamount="5">
+                        <ul>
+                            @foreach ($notifications as $notification)
+                                <li>
+                                    {{$notification->notification}}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </marquee>
 
-        </div>
+                </div>
+            </div>
+
+        @endif
     </div>
-@endif
+    <div class="col-md-12 icons">
+        <?php
+        $print_params = Request::all();
+        $print_params['print'] = 'true';
+        ?>
+        <a href="javascript:void(0);" class="print-btn btn btn-primary pull-right "
+           NAME="Print Properties"  title=" Print Properties "
+           onClick=window.open("{{Request::url()}}?<?= http_build_query($print_params); ?>","Ratting","width=850,height=670,0,status=0,");>
+            <span class="glyphicon glyphicon-print "></span>
+        </a>
+    </div>
 
-<div class="pull-left" style="padding-bottom: 10px;">
-    <a href="{{ route('my-properties') }}" class="{{(Request::route()->getName() == 'my-properties')?'active':''}} btn btn-default btn-xs">My Listings &nbsp;</a>
-    <a href="{{ route('all-properties') }}" class="{{(Request::route()->getName() == 'all-properties')?'active':''}} btn btn-default btn-xs">ALL Listings &nbsp;</a>
+<div class=" col-xs-6">
+    <div class="buttons">
+        <a href="{{ route('my-properties') }}" class="{{(Request::route()->getName() == 'my-properties')?'active':''}} btn btn-default btn-xs">My Listings &nbsp;</a>
+        <a href="{{ route('all-properties') }}" class="{{(Request::route()->getName() == 'all-properties')?'active':''}} btn btn-default btn-xs">ALL Listings &nbsp;</a>
+    </div>
+</div>
+<div class=" col-xs-6">
+    <div class="" style="padding-bottom: 10px;">
+        @if($user->can('add','property'))
+            <a href="{{ route('admin.properties.create') }}" class="btn btn-success btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span>&nbsp; Add  </a>
+        @endif
+        <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#searchModal">Search &nbsp;<span Class="glyphicon glyphicon-search"></span></button>
+    </div>
 </div>
 
 
-<div class="pull-right" style="padding-bottom: 10px;">
-    @if($user->can('add','property'))
-        <a href="{{ route('admin.properties.create') }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-plus"></span>&nbsp; Add  </a>
-    @endif
-    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#searchModal">Search &nbsp;<span Class="glyphicon glyphicon-search"></span></button>
+<div class="col-md-12">
+    <div class="properties">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th width="10%">Owner</th>
+                    <th width="15%">Society</th>
+                    <th width="10%">Block</th>
+                    <th width="14%">Property No</th>
+                    <th width="12%">Size</th>
+                    <th width="12%">Price</th>
+                    <th width="10%">Status</th>
+                    <th width="10%">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($properties as $property)
 
-</div>
-<div class="clearfix"></div>
+                    <?php
+                    $updateAble = '';
+                    if(Helper::daysDiffInTimes(date('Y-m-d H:i:s'), $property->updated_at) > 14 && $property->sold == 'N')
+                        $updateAble = 'update-able';
+                    ?>
 
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th width="10%">Owner</th>
-            <th width="15%">Society</th>
-            <th width="10%">Block</th>
-            <th width="14%">Property No</th>
-            <th width="12%">Size</th>
-            <th width="12%">Price</th>
-            <th width="10%">Status</th>
-            <th width="10%">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($properties as $property)
+                    <tr class="{{$updateAble}}">
+                        <td>
+                            @if($property->isPrivate())
+                                <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
+                            @endif
+                            {{ $property->user_name }}
+                        </td>
+                        <td>{{ $property->society_name }}</td>
+                        <td>
+                            @if($property->category_id == 4)
+                                N/A
+                            @else
+                                {{ $property->block_name }}</td>
+                        @endif
+                        <td>
+                            @if($property->property_no != '')
+                                {{ $property->property_no }}
+                            @else
+                                N/A
+                            @endif
+                        </td>
+                        <td>{{ $property->size . ' ' . ucfirst($property->size_unit) }}</td>
+                        <td>{{ $property->price . ' ' . ucfirst($property->price_unit) }}</td>
+                        <td>{{ $data['status'][$property->sold] }}</td>
 
-            <?php
-                $updateAble = '';
-                if(Helper::daysDiffInTimes(date('Y-m-d H:i:s'), $property->updated_at) > 14 && $property->sold == 'N')
-                    $updateAble = 'update-able';
-            ?>
-
-            <tr class="{{$updateAble}}">
-                <td>
-                    @if($property->isPrivate())
-                    <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
-                    @endif
-                        {{ $property->user_name }}
-                </td>
-                <td>{{ $property->society_name }}</td>
-                <td>
-                    @if($property->category_id == 4)
-                        N/A
-                    @else
-                        {{ $property->block_name }}</td>
-                @endif
-                <td>
-                    @if($property->property_no != '')
-                        {{ $property->property_no }}
-                    @else
-                        N/A
-                    @endif
-                </td>
-                <td>{{ $property->size . ' ' . ucfirst($property->size_unit) }}</td>
-                <td>{{ $property->price . ' ' . ucfirst($property->price_unit) }}</td>
-                <td>{{ $data['status'][$property->sold] }}</td>
-
-                    <td>
-                        {{--@if(Request::route()->getName() == 'my-properties')--}}
+                        <td>
+                            {{--@if(Request::route()->getName() == 'my-properties')--}}
 
                             @if($user->can('update','property',$property))
                                 <a href="{{ route('property/edit', $property->id) }}" class="btn btn-info btn-xs">Update</a>
                             @endif
                             @if($user->can('delete','property',$property))
-                                    {!! Form::open(array('route' => array('staff.properties.destroy', $property->id), 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return window.confirm(\'Are you sure, you want to delete this record?\')')) !!}
-                                    {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
-                                    {!! Form::close() !!}
+                                {!! Form::open(array('route' => array('staff.properties.destroy', $property->id), 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return window.confirm(\'Are you sure, you want to delete this record?\')')) !!}
+                                {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
+                                {!! Form::close() !!}
                             @endif
-                        {{--@endif--}}
-                        <a href="{{route('staff.properties.show', $property->id)}}">Detail</a>
-                    </td>
-            </tr>
-            @endforeach
-            </tbody>
-    </table>
+                            {{--@endif--}}
+                            <a href="{{route('staff.properties.show', $property->id)}}">Detail</a>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
 
-    <?php
-        $print_params = Request::all();
-        $print_params['print'] = 'true';
-    ?>
-    <a href="javascript:void(0);" class="btn btn-primary"
-       NAME="Print Properties"  title=" Print Properties "
-       onClick=window.open("{{Request::url()}}?<?= http_build_query($print_params); ?>","Ratting","width=850,height=670,0,status=0,");>
-       Print
-    </a>
-    <div class="text-center">
-        <?php
-           if(sizeof($properties) == 0)
-               echo "<b style='color:#ff3920' >No record Found!</b>"
-         ?>
+
+            <div class="text-center">
+                <?php
+                if(sizeof($properties) == 0)
+                    echo "<b style='color:#ff3920' >No record Found!</b>"
+                ?>
+            </div>
+
+        </div>
     </div>
-
 </div>
+
 
 <script>
     $(document).ready(function(){
