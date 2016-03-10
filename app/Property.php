@@ -42,6 +42,8 @@ class Property extends Model {
     }
 
     public static function scopeApplySearchConditions($query, $params){
+        if($params['property_id'] != null || $params['property_id'] != '')
+            $query = $query->where('properties.id', '=', $params['property_id']);
         if($params['user'] != null || $params['user'] != '')
             $query = $query->where('user_id', '=', $params['user']);
         if($params['location'] != null || $params['location'] != '')
@@ -108,7 +110,7 @@ class Property extends Model {
         dd($result);
     }
 
-    public function is_secure(){
+    public function isPrivate(){
         if($this->share_property == 'N'){
             return true;
         }

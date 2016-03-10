@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('group', 'Property Type:') !!}
-                    {!! Form::select('group', Helper::prependArray([''=>'Select All...'],$data['group']), ($form_data['group'] == null)?'residential':$form_data['group'], ['class'=>'form-control', 'required']) !!}
+                    {!! Form::select('group', Helper::prependArray([''=>'Select All...'],$data['group']), (isset($_GET['group']))?(($_GET['group'] != '')?$form_data['group']:''):'residential', ['class'=>'form-control', 'required']) !!}
                 </div>
 				   <div class="form-group">
                     {!! Form::label('Land', 'Land Area:') !!}
@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('category', 'Property Category:') !!}
-                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), ($form_data['category'] == null)?2:$form_data['category'],['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
+                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), (isset($_GET['category']))?(($_GET['category'] != '')?$form_data['category']:''):2,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
                 </div>
                     <div class="form-group" id="apartment_features">
                         {!! Form::label('bedrooms', 'Bedrooms:') !!}
@@ -56,7 +56,7 @@
                     </div>
                     <div class="form-group">
                         {!! Form::label('location', 'Location:') !!}
-                        {!! Form::select('location', Helper::prependArray([''=>'Select All...'],$data['location']), ($form_data['location'] == null)?'average':$form_data['location'],['class'=>'form-control', 'required']) !!}
+                        {!! Form::select('location', Helper::prependArray([''=>'Select All...'],$data['location']), (isset($_GET['location']))?(($_GET['location'] != '')?$form_data['location']:''):'average',['class'=>'form-control', 'required']) !!}
                     </div>
                 <div class="form-group">
                     {!! Form::label('lead', 'Lead Type:') !!}
@@ -108,25 +108,22 @@
     </div>
 </div>
 
-
-
-
-
+@if(sizeof($notifications) > 0)
     <div class="col-md-12">
         <div class="marquee">
-        <marquee direction="left" behavior="scroll" scrollamount="5">
-            <ul>
-                <li>
-                DHA Phase 9, 5 Marla File Rate 78 Lac
-                </li>
-                <li>
-                    DHA Phase 9, 5 Marla File Rate 78 Lac
-                </li>
-            </ul>
-        </marquee>
+            <marquee direction="left" behavior="scroll" scrollamount="5">
+                <ul>
+                    @foreach ($notifications as $notification)
+                        <li>
+                            {{$notification->notification}}
+                        </li>
+                    @endforeach
+                </ul>
+            </marquee>
 
         </div>
-        </div>
+    </div>
+@endif
 
 <div class="pull-left" style="padding-bottom: 10px;">
     <a href="{{ route('my-properties') }}" class="{{(Request::route()->getName() == 'my-properties')?'active':''}} btn btn-default btn-xs">My Listings &nbsp;</a>
@@ -168,8 +165,8 @@
 
             <tr class="{{$updateAble}}">
                 <td>
-                    @if($property->is_secure())
-                    <span data-toggle="tooltip" data-placement="top" title="Property is Lock"> <span class="lock glyphicon glyphicon-lock"></span> </span>
+                    @if($property->isPrivate())
+                    <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
                     @endif
                         {{ $property->user_name }}
                 </td>
@@ -192,7 +189,7 @@
                 <td>{{ $data['status'][$property->sold] }}</td>
 
                     <td>
-                        @if(Request::route()->getName() == 'my-properties')
+                        {{--@if(Request::route()->getName() == 'my-properties')--}}
 
                             @if($user->can('update','property',$property))
                                 <a href="{{ route('property/edit', $property->id) }}" class="btn btn-info btn-xs">Update</a>
@@ -202,7 +199,7 @@
                                     {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
                                     {!! Form::close() !!}
                             @endif
-                        @endif
+                        {{--@endif--}}
                         <a href="{{route('staff.properties.show', $property->id)}}">Detail</a>
                     </td>
             </tr>
@@ -210,11 +207,19 @@
             </tbody>
     </table>
 
+    <?php
+        $print_params = Request::all();
+        $print_params['print'] = 'true';
+    ?>
+    <a href="javascript:void(0);" class="btn btn-primary"
+       NAME="Print Properties"  title=" Print Properties "
+       onClick=window.open("{{Request::url()}}?<?= http_build_query($print_params); ?>","Ratting","width=850,height=670,0,status=0,");>
+       Print
+    </a>
     <div class="text-center">
         <?php
-       if(sizeof($properties) == 0)
-           echo "<b style='color:#ff3920' >No record Found!</b>"
-
+           if(sizeof($properties) == 0)
+               echo "<b style='color:#ff3920' >No record Found!</b>"
          ?>
     </div>
 
