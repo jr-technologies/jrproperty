@@ -24,7 +24,7 @@ class UserController extends AdminController
     {
         $staffs = User::all();
         $heading = 'List of Staff';
-        return view('staff.listing', compact('staffs', 'heading'))->with('section', $this->section);
+        return view('staff.listing',compact('staffs', 'heading'))->with('section', $this->section);
     }
 
     /**
