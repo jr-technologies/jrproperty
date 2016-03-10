@@ -114,10 +114,10 @@
 
     <div class="col-md-12 notifications">
         @if(sizeof($notifications) > 0)
-            <div class="">
+
                 <div class="marquee">
                     <marquee direction="left" behavior="scroll" scrollamount="5">
-                        <ul>
+                        <ul class="mar-ul">
                             @foreach ($notifications as $notification)
                                 <li>
                                     {{$notification->notification}}
@@ -127,7 +127,7 @@
                     </marquee>
 
                 </div>
-            </div>
+
 
         @endif
     </div>
