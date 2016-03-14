@@ -41,7 +41,7 @@
                 </div>
 				   <div class="form-group">
                     {!! Form::label('Land', 'Land Area:') !!}
-                    {!! Form::select('land',Helper::prependArray([''=>'Select All...'], ['marla'=>'marla','knal'=>'Kanal']),$form_data['land'],['class'=>'form-control']) !!}
+                    {!! Form::select('land',Helper::prependArray([''=>'Select All...'], $data['size_units']),$form_data['land'],['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
@@ -155,7 +155,7 @@
 <div class=" col-xs-6 buttons">
     <div class="" style="padding-bottom: 10px;">
         @if($user->can('add','property'))
-            <a href="{{ route('admin.properties.create') }}" class="btn btn-success btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span>&nbsp; Add  </a>
+            <a href="{{ route('staff.properties.create') }}" class="btn btn-success btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span>&nbsp; Add  </a>
         @endif
         <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#searchModal">Search &nbsp;<span Class="glyphicon glyphicon-search"></span></button>
     </div>
@@ -208,7 +208,7 @@
                                 N/A
                             @endif
                         </td>
-                        <td>{{ $property->size . ' ' . ucfirst($property->size_unit) }}</td>
+                        <td>{{ \App\Libs\Helpers\Land::convert('square feets' , $property->size_unit, $property->size) . ' ' . ucfirst($property->size_unit) }}</td>
                         <td>{{ $property->price . ' ' . ucfirst($property->price_unit) }}</td>
                         <td>{{ $data['status'][$property->sold] }}</td>
 

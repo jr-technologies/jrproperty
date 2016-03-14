@@ -81,18 +81,6 @@ Route::get('/', function(){
 
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
-
-    Route::resource('city', 'Admin\CityController');
-    Route::resource('societies', 'Admin\SocietyController');
-    Route::resource('blocks', 'Admin\BlockController');
-    Route::resource('categories', 'Admin\CategoryController');
-    Route::resource('properties', 'Admin\PropertyController');
-    Route::resource('staff', 'Admin\UserController');
-    Route::get('home', ['uses' => 'Admin\HomeController@index', 'as' => 'admin.home.index']);
-});
-
-
 Route::group(['prefix' => 'staff', 'middleware' => 'auth'], function() {
 
 

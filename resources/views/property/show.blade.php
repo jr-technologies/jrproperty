@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <td>Area:</td>
-            <td>{{ $property->size.' '.ucfirst($property->size_unit) }}</td>
+            <td>{{ \App\Libs\Helpers\Land::convert('square feets' , $property->size_unit, $property->size).' '.ucfirst($property->size_unit) }}</td>
         </tr>
         <tr>
             <td>Property Number:</td>

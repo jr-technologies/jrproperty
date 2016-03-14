@@ -58,8 +58,8 @@ class Property extends Model {
             $query = $query->where('group' , '=', $params['group']);
         if($params['category_id'] != null || $params['category'] != '')
             $query = $query->where('properties.category_id' , '=', $params['category']);
-        if($params['land'] != null || $params['land'] != '')
-            $query = $query->where('properties.size_unit', '=', $params['land']);
+        /*if($params['land'] != null || $params['land'] != '')
+            $query = $query->where('properties.size_unit', '=', $params['land']);*/
         if($params['size_from'] != null || $params['size_from'] != '')
             $query = $query->where('properties.size', '>=', $params['size_from']);
         if($params['size_to'] != null || $params['size_to'] != '')
