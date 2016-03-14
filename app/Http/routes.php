@@ -93,3 +93,17 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
+/*Route::get('/update_size', function(){
+    $properties = \App\Property::get();
+    $updated_properties =[];
+    foreach($properties as $property){
+        $property->size = \App\Libs\Helpers\Land::convert($property->size_unit, 'square feets', $property->size);
+        $updated_properties[] = $property;
+    }
+
+    foreach($updated_properties as $property)
+    {
+        $property->save();
+    }
+});*/
