@@ -148,6 +148,7 @@
                 </ul>
             </span>
         </div>
+        <span id="priceInWords"></span>
     </div>
 
 
@@ -231,6 +232,15 @@
 
     <script>
 
+        $(document).on('change','#price',function(){
+            var price = digitsToWords($(this).val());
+            $('#priceInWords').html(price);
+        });
+        $(document).on('keyup','#price',function(){
+            var price = digitsToWords($(this).val());
+            $('#priceInWords').html(price);
+        });
+
         $(function(){
 
             if($('#category_id').val() == 4)
@@ -249,6 +259,9 @@
 
         $(document).ready(function () {
             category_changed();
+
+            var price = digitsToWords($("#price").val());
+            $('#priceInWords').html(price);
         });
         $(document).on('change','#category_id',function(){
             category_changed();

@@ -85,9 +85,10 @@
                     {!! Form::label('price', 'Price:') !!}
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-12">
-                        {!! Form::text('price_from',  $form_data['price_from'], ['class'=>'col-xs-6', 'placeholder'=>'From']) !!}
-                        {!! Form::text('price_to',  $form_data['price_to'], ['class'=>'col-xs-6', 'placeholder'=>'To']) !!}
+                    <div class="col-md-12">
+                        <span style="font-size: 12px;" id="priceInWords" class="col-xs-12"></span>
+                        {!! Form::text('price_from',  $form_data['price_from'], ['class'=>'col-xs-6', 'placeholder'=>'From', 'id'=>'price_from']) !!}
+                        {!! Form::text('price_to',  $form_data['price_to'], ['class'=>'col-xs-6', 'placeholder'=>'To', 'id'=>'price_to']) !!}
                     </div>
                 </div>
 
@@ -245,6 +246,24 @@
 
 
 <script>
+
+    $(document).on('change','#price_from',function(){
+        var price = digitsToWords($(this).val());
+        $('#priceInWords').html(price);
+    });
+    $(document).on('keyup','#price_from',function(){
+        var price = digitsToWords($(this).val());
+        $('#priceInWords').html(price);
+    });
+    $(document).on('change','#price_to',function(){
+        var price = digitsToWords($(this).val());
+        $('#priceInWords').html(price);
+    });
+    $(document).on('keyup','#price_to',function(){
+        var price = digitsToWords($(this).val());
+        $('#priceInWords').html(price);
+    });
+
     $(document).ready(function(){
         societyChangedInPropertySearch();
         category_changed()

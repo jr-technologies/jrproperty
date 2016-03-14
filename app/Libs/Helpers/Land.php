@@ -11,6 +11,9 @@ namespace App\Libs\Helpers;
 class Land
 {
     public static function convert($from, $to, $area){
+        if($from == $to)
+            return $area;
+
         $computedArea = $area;
         switch($from)
         {
