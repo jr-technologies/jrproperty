@@ -137,7 +137,7 @@
         {!! Form::label('price', 'Price:') !!}
         <div class="input-group ">
             <label class="input-group-addon">PKR: </label>
-            {!! Form::input('number', 'price', null,['class'=>'form-control', 'required']) !!}
+            {!! Form::input('number', 'price', null,['class'=>'form-control', 'required', 'max'=>'99999999999']) !!}
             <span class="input-group-btn btn-group">
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Lakh <span class="caret"></span> </button>
                 <ul class="dropdown-menu pull-right">
@@ -159,6 +159,7 @@
                 </ul>
             </span>
         </div>
+           <span id="priceInWords"></span>
     </div>
 
 
