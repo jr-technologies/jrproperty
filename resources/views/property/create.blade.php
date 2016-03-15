@@ -14,11 +14,13 @@
 
         $(document).on('change','#price',function(){
             var price = digitsToWords($(this).val());
-            $('#priceInWords').html(price);
+            var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+            $('#priceInWordsContainer').html(final_price_html);
         });
         $(document).on('keyup','#price',function(){
             var price = digitsToWords($(this).val());
-            $('#priceInWords').html(price);
+            var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+            $('#priceInWordsContainer').html(final_price_html);
         });
 
         $(function(){

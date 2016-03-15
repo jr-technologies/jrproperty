@@ -129,7 +129,7 @@
             <label class="input-group-addon">PKR: </label>
             {!! Form::input('number', 'price', null,['class'=>'form-control', 'required', 'max'=>'99999999999']) !!}
         </div>
-           <span id="priceInWords"></span>
+         <span id="priceInWordsContainer">  </span>
     </div>
 
 
