@@ -41,8 +41,16 @@
                         N/A
                     @endif
                 </td>
-                <td style="text-align: center">{{ $property->size . ' ' . ucfirst($property->size_unit) }}</td>
-                <td style="text-align: center">{{ $property->price . ' ' . ucfirst($property->price_unit) }}</td>
+                <td>
+                    <?php
+                    $land_unit = $property->size_unit;
+                    if(isset($_GET['land']) && $_GET['land'] != ''){
+                        $land_unit = $_GET['land'];
+                    }
+                    ?>
+                    {{ \App\Libs\Helpers\Land::convert('square feets' , $land_unit, $property->size) . ' ' . ucfirst($land_unit) }}
+                </td>
+                <td style="text-align: center">{{ $property->price  }}</td>
                 <td style="text-align: center">{{ $data['status'][$property->sold] }}</td>
 
             </tr>

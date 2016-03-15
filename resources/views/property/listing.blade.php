@@ -86,7 +86,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <span style="font-size: 12px;" id="priceInWords" class="col-xs-12"></span>
+                        <span style="font-size: 12px;" id="priceInWordsContainer" class="col-xs-12"></span>
                         {!! Form::text('price_from',  $form_data['price_from'], ['class'=>'col-xs-6', 'placeholder'=>'From', 'id'=>'price_from']) !!}
                         {!! Form::text('price_to',  $form_data['price_to'], ['class'=>'col-xs-6', 'placeholder'=>'To', 'id'=>'price_to']) !!}
                     </div>
@@ -209,7 +209,15 @@
                                 N/A
                             @endif
                         </td>
-                        <td>{{ \App\Libs\Helpers\Land::convert('square feets' , $property->size_unit, $property->size) . ' ' . ucfirst($property->size_unit) }}</td>
+                        <td>
+                            <?php
+                                $land_unit = $property->size_unit;
+                                if(isset($_GET['land']) && $_GET['land'] != ''){
+                                    $land_unit = $_GET['land'];
+                                }
+                            ?>
+                            {{ \App\Libs\Helpers\Land::convert('square feets' , $land_unit, $property->size) . ' ' . ucfirst($land_unit) }}
+                        </td>
                         <td title="" class="priceListing" price="{{$property->price}}">{{ $property->price}}</td>
                         <td>{{ $data['status'][$property->sold] }}</td>
 
@@ -249,19 +257,23 @@
 
     $(document).on('change','#price_from',function(){
         var price = digitsToWords($(this).val());
-        $('#priceInWords').html(price);
+        var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+        $('#priceInWordsContainer').html(final_price_html);
     });
     $(document).on('keyup','#price_from',function(){
         var price = digitsToWords($(this).val());
-        $('#priceInWords').html(price);
+        var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+        $('#priceInWordsContainer').html(final_price_html);
     });
     $(document).on('change','#price_to',function(){
         var price = digitsToWords($(this).val());
-        $('#priceInWords').html(price);
+        var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+        $('#priceInWordsContainer').html(final_price_html);
     });
     $(document).on('keyup','#price_to',function(){
         var price = digitsToWords($(this).val());
-        $('#priceInWords').html(price);
+        var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+        $('#priceInWordsContainer').html(final_price_html);
     });
 
     $(document).on('change','#category_id',function(){
