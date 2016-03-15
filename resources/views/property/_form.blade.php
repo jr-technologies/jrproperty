@@ -149,7 +149,7 @@
                 </ul>
             </span>
         </div>
-           <span id="priceInWords"></span>
+         <span id="priceInWordsContainer">  </span>
     </div>
 
 

@@ -1,3 +1,3 @@
 <?php 
-header('Location: http://viriklogistics.com/jrproperty/public/');
+header('Location: http://localhost/jrproperty/public/');
 ?>

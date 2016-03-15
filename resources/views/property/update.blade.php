@@ -148,7 +148,7 @@
                 </ul>
             </span>
         </div>
-        <span id="priceInWords"></span>
+        <span id="priceInWordsContainer"></span>
     </div>
 
 
@@ -234,11 +234,13 @@
 
         $(document).on('change','#price',function(){
             var price = digitsToWords($(this).val());
-            $('#priceInWords').html(price);
+            var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+            $('#priceInWordsContainer').html(final_price_html);
         });
         $(document).on('keyup','#price',function(){
             var price = digitsToWords($(this).val());
-            $('#priceInWords').html(price);
+            var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+            $('#priceInWordsContainer').html(final_price_html);
         });
 
         $(function(){
@@ -261,7 +263,8 @@
             category_changed();
 
             var price = digitsToWords($("#price").val());
-            $('#priceInWords').html(price);
+            var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+            $('#priceInWordsContainer').html(final_price_html);
         });
         $(document).on('change','#category_id',function(){
             category_changed();

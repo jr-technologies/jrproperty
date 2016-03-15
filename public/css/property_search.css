@@ -24,6 +24,7 @@
 	border-radius: 5px;
 	background-color: #337ab7;
 	overflow: hidden;
+	height:28px;
 
 }
 .mar-ul {
@@ -63,3 +64,10 @@
 	}
 }
 
+
+#priceInWords{
+	color:#fff;
+	background-color: #080808;
+padding:5px;
+
+}
