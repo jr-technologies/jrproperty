@@ -7,7 +7,7 @@
  */
 
 namespace App\Policies;
-
+use App\User;
 
 class ContactInfoPolicy extends Policy
 {

@@ -279,7 +279,6 @@ class PropertyController extends StaffController
             'group' =>$this->request->get('type'),
             'purpose' => $this->request->get('purpose'),
             'price' => $this->request->get('price'),
-            'price_unit' => $this->request->get('price_unit'),
             'estate_name' => ($this->request->get('lead_type') == 'indirect')?$this->request->get('owner_estate'):null,
             'contact_person' =>($this->request->get('lead_type') != '')?$this->request->get('owner_name'):null,
             'phone' => ($this->request->get('lead_type') != '')?$this->request->get('owner_phone'):null,

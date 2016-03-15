@@ -210,7 +210,7 @@
                             @endif
                         </td>
                         <td>{{ \App\Libs\Helpers\Land::convert('square feets' , $property->size_unit, $property->size) . ' ' . ucfirst($property->size_unit) }}</td>
-                        <td>{{ $property->price . ' ' . ucfirst($property->price_unit) }}</td>
+                        <td title="" class="priceListing" price="{{$property->price}}">{{ $property->price}}</td>
                         <td>{{ $data['status'][$property->sold] }}</td>
 
                         <td>
@@ -264,12 +264,23 @@
         $('#priceInWords').html(price);
     });
 
-    $(document).ready(function(){
-        societyChangedInPropertySearch();
-        category_changed()
-    });
     $(document).on('change','#category_id',function(){
         category_changed();
+    });
+
+    function convertPricesToWords(){
+        $('.priceListing').each(function(){
+            var price = $(this).attr('price');
+            price = parseInt(price);
+            var priceInWords = digitsToWords(price);
+            $(this).attr('title',priceInWords);
+        });
+    }
+
+    $(document).ready(function(){
+        societyChangedInPropertySearch();
+        category_changed();
+        convertPricesToWords();
     });
 </script>
 @stop

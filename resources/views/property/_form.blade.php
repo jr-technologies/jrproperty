@@ -128,26 +128,6 @@
         <div class="input-group ">
             <label class="input-group-addon">PKR: </label>
             {!! Form::input('number', 'price', null,['class'=>'form-control', 'required', 'max'=>'99999999999']) !!}
-            <span class="input-group-btn btn-group">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Lakh <span class="caret"></span> </button>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        {!! Form::radio('price_unit', 'thousand', null, ['id' => 'price_unit_thousand']) !!}
-                        {{--<input type="radio" id="price_unit_thousand" value="thousand" name="price_unit" checked="checked">--}}
-                        <label for="price_unit_thousand">Thousand</label>
-                    </li>
-                    <li>
-                        {!! Form::radio('price_unit', 'lakh', null, ['id' => 'price_unit_lakh']) !!}
-                        {{--<input type="radio" id="price_unit_lakh" value="lakh" name="price_unit" checked="checked">--}}
-                        <label for="price_unit_lakh">Lakh</label>
-                    </li>
-                    <li>
-                        {!! Form::radio('price_unit', 'crore', null, ['id' => 'price_unit_crore']) !!}
-                        {{--<input type="radio" id="price_unit_crore" value="crore" name="price_unit">--}}
-                        <label for="price_unit_crore">Crore</label>
-                    </li>
-                </ul>
-            </span>
         </div>
            <span id="priceInWords"></span>
     </div>
