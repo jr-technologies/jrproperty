@@ -30,7 +30,7 @@
         </tr>
         <tr>
             <td>Price:</td>
-            <td>{{ $property->price }} <span style="background-color: #222222; color:white; padding: 5px;" id="priceInWords" price="{{$property->price}}"></span></td>
+            <td>{{ $property->price }} <span class="price-font" style="background-color: #222222; color:white; padding: 5px;" id="priceInWords" price="{{$property->price}}"></span></td>
         </tr>
         <tr>
             <td>Location:</td>
