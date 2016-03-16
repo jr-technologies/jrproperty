@@ -21,21 +21,15 @@
     color:#fff;
 	border:2px solid #fff;
 	margin:0 auto;
-	margin-bottom: 10px;
 	border-radius: 5px;
 	background-color: #337ab7;
 	overflow: hidden;
 
 }
-.marquue ul{
-	margin:0;
-	padding: 0;
+.mar-ul {
+	margin:0 !important;
+	padding: 0 !important;
 
-}
-.marquee-list{
-
-margin:0;
-padding:0;
 }
 
 .marquee ul li{
@@ -52,8 +46,20 @@ padding:0;
 }
 
 .lock{
-	color:#B0BEC5 !important;
+	color:#f30622 !important;
 	font-size:12px;
 
+}
+
+.icons{
+
+	margin-bottom:12px;
+}
+
+@media screen and (max-width: 768px) {
+	.icons {
+		display:none;
+		margin-bottom: 0;
+	}
 }
 

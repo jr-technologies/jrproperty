@@ -1,4 +1,7 @@
 <?php
+//die('please wait. system is updating...');
+
+
 /**
  * Laravel - A PHP Framework For Web Artisans
  *

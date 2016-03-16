@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2016 at 07:32 AM
+-- Generation Time: Mar 10, 2016 at 07:15 AM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -204,12 +204,11 @@ CREATE TABLE `cities` (
 --
 
 INSERT INTO `cities` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(5, 'Karachi', '2015-04-27 18:25:56', '2016-03-04 06:40:25'),
+(5, 'Karachi', '2015-04-27 18:25:56', '2015-04-27 18:25:56'),
 (10, 'Lahore', '2015-05-01 10:09:46', '2015-05-01 10:09:46'),
 (11, 'Islamabad', '2015-05-01 10:10:04', '2015-05-01 10:10:04'),
 (12, 'Gawadar', '2015-05-01 10:10:32', '2015-05-01 10:10:32'),
-(13, 'Multan', '2015-05-01 10:25:15', '2015-05-01 10:25:15'),
-(14, '', '2016-03-04 04:51:43', '2016-03-04 04:51:43');
+(13, 'Multan', '2015-05-01 10:25:15', '2015-05-01 10:25:15');
 
 -- --------------------------------------------------------
 
@@ -234,6 +233,27 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2015_04_27_221356_create_societies_table', 1),
 ('2015_04_27_221356_create_users_table', 1),
 ('2015_04_27_221406_create_foreign_keys', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL,
+  `notification` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `notification`, `created_at`, `updated_at`) VALUES
+(3, 'Its a sample new notification...', '2016-03-09 12:40:08', '0000-00-00 00:00:00'),
+(4, 'its an other notification..', '2016-03-10 06:09:26', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -271,17 +291,17 @@ CREATE TABLE `properties` (
   `type` enum('direct','indirect') COLLATE utf8_unicode_ci NOT NULL,
   `group` enum('commercial','residential') COLLATE utf8_unicode_ci DEFAULT NULL,
   `estate_name` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `contact_person` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `mobile` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `phone` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact_person` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `mobile` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `property_no` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `purpose` enum('sale','rent','wanted') COLLATE utf8_unicode_ci NOT NULL,
   `size` int(10) UNSIGNED NOT NULL,
   `size_unit` enum('marla','kanal') COLLATE utf8_unicode_ci NOT NULL,
-  `location` enum('corner','non-corner','facing-park','main-boulevard','average') COLLATE utf8_unicode_ci NOT NULL,
+  `location` enum('corner','non-corner') COLLATE utf8_unicode_ci NOT NULL,
   `price` int(10) UNSIGNED NOT NULL,
-  `price_unit` enum('lakh','thousand','crore') COLLATE utf8_unicode_ci NOT NULL,
+  `price_unit` enum('thousand','lakh','crore') COLLATE utf8_unicode_ci NOT NULL,
   `price_converted` int(10) UNSIGNED NOT NULL,
   `picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `detail` text COLLATE utf8_unicode_ci,
@@ -300,16 +320,11 @@ CREATE TABLE `properties` (
 --
 
 INSERT INTO `properties` (`id`, `category_id`, `city_id`, `society_id`, `block_id`, `user_id`, `title`, `type`, `group`, `estate_name`, `contact_person`, `mobile`, `phone`, `address`, `property_no`, `purpose`, `size`, `size_unit`, `location`, `price`, `price_unit`, `price_converted`, `picture`, `detail`, `house_type`, `bedrooms`, `features`, `share_contact_info`, `share_property`, `sold`, `created_at`, `updated_at`) VALUES
-(1, 2, 10, 16, 98, 3, NULL, 'direct', 'residential', NULL, '', '', '', NULL, '130', 'sale', 10, 'marla', 'corner', 0, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-02 15:23:28', '2016-03-02 15:23:28'),
-(2, 1, 10, 16, 98, 3, NULL, 'direct', 'commercial', NULL, '', '', '', NULL, '130', 'sale', 10, 'marla', 'corner', 2, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-02 15:38:53', '2016-03-02 15:38:53'),
-(3, 2, 10, 16, 98, 3, NULL, 'direct', 'commercial', NULL, '', '', '', NULL, '130', 'sale', 10, 'marla', 'corner', 2, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-01-02 15:39:14', '2016-03-02 15:39:14'),
-(7, 2, 5, 16, 98, 1, NULL, 'direct', 'commercial', NULL, NULL, NULL, NULL, NULL, '120', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-01-01 20:13:14', '2016-03-02 20:13:14'),
-(9, 1, 10, 10, 98, 3, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, '10', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 05:04:06', '2016-03-04 05:04:06'),
-(10, 1, 10, 10, 98, 3, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, '10', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 05:05:18', '2016-03-04 05:05:18'),
-(11, 1, 10, 10, 98, 3, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, '10', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 05:07:01', '2016-03-04 05:07:01'),
-(12, 1, 10, 10, 98, 3, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, '10', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 05:09:04', '2016-03-04 05:09:04'),
-(13, 1, 10, 10, 98, 3, NULL, 'indirect', NULL, NULL, 'waqas', NULL, '01232520', NULL, '10', 'rent', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 05:10:00', '2016-03-04 05:10:00'),
-(15, 2, 10, 15, 92, 4, NULL, 'indirect', 'residential', 'JR Properoetytg', '22222', '111111111111111', '7455465', '64-Q', '25', 'sale', 10, 'marla', 'corner', 252000, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', '', '', '2016-03-04 08:17:53', '2016-03-04 08:18:53');
+(2, 2, 10, 16, 98, 1, NULL, 'indirect', 'residential', 'JR Property Network', 'Sajid', '03234320100', '35690431', 'DHA Phase 8', '55', 'wanted', 20, 'marla', '', 150000, 'thousand', 0, 'C:\\xampp\\tmp\\phpE63D.tmp', NULL, NULL, NULL, NULL, 'Y', 'N', 'Y', '2016-03-04 03:57:30', '2016-03-04 07:08:01'),
+(3, 3, 10, 8, 8, 1, NULL, 'direct', 'commercial', '', 'waqas', '0348450405', '03456852855', 'sami town', '10', 'sale', 10, 'marla', 'corner', 10, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'Y', 'Y', 'Y', '2016-03-04 07:51:19', '2016-03-04 07:51:19'),
+(4, 2, 10, 16, 17, 4, NULL, 'direct', 'residential', NULL, 'ffg', '55', '454545454545', 'tttttttttt', '222', 'sale', 10, 'marla', '', 222, 'lakh', 0, NULL, NULL, NULL, NULL, NULL, 'N', 'N', 'N', '2016-03-08 23:38:50', '2016-03-08 23:38:50'),
+(5, 3, 10, 16, 98, 4, NULL, 'direct', 'residential', NULL, 'ffg', '55', '454545454545', 'tttttttttt', '222', 'sale', 10, 'marla', 'non-corner', 222, 'lakh', 0, NULL, NULL, NULL, 3, NULL, 'N', 'Y', 'N', '2016-03-08 23:39:39', '2016-03-09 06:27:21'),
+(6, 3, 10, 16, 97, 4, NULL, 'indirect', 'residential', 'JR', '0321706841', '0321706841', '03217068411', 'sami town', '555', 'sale', 10, 'marla', 'corner', 55555, 'lakh', 0, NULL, NULL, NULL, 2, NULL, 'Y', 'Y', 'N', '2016-03-09 06:35:58', '2016-03-09 06:36:36');
 
 -- --------------------------------------------------------
 
@@ -330,7 +345,7 @@ CREATE TABLE `societies` (
 --
 
 INSERT INTO `societies` (`id`, `city_id`, `name`, `created_at`, `updated_at`) VALUES
-(8, 10, 'DHA Phase 1', '2015-05-01 10:29:33', '2016-03-04 06:40:42'),
+(8, 10, 'DHA Phase 1', '2015-05-01 10:29:33', '2015-05-01 10:29:33'),
 (9, 10, 'DHA Phase 2', '2015-05-01 10:36:49', '2015-05-01 10:36:49'),
 (10, 10, 'DHA Phase 3', '2015-05-01 11:17:30', '2015-05-01 11:17:30'),
 (11, 10, 'DHA Phase 4', '2015-05-01 11:21:46', '2015-05-01 11:21:46'),
@@ -367,9 +382,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Muhammad Asif', 'jrasif@gmail.com', '$2y$10$JmuNko.tRb9dw36bz/UhNeYskW7dbmiQifxHsNdyN.hqXO6ezj9ha', 'admin', 'xtqay1snoETigZgzjDhEmiDDWfothkdbpik1kvOUr5WgzIzqwP8C5jTHw10m', '2015-04-27 17:41:48', '2016-03-04 06:51:54'),
+(1, 'Muhammad Asif', 'jrasif@gmail.com', '$2y$10$JmuNko.tRb9dw36bz/UhNeYskW7dbmiQifxHsNdyN.hqXO6ezj9ha', 'admin', 'ipW7BLT15zerZ116fo5MgDHlYKyw9NzcU6ko0kOAlnLjOLJ75dGXPJERp8HT', '2015-04-27 17:41:48', '2016-03-09 07:40:29'),
 (3, 'Sajid', 'maliksajidawan786@gmail.com', '$2y$10$k/2GOEPLpHNYNraodGl/c.Sfg2PqpM2C1Tbly4MbESARRmFTe3OO6', 'staff', 'jwXMCjrXk9cNOP1B3HiZCwOndZT7a3p84TQM8fViVT60QZys1u90PhtCcfPE', '2015-05-01 16:09:18', '2015-05-01 16:15:27'),
-(4, 'Asif', 'malikasifawank@yahoo.com', '$2y$10$2GmAUifQScKagT9g0gjJyevT2s4b2TtJW.HhfWY73zsmKEivbXyxq', 'staff', '3x47CLWIEvjEC1kUsipnOd3uYW4ONQ9cwBIC2UsNQJgxYMOV79M1DdM4fVgT', '2015-05-04 10:45:36', '2016-03-04 06:51:40'),
+(4, 'Asif', 'malikasifawank@yahoo.com', '$2y$10$2GmAUifQScKagT9g0gjJyevT2s4b2TtJW.HhfWY73zsmKEivbXyxq', 'staff', '4ClsmfWRIir5wY51oVI0BZuVfwjzc97a0qDzmGatoodUV5x13H8lYttXA9op', '2015-05-04 10:45:36', '2016-03-09 06:59:31'),
 (5, 'Sajid Mahmood', 'malik_sajidawan786@yahoo.com', '$2y$10$.FrTrwZSzqDF6GeFYy2Si.VfFheI2K8ik/gl3eXRXq3cxU6IycVBu', 'staff', 'GAs4X2UKq8BMDxZI8mUa1ELnSXEPbobzJeCuJ4lXkgruQWGyq5YlapC1670q', '2015-05-05 08:59:42', '2015-05-05 09:02:11'),
 (6, 'Irfan Ahmed', 'irfanahmed1466@gmail.com', '$2y$10$oV9Z/DdfE/pelG5K6QhgJulOaTiKtB8sKFAyWa9gH7HnQr6Mrn7J6', 'staff', NULL, '2015-05-05 11:52:46', '2016-03-01 17:13:08'),
 (7, 'Akbar', 'akki.mehar@yahoo.com', '$2y$10$2uplSzKYkkYV7pSHM30AYe5bvyTOULBjwuZ1Gi4vczAFONDVGZr.m', 'staff', 'VlPkPRdUH9cFjDMIdwj1OVR7KRf5OBJULHnNFILJJtjKGGTdmNPt1jNmZYta', '2015-05-06 10:49:12', '2016-03-01 17:13:27'),
@@ -377,8 +392,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `type`, `remember_token`
 (9, 'Muhammad Yousuf Awan', 'yousufawan21@gmail.com', '$2y$10$jNim0dyI9SJuHDwuuHYMsOAOQq4WY8ZX0ISdBOD/dHU5LurIGAAMO', 'staff', 'nmAZbgZdJYAEBim02sIRw6ZdSaINll3YGx6DjJvZiOyhmmkZFWd2N1Y421zk', '2015-05-11 14:01:54', '2015-05-13 11:55:21'),
 (10, 'Adeel Malik', 'adeelahmed307@gmail.com', '$2y$10$i5Xo1uroGMqNs5YJM77zyuf0mYeL7DgCmHbyt4f85.cMPvuBFDhMy', 'staff', NULL, '2015-05-11 14:03:08', '2015-05-11 14:03:08'),
 (11, 'Sajid Mahmood', 'malikhassaanasif@gmail.com', '$2y$10$2TFNwrs2txdlPIHUQKAy5.OWhw7rw2MPVXUV79F9t4a/Xa3RKqSl2', 'staff', NULL, '2015-06-01 11:31:36', '2015-06-01 11:31:36'),
-(12, 'waqas', 'muhammad@gmail.com', '$2y$10$ejHgTqA9XnEfWVJA5XBz7.rVB0qcVIFHJGU79d8PmlaFfYia7sEBK', 'staff', NULL, '2015-06-20 09:58:33', '2015-06-20 09:58:33'),
-(13, '', '', '$2y$10$KFLIYQmOIze6oOccsLQn5e54sHZxtf5Td/KkYcpOrHMx/s/ocwLLm', 'staff', NULL, '2016-03-04 03:21:35', '2016-03-04 03:21:35');
+(12, 'waqas', 'muhammad@gmail.com', '$2y$10$ejHgTqA9XnEfWVJA5XBz7.rVB0qcVIFHJGU79d8PmlaFfYia7sEBK', 'staff', NULL, '2015-06-20 09:58:33', '2015-06-20 09:58:33');
 
 --
 -- Indexes for dumped tables
@@ -404,6 +418,12 @@ ALTER TABLE `categories`
 ALTER TABLE `cities`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `cities_name_unique` (`name`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `password_resets`
@@ -454,12 +474,17 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `cities`
 --
 ALTER TABLE `cities`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `properties`
 --
 ALTER TABLE `properties`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `societies`
 --
@@ -469,7 +494,7 @@ ALTER TABLE `societies`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- Constraints for dumped tables
 --
