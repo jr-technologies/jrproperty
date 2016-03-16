@@ -7,15 +7,18 @@
     });
 </script>
 <style>
+    .buttons {
+        z-index: 100;
+    }
     .buttons a{
         float: left;
     }
 </style>
 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    
-	
+
+
 	<div class="modal-dialog">
-		
+
 			<div class="modal-content">
 	       <div class="search-parent-container">
             {!! Form::open(array('route' => 'search-properties', 'method' => 'get')) !!}
@@ -38,14 +41,14 @@
                 </div>
 				   <div class="form-group">
                     {!! Form::label('Land', 'Land Area:') !!}
-                    {!! Form::select('land',Helper::prependArray([''=>'Select All...'], ['marla'=>'marla','knal'=>'Kanal']),$form_data['land'],['class'=>'form-control']) !!}
+                    {!! Form::select('land',Helper::prependArray([''=>'Select All...'], $data['size_units']),$form_data['land'],['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
                         {!! Form::text('size_from', $form_data['size_from'], ['class'=>'col-xs-6', 'placeholder'=>'From']) !!}
                         {!! Form::text('size_to',  $form_data['size_to'], ['class'=>'col-xs-6', 'placeholder'=>'To']) !!}
                     </div>
-					
+
 					      <div class="form-group">
                     {!! Form::label('block_id', 'Block:') !!}
                     {!! Form::select('block', Helper::prependArray([''=>'Select All...'], []), $form_data['block'], ['class' => 'form-control', 'required' => 'required', 'id'=>'block_id']) !!}
@@ -75,16 +78,17 @@
                     {{--{!! Form::label('user', 'Staff:') !!}--}}
                     {{--{!! Form::select('user', Helper::prependArray([''=>'Select All...'],$data['users']), $form_data['user'], ['class'=>'form-control']) !!}--}}
                 {{--</div>--}}
-             
+
                 </div>
 
                 <div class="form-group">
                     {!! Form::label('price', 'Price:') !!}
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-12">
-                        {!! Form::text('price_from',  $form_data['price_from'], ['class'=>'col-xs-6', 'placeholder'=>'From']) !!}
-                        {!! Form::text('price_to',  $form_data['price_to'], ['class'=>'col-xs-6', 'placeholder'=>'To']) !!}
+                    <div class="col-md-12">
+                        <span style="font-size: 12px;" id="priceInWordsContainer" class="col-xs-12"></span>
+                        {!! Form::text('price_from',  $form_data['price_from'], ['class'=>'col-xs-6', 'placeholder'=>'From', 'id'=>'price_from']) !!}
+                        {!! Form::text('price_to',  $form_data['price_to'], ['class'=>'col-xs-6', 'placeholder'=>'To', 'id'=>'price_to']) !!}
                     </div>
                 </div>
 
@@ -100,13 +104,13 @@
 				<div class="search-footer navbar-default">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="this.form.submit();">Start Search</button>
-				</div>				
+				</div>
 			   </div>
-				
-				
+
+
             </div>
             {!! Form::close() !!}
-        
+
 		</div>
 		</div>
     </div>
@@ -143,24 +147,24 @@
         </a>
     </div>
 
-<div class=" col-xs-6">
-    <div class="buttons">
+<div class=" col-xs-6 buttons">
+    <div class="">
         <a href="{{ route('my-properties') }}" class="{{(Request::route()->getName() == 'my-properties')?'active':''}} btn btn-default btn-xs">My Listings &nbsp;</a>
         <a href="{{ route('all-properties') }}" class="{{(Request::route()->getName() == 'all-properties')?'active':''}} btn btn-default btn-xs">ALL Listings &nbsp;</a>
     </div>
 </div>
-<div class=" col-xs-6">
+<div class=" col-xs-6 buttons">
     <div class="" style="padding-bottom: 10px;">
         @if($user->can('add','property'))
-            <a href="{{ route('admin.properties.create') }}" class="btn btn-success btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span>&nbsp; Add  </a>
+            <a href="{{ route('staff.properties.create') }}" class="btn btn-success btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span>&nbsp; Add  </a>
         @endif
         <button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#searchModal">Search &nbsp;<span Class="glyphicon glyphicon-search"></span></button>
     </div>
 </div>
 
 
-<div class="col-md-12">
-    <div class="properties">
+<div class="">
+    <div class="properties col-md-12">
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -205,8 +209,16 @@
                                 N/A
                             @endif
                         </td>
-                        <td>{{ $property->size . ' ' . ucfirst($property->size_unit) }}</td>
-                        <td>{{ $property->price . ' ' . ucfirst($property->price_unit) }}</td>
+                        <td>
+                            <?php
+                                $land_unit = $property->size_unit;
+                                if(isset($_GET['land']) && $_GET['land'] != ''){
+                                    $land_unit = $_GET['land'];
+                                }
+                            ?>
+                            {{ \App\Libs\Helpers\Land::convert('square feets' , $land_unit, $property->size) . ' ' . ucfirst($land_unit) }}
+                        </td>
+                        <td title="" class="priceListing" price="{{$property->price}}">{{ $property->price}}</td>
                         <td>{{ $data['status'][$property->sold] }}</td>
 
                         <td>
@@ -242,12 +254,45 @@
 
 
 <script>
-    $(document).ready(function(){
-        societyChangedInPropertySearch();
-        category_changed()
+
+    $(document).on('change','#price_from',function(){
+        var price = digitsToWords($(this).val());
+        var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+        $('#priceInWordsContainer').html(final_price_html);
     });
+    $(document).on('keyup','#price_from',function(){
+        var price = digitsToWords($(this).val());
+        var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+        $('#priceInWordsContainer').html(final_price_html);
+    });
+    $(document).on('change','#price_to',function(){
+        var price = digitsToWords($(this).val());
+        var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+        $('#priceInWordsContainer').html(final_price_html);
+    });
+    $(document).on('keyup','#price_to',function(){
+        var price = digitsToWords($(this).val());
+        var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+        $('#priceInWordsContainer').html(final_price_html);
+    });
+
     $(document).on('change','#category_id',function(){
         category_changed();
+    });
+
+    function convertPricesToWords(){
+        $('.priceListing').each(function(){
+            var price = $(this).attr('price');
+            price = parseInt(price);
+            var priceInWords = digitsToWords(price);
+            $(this).attr('title',priceInWords);
+        });
+    }
+
+    $(document).ready(function(){
+        societyChangedInPropertySearch();
+        category_changed();
+        convertPricesToWords();
     });
 </script>
 @stop

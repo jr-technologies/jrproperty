@@ -112,23 +112,13 @@
 
     <div class="form-group">
         {!! Form::label('size', 'Area:') !!}
-        <div class="input-group ">
-            {!! Form::input('number', 'size', null,['class'=>'form-control', 'required']) !!}
-            <span class="input-group-btn btn-group">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Marla <span class="caret"></span> </button>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        {!! Form::radio('size_unit', 'marla', null, ['id' => 'size_unit_marla']) !!}
-                        {{--<input type="radio" id="size_unit_marla" value="marla" name="size_unit" checked="checked" />--}}
-                        <label for="size_unit_marla">Marla</label>
-                    </li>
-                    <li>
-                        {!! Form::radio('size_unit', 'kanal', null, ['id' => 'size_unit_kanal']) !!}
-                        {{--<input type="radio" id="size_unit_kanal" value="kanal" name="size_unit" />--}}
-                        <label for="size_unit_kanal">Kanal</label>
-                    </li>
-                </ul>
-            </span>
+        <div class="input-group col-md-12">
+            <div class="col-xs-6">
+                {!! Form::input('number', 'size',  null,['class'=>'form-control', 'required']) !!}
+            </div>
+            <div class="col-xs-6">
+                {!! Form::select('size_unit', $data['size_units'], $property->size_unit,['class'=>'form-control']) !!}
+            </div>
         </div>
     </div>
 
@@ -137,28 +127,9 @@
         {!! Form::label('price', 'Price:') !!}
         <div class="input-group ">
             <label class="input-group-addon">PKR: </label>
-            {!! Form::input('number', 'price', null,['class'=>'form-control', 'required']) !!}
-            <span class="input-group-btn btn-group">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Lakh <span class="caret"></span> </button>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        {!! Form::radio('price_unit', 'thousand', null, ['id' => 'price_unit_thousand']) !!}
-                        {{--<input type="radio" id="price_unit_thousand" value="thousand" name="price_unit" checked="checked">--}}
-                        <label for="price_unit_thousand">Thousand</label>
-                    </li>
-                    <li>
-                        {!! Form::radio('price_unit', 'lakh', null, ['id' => 'price_unit_lakh']) !!}
-                        {{--<input type="radio" id="price_unit_lakh" value="lakh" name="price_unit" checked="checked">--}}
-                        <label for="price_unit_lakh">Lakh</label>
-                    </li>
-                    <li>
-                        {!! Form::radio('price_unit', 'crore', null, ['id' => 'price_unit_crore']) !!}
-                        {{--<input type="radio" id="price_unit_crore" value="crore" name="price_unit">--}}
-                        <label for="price_unit_crore">Crore</label>
-                    </li>
-                </ul>
-            </span>
+            {!! Form::input('number', 'price', null,['class'=>'form-control', 'required', 'max'=>'99999999999']) !!}
         </div>
+         <span id="priceInWordsContainer">  </span>
     </div>
 
 

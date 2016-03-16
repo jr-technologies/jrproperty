@@ -3,16 +3,16 @@
 <head>
     <title>JR Property | Backoffice</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <link href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <link href="{{public_path()}}/css/dropdowns-enhancement.min.css" rel="stylesheet" type="text/css">
+    <script src="{{url('/')}}/js/jquery-2.1.3.js"></script>
+    <script src="{{url('/')}}/js/jquery-ui.min.js"></script>
+    <link href="{{url('/')}}/css/jquery-ui.css" rel="stylesheet">
+    <link href="{{url('/')}}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{url('/')}}/css/fonts.css" rel='stylesheet' type='text/css'>
+    <script src="{{url('/')}}/js/bootstrap.min.js"></script>
+    {{--<link href="{{public_path()}}/css/dropdowns-enhancement.min.css" rel="stylesheet" type="text/css">--}}
     <link href="{{url('/')}}/css/styles.css" rel="stylesheet" type="text/css">
 	<link href="{{url('/')}}/css/property_search.css" rel="stylesheet" type="text/css">
-    <script src="{{url('/')}}/js/dropdowns-enhancement.js"></script>
+    {{--<script src="{{url('/')}}/js/dropdowns-enhancement.js"></script>--}}
     <script src="{{url('/')}}/js/scripts.js"></script>
   </head>
 <body>

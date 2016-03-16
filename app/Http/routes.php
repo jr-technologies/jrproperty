@@ -81,18 +81,6 @@ Route::get('/', function(){
 
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
-
-    Route::resource('city', 'Admin\CityController');
-    Route::resource('societies', 'Admin\SocietyController');
-    Route::resource('blocks', 'Admin\BlockController');
-    Route::resource('categories', 'Admin\CategoryController');
-    Route::resource('properties', 'Admin\PropertyController');
-    Route::resource('staff', 'Admin\UserController');
-    Route::get('home', ['uses' => 'Admin\HomeController@index', 'as' => 'admin.home.index']);
-});
-
-
 Route::group(['prefix' => 'staff', 'middleware' => 'auth'], function() {
 
 
@@ -105,3 +93,17 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
+/*Route::get('/update_size', function(){
+    $properties = \App\Property::get();
+    $updated_properties =[];
+    foreach($properties as $property){
+        $property->size = \App\Libs\Helpers\Land::convert($property->size_unit, 'square feets', $property->size);
+        $updated_properties[] = $property;
+    }
+
+    foreach($updated_properties as $property)
+    {
+        $property->save();
+    }
+});*/

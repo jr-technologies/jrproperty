@@ -12,16 +12,25 @@
 
     <script>
 
+        $(document).on('change','#price',function(){
+            var price = digitsToWords($(this).val());
+            var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+            $('#priceInWordsContainer').html(final_price_html);
+        });
+        $(document).on('keyup','#price',function(){
+            var price = digitsToWords($(this).val());
+            var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+            $('#priceInWordsContainer').html(final_price_html);
+        });
+
         $(function(){
             $('#size_unit_marla').attr('checked', true);
             $('#price_unit_lakh').attr('checked', true);
         });
-
         $(document).ready(function(){
             societyChangedInPropertySearch('society_id');
             category_changed();
         });
-
         $(document).on('change','#category_id',function(){
             category_changed();
         });

@@ -111,23 +111,14 @@
 
     <div class="form-group">
         {!! Form::label('size', 'Area:') !!}
-        <div class="input-group ">
-            {!! Form::input('number', 'size', $property->size,['class'=>'form-control', 'required']) !!}
-            <span class="input-group-btn btn-group">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Marla <span class="caret"></span> </button>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        {!! Form::radio('size_unit', 'marla', ($property->size_unit =='marla')?true:false, ['id' => 'size_unit_marla']) !!}
-                        {{--<input type="radio" id="size_unit_marla" value="marla" name="size_unit" checked="checked" />--}}
-                        <label for="size_unit_marla">Marla</label>
-                    </li>
-                    <li>
-                        {!! Form::radio('size_unit', 'kanal', ($property->size_unit =='kanal')?true:false, ['id' => 'size_unit_kanal']) !!}
-                        {{--<input type="radio" id="size_unit_kanal" value="kanal" name="size_unit" />--}}
-                        <label for="size_unit_kanal">Kanal</label>
-                    </li>
-                </ul>
-            </span>
+        <div class="input-group col-md-12">
+            <div class="col-xs-6">
+                {!! Form::input('number', 'size',  \App\Libs\Helpers\Land::convert('square feets' , $property->size_unit, $property->size),['class'=>'form-control', 'required']) !!}
+            </div>
+            <div class="col-xs-6">
+                {!! Form::select('size_unit', $data['size_units'], $property->size_unit,['class'=>'form-control']) !!}
+            </div>
+
         </div>
     </div>
 
@@ -136,27 +127,8 @@
         <div class="input-group ">
             <label class="input-group-addon">PKR: </label>
             {!! Form::input('number', 'price',  $property->price,['class'=>'form-control', 'required']) !!}
-            <span class="input-group-btn btn-group">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">Lakh <span class="caret"></span> </button>
-                <ul class="dropdown-menu pull-right">
-                    <li>
-                        {!! Form::radio('price_unit', 'thousand', ($property->price_unit =='thousand')?true:false, ['id' => 'price_unit_thousand']) !!}
-                        {{--<input type="radio" id="price_unit_thousand" value="thousand" name="price_unit" checked="checked">--}}
-                        <label for="price_unit_thousand">Thousand</label>
-                    </li>
-                    <li>
-                        {!! Form::radio('price_unit', 'lakh', ($property->price_unit =='lakh')?true:false, ['id' => 'price_unit_lakh']) !!}
-                        {{--<input type="radio" id="price_unit_lakh" value="lakh" name="price_unit" checked="checked">--}}
-                        <label for="price_unit_lakh">Lakh</label>
-                    </li>
-                    <li>
-                        {!! Form::radio('price_unit', 'crore', ($property->price_unit =='crore')?true:false, ['id' => 'price_unit_crore']) !!}
-                        {{--<input type="radio" id="price_unit_crore" value="crore" name="price_unit">--}}
-                        <label for="price_unit_crore">Crore</label>
-                    </li>
-                </ul>
-            </span>
         </div>
+        <span id="priceInWordsContainer"></span>
     </div>
 
 
@@ -240,6 +212,17 @@
 
     <script>
 
+        $(document).on('change','#price',function(){
+            var price = digitsToWords($(this).val());
+            var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+            $('#priceInWordsContainer').html(final_price_html);
+        });
+        $(document).on('keyup','#price',function(){
+            var price = digitsToWords($(this).val());
+            var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+            $('#priceInWordsContainer').html(final_price_html);
+        });
+
         $(function(){
 
             if($('#category_id').val() == 4)
@@ -258,6 +241,10 @@
 
         $(document).ready(function () {
             category_changed();
+
+            var price = digitsToWords($("#price").val());
+            var final_price_html = (price == '')?'':'<span  id="priceInWords">'+price+'</span>';
+            $('#priceInWordsContainer').html(final_price_html);
         });
         $(document).on('change','#category_id',function(){
             category_changed();

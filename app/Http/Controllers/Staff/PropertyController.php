@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Traits\PropertyRequestTrait;
+use App\Libs\Helpers\Land as LandHelper;
+
 class PropertyController extends StaffController
 {
     /**
@@ -39,7 +41,7 @@ class PropertyController extends StaffController
             'group' => config('constants.PROPERTY_TYPES'),
             'location' => config('constants.PROPERTY_LOCATIONS'),
             'lead_type' => config('constants.LEAD_TYPES'),
-
+            'size_units' => config('constants.SIZE_UNITS'),
             'users' => User::lists('name', 'id'),
             'cities' => City::lists('name', 'id'),
             'societies' => Society::lists('name','id'),
@@ -92,6 +94,8 @@ class PropertyController extends StaffController
     {
         $searchParams = $params;
         $searchParams['bedrooms'] =($params['bedrooms'] == 3)? $params['bedrooms']:null;
+        $searchParams['size_from'] = ($params['size_from'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_from']) :null;
+        $searchParams['size_to'] = ($params['size_to'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_to']) :null;
 
         $searchParams['authenticated_user'] = $this->authenticatedUser;
         return $searchParams;
@@ -126,7 +130,7 @@ class PropertyController extends StaffController
         $bedrooms = ['' => 'Please Select ...', 1 => '1 Bedroom', 2 => '2 Bedrooms', 3 => '3 Bedrooms', 4 => '4 Bedrooms', 5 => '5 Bedrooms', 6 => '6 Bedrooms', 7 => '6+ Bedrooms'];
         $features = ['TV Lounge', 'Drawing Room', 'Dinning Room', 'Servant Quarters', 'Study Room', 'Garage', 'Store Room', 'Balcony'];
 
-        return view('staffpanel.property.create', compact('users', 'house_type', 'bedrooms', 'features', 'group', 'purpose', 'categories', 'societies', 'blocks', 'type', 'location', 'cities', 'heading'))->with('section', $this->section);
+        return view('property.create', compact('users', 'house_type', 'bedrooms', 'features', 'group', 'purpose', 'categories', 'societies', 'blocks', 'type', 'location', 'cities', 'heading'))->with('section', $this->section)->with('data',$this->computeData());
     }
 
 
@@ -179,7 +183,7 @@ class PropertyController extends StaffController
 
         $heading .= ' (Added '. date('M h, Y H:i', strtotime($property->created_at)) .')';
 
-        return view('staffpanel.property.show', compact('property', 'location', 'heading', 'status', 'purpose', 'group', 'house_type', 'bedrooms'))->with('section', $this->section);
+        return view('property.show', compact('property', 'location', 'heading', 'status', 'purpose', 'group', 'house_type', 'bedrooms'))->with('section', $this->section);
     }
 
     /**
@@ -219,7 +223,9 @@ class PropertyController extends StaffController
         $features = ['TV Lounge', 'Drawing Room', 'Dinning Room', 'Servant Quarters', 'Study Room', 'Garage', 'Store Room', 'Balcony'];
         $features_selected = explode(',', $property->features);
 
-        return view('property.update', compact('property','users', 'house_type', 'bedrooms', 'features', 'features_selected', 'group', 'purpose', 'categories', 'societies', 'blocks', 'type', 'location', 'cities', 'heading'))->with('section', $this->section);
+        return view('property.update', compact('property','users', 'house_type', 'bedrooms', 'features', 'features_selected', 'group', 'purpose', 'categories', 'societies', 'blocks', 'type', 'location', 'cities', 'heading'))
+            ->with('section', $this->section)
+            ->with('data', $this->computeData());
     }
 
     /**
@@ -268,12 +274,11 @@ class PropertyController extends StaffController
             'user_id'=>$this->authenticatedUser->id,
             'type'=>$this->request->get('lead_type'),
             'property_no'=>$this->request->get('property_number'),
-            'size'=>$this->request->get('size'),
+            'size'=>LandHelper::convert($this->request->get('size_unit'), 'square feets', $this->request->get('size')),
             'size_unit'=>$this->request->get('size_unit'),
             'group' =>$this->request->get('type'),
             'purpose' => $this->request->get('purpose'),
             'price' => $this->request->get('price'),
-            'price_unit' => $this->request->get('price_unit'),
             'estate_name' => ($this->request->get('lead_type') == 'indirect')?$this->request->get('owner_estate'):null,
             'contact_person' =>($this->request->get('lead_type') != '')?$this->request->get('owner_name'):null,
             'phone' => ($this->request->get('lead_type') != '')?$this->request->get('owner_phone'):null,

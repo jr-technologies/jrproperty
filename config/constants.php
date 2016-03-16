@@ -16,6 +16,7 @@ return [
     'PROPERTY_PURPOSES' => ['sale' => 'For Sale', 'rent' => 'For Rent', 'wanted' => 'Wanted'],
     'PROPERTY_TYPES' => ['commercial' => 'Commercial', 'residential' => 'Residential'],
     'LEAD_TYPES'=>['direct'=>'direct','indirect'=>'indirect'],
+    'SIZE_UNITS'=>['marla'=>'Marla','kanal'=>'Kanal','square feet'=>'Square Feet','square yards'=>'Square Yards','square meters'=>'Square Meters'],
     'PROPERTY_LOCATIONS' => [
         'corner' => 'Corner',
         'non-corner' => 'Non-Corner',

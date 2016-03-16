@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <td>Area:</td>
-            <td>{{ $property->size.' '.ucfirst($property->size_unit) }}</td>
+            <td>{{ \App\Libs\Helpers\Land::convert('square feets' , $property->size_unit, $property->size).' '.ucfirst($property->size_unit) }}</td>
         </tr>
         <tr>
             <td>Property Number:</td>
@@ -30,7 +30,7 @@
         </tr>
         <tr>
             <td>Price:</td>
-            <td>{{ $property->price.' '.ucfirst($property->price_unit) }}</td>
+            <td>{{ $property->price }} <span class="price-font" style="background-color: #222222; color:white; padding: 5px;" id="priceInWords" price="{{$property->price}}"></span></td>
         </tr>
         <tr>
             <td>Location:</td>
@@ -132,4 +132,12 @@
 
     <a href="javascript:;" onclick="history.back();" class="btn btn-default btn-lg">Back</a>
 
+    <script>
+        function convertPriceToWords(){
+            $('#priceInWords').html( digitsToWords(parseInt($('#priceInWords').attr('price'))) );
+        }
+        $(document).ready(function () {
+            convertPriceToWords();
+        });
+    </script>
 @stop
