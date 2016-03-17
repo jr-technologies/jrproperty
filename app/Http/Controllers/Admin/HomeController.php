@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Block;
 use App\Category;
@@ -54,27 +55,9 @@ class HomeController extends AdminController
         }
 
 
-        $properties = DB::table('properties')
-            ->join('cities', 'properties.city_id', '=', 'cities.id')
-            ->join('societies', 'properties.society_id', '=', 'societies.id')
-            ->join('blocks', 'properties.block_id', '=', 'blocks.id')
-            ->join('users', 'properties.user_id', '=', 'users.id')
-            ->join('categories', 'properties.category_id', '=', 'categories.id')
-            ->select('properties.*', 'cities.name as city_name', 'societies.name as society_name', 'blocks.name as block_name', 'users.name as user_name', 'categories.name as category_name')
-            ->where('properties.share_property', 'Y')
-            ->whereNested(function($query) use ($search) {
-                            foreach ($search as $key => $value)
-                            {
-                                if($key == 'search' || $key == 'ajax_url' || $key == '_token' || $key == 'page') continue;
-                                if($value != ''){
-                                    $query->where('properties.'.$key, '=', $value);
-                                }
-                            }
-                        }, 'and')
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+        $properties = Property::search(['authenticated_user'=>Auth::user()])->get();
 
-        $properties->setPath('home');
+        //$properties->setPath('home');
 
         $status = ['Y' => 'Sold', 'N' => 'Available'];
         $purpose = ['sale' => 'For Sale', 'rent' => 'For Rent', 'wanted' => 'Wanted'];
