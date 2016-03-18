@@ -25,7 +25,7 @@ Route::get('where-to-go-after-login', [
 ]);
 
 Route::post('property/store', [
-    'middleware' => ['auth'],
+
     'uses' => 'Staff\PropertyController@store',
     'as' => 'property/store'
 ]);

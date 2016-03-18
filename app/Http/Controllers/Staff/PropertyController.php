@@ -8,6 +8,7 @@ use App\Notifications;
 use App\Society;
 use App\Property;
 use App\User;
+use Illuminate\Support\Facades\Validator;
 use Redirect;
 use \Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
@@ -141,7 +142,31 @@ class PropertyController extends StaffController
      */
     public function store()
     {
-       $newPropertyInfo = $this->getNewPropertyInfo();
+        $validator = Validator::make($this->request->all(),
+            [
+                'category'=>'required',
+                'city'=>'required',
+                'society'=>'required',
+                'block'=>'required',
+                'location'=>'required',
+                'lead_type'=>'required',
+                'size'=>'required',
+                'size_unit'=>'required',
+                'type' =>'required',
+                'purpose' => 'required',
+                'price' => 'required',
+                'owner_estate' => 'required',
+                'owner_name' =>'required',
+                'owner_phone' => 'required',
+                'owner_mobile' =>'required',
+                'owner_address' =>'required',
+             ]
+        );
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator);
+        }
+
+        $newPropertyInfo = $this->getNewPropertyInfo();
        if(!Property::create($newPropertyInfo))
             return redirect()->back()->withInputs();
 
@@ -239,6 +264,31 @@ class PropertyController extends StaffController
 
         if($this->authenticatedUser->cannot('update','property',$property))
             return redirect('my-properties');
+
+        $validator = Validator::make($this->request->all(),
+            [
+
+                'category'=>'required',
+                'city'=>'required',
+                'society'=>'required',
+                'block'=>'required',
+                'location'=>'required',
+                'lead_type'=>'required',
+                'size'=>'required',
+                'size_unit'=>'required',
+                'type' =>'required',
+                'purpose' => 'required',
+                'price' => 'required',
+                'owner_estate' => 'required',
+                'owner_name' =>'required',
+                'owner_phone' => 'required',
+                'owner_mobile' =>'required',
+                'owner_address' =>'required',
+            ]
+        );
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator);
+        }
 
         $request = $this->getNewPropertyInfo();
         $property->update($request);
