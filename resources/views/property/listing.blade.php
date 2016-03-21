@@ -41,7 +41,7 @@
                 </div>
 				   <div class="form-group">
                     {!! Form::label('Land', 'Land Area:') !!}
-                    {!! Form::select('land',Helper::prependArray([''=>'Select All...'], $data['size_units']),$form_data['land'],['class'=>'form-control']) !!}
+                    {!! Form::select('land',Helper::prependArray([''=>'Select All...'], $data['size_units']),(isset($_GET['land']))?(($_GET['land'] != '')?$form_data['land']:''):'marla',['class'=>'form-control']) !!}
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
