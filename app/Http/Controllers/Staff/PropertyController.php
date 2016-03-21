@@ -155,7 +155,7 @@ class PropertyController extends StaffController
                 'type' =>'required',
                 'purpose' => 'required',
                 'price' => 'required',
-                'owner_estate' => 'required',
+                'owner_estate' => ($this->request->get('lead_type') == 'indirect')?'required':null,
                 'owner_name' =>'required',
                 'owner_phone' => 'required',
                 'owner_mobile' =>'required',
@@ -260,6 +260,7 @@ class PropertyController extends StaffController
      */
     public function update()
     {
+
         $property = Property::find($this->request->get('property_id'));
 
         if($this->authenticatedUser->cannot('update','property',$property))
@@ -279,7 +280,7 @@ class PropertyController extends StaffController
                 'type' =>'required',
                 'purpose' => 'required',
                 'price' => 'required',
-                'owner_estate' => 'required',
+                'owner_estate' => ($this->request->get('lead_type') == 'indirect')?'required':null,
                 'owner_name' =>'required',
                 'owner_phone' => 'required',
                 'owner_mobile' =>'required',
