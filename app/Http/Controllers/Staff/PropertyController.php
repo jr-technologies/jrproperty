@@ -97,6 +97,8 @@ class PropertyController extends StaffController
         $searchParams['bedrooms'] =($params['bedrooms'] == 3)? $params['bedrooms']:null;
         $searchParams['size_from'] = ($params['size_from'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_from']) :null;
         $searchParams['size_to'] = ($params['size_to'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_to']) :null;
+        $searchParams['size_to'] = ($searchParams['size_to'] == null)?$searchParams['size_from']:$searchParams['size_to'];
+        $searchParams['price_to'] = ($searchParams['price_to'] == null)?$searchParams['price_from']:$searchParams['price_to'];
 
         $searchParams['authenticated_user'] = $this->authenticatedUser;
         return $searchParams;
