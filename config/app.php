@@ -203,6 +203,8 @@ return [
 		/*-----------Policies---------------*/
 		'PropertyPolicy'    => 'App\Policies\PropertyPolicy',
 		'ContactInfoPolicy'    => 'App\Policies\ContactInfoPolicy',
+		'UserPolicy'    => 'App\Policies\UserPolicy',
+		'CityPolicy'    => 'App\Policies\CityPolicy',
 
 	],
 

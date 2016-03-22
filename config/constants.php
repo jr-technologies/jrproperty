@@ -24,5 +24,7 @@ return [
         'main-boulevard' => 'Main Boulevard',
         'average' => 'Average'
     ],
+
+    'PROPERTIES_PER_PAGE'=>13,
     /*------------------------------------------------------------*/
 ];

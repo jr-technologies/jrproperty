@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\StaffController;
 use App\User;
 use App\property;
+use Illuminate\Support\Facades\Auth;
 use Request;
 use \Redirect;
 use Laracasts\Flash\Flash;
@@ -20,6 +21,9 @@ class UserController extends StaffController
 
     public function index()
     {
+        /*if($user->cannot('see','staffMembers'))
+            return response()->redirect()->back();*/
+
         $staffs = User::all();
         $heading = 'List of Staff';
         return view('staffpanel.staff.listing', compact('staffs', 'heading'))->with('section', $this->section);
@@ -69,6 +73,12 @@ class UserController extends StaffController
      */
     public function edit($id)
     {
+        $authenticatedUser = Auth::user();
+        $subject = User::find($id);
+
+        if($authenticatedUser->cannot('update','user', $subject))
+            return redirect()->back();
+
         $staff = User::find($id);
         $heading = 'Update Staff Member';
         return view('staffpanel.staff.update', compact('heading', 'staff'));
@@ -82,15 +92,21 @@ class UserController extends StaffController
      */
     public function update($id)
     {
+        $authenticatedUser = Auth::user();
         $staff = User::find($id);
+        if($authenticatedUser->cannot('update','user', $staff))
+            return redirect()->back();
+
         $input = Request::all();
+
         if($input['password'] != '')
             $input['password'] = bcrypt($input['password']);
+
         $staff->update($input);
+
         Flash::success('Your Profile updated successfully.');
         return view('staffpanel.staff.update', compact('heading', 'staff'));
-
-    }
+     }
 
     /**
      * Remove the specified resource from storage.

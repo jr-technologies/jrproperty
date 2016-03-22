@@ -44,7 +44,7 @@ Route::get('all-properties', [
     'uses' => 'Staff\PropertyController@index',
     'as' => 'all-properties'
 ]);
-Route::get('my-properties', [
+Route::get('/my-properties', [
     'middleware'=>['auth'],
     'uses' => 'Staff\PropertyController@myProperties',
     'as' => 'my-properties'
