@@ -199,7 +199,7 @@ return [
 		'Flash'     => 'Laracasts\Flash\Flash',
 
 		'Helper'    => 'App\Libs\Helpers\Helper',
-
+		'Carbon'	=> 'Carbon\Carbon',
 		/*-----------Policies---------------*/
 		'PropertyPolicy'    => 'App\Policies\PropertyPolicy',
 		'ContactInfoPolicy'    => 'App\Policies\ContactInfoPolicy',

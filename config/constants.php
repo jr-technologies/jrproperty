@@ -25,6 +25,6 @@ return [
         'average' => 'Average'
     ],
 
-    'PROPERTIES_PER_PAGE'=>13,
+    'PROPERTIES_PER_PAGE'=>25,
     /*------------------------------------------------------------*/
 ];

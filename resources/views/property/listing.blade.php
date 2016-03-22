@@ -191,68 +191,69 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($properties as $property)
+                @foreach($properties as $date => $group)
+                    <tr>
+                        <td colspan="8" style="text-align: left; font-size: 12px; color:grey;">{{Carbon::createFromFormat('Y-m-d', $date)->toFormattedDateString()}}</td>
+                    </tr>
+                    @foreach($group as $property)
+                        <?php
+                        $updateAble = '';
+                        if(Helper::daysDiffInTimes(date('Y-m-d H:i:s'), $property->updated_at) > 14 && $property->sold == 'N')
+                            $updateAble = 'update-able';
+                        ?>
 
-                    <?php
-                    $updateAble = '';
-                    if(Helper::daysDiffInTimes(date('Y-m-d H:i:s'), $property->updated_at) > 14 && $property->sold == 'N')
-                        $updateAble = 'update-able';
-                    ?>
-
-                    <tr class="{{$updateAble}}">
-                        <td>
-                            @if($property->isPrivate())
-                                <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
+                        <tr class="{{$updateAble}}">
+                            <td>
+                                @if($property->isPrivate())
+                                    <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
+                                @endif
+                                {{ $property->user_name }}
+                            </td>
+                            <td>{{ $property->society_name }}</td>
+                            <td>
+                                @if($property->category_id == 4)
+                                    N/A
+                                @else
+                                    {{ $property->block_name }}</td>
                             @endif
-                            {{ $property->user_name }}
-                        </td>
-                        <td>{{ $property->society_name }}</td>
-                        <td>
-                            @if($property->category_id == 4)
-                                N/A
-                            @else
-                                {{ $property->block_name }}</td>
-                        @endif
-                        <td>
-                            @if($property->property_no != '')
-                                {{ $property->property_no }}
-                            @else
-                                N/A
-                            @endif
-                        </td>
-                        <td>
-                            <?php
+                            <td>
+                                @if($property->property_no != '')
+                                    {{ $property->property_no }}
+                                @else
+                                    N/A
+                                @endif
+                            </td>
+                            <td>
+                                <?php
                                 $land_unit = $property->size_unit;
                                 if(isset($_GET['land']) && $_GET['land'] != ''){
                                     $land_unit = $_GET['land'];
                                 }
-                            ?>
-                            {{ \App\Libs\Helpers\Land::convert('square feets' , $land_unit, $property->size) . ' ' . ucfirst($land_unit) }}
-                        </td>
-                        <td title="" class="priceListing" price="{{$property->price}}">{{ $property->price}}</td>
-                        <td>{{ $data['status'][$property->sold] }}</td>
+                                ?>
+                                {{ \App\Libs\Helpers\Land::convert('square feets' , $land_unit, $property->size) . ' ' . ucfirst($land_unit) }}
+                            </td>
+                            <td title="" class="priceListing" price="{{$property->price}}">{{ $property->price}}</td>
+                            <td>{{ $data['status'][$property->sold] }}</td>
 
-                        <td>
-                            {{--@if(Request::route()->getName() == 'my-properties')--}}
+                            <td>
+                                {{--@if(Request::route()->getName() == 'my-properties')--}}
 
-                            @if($user->can('update','property',$property))
-                                <a href="{{ route('property/edit', $property->id) }}" class="btn btn-info btn-xs">Update</a>
-                            @endif
-                            @if($user->can('delete','property',$property))
-                                {!! Form::open(array('route' => array('staff.properties.destroy', $property->id), 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return window.confirm(\'Are you sure, you want to delete this record?\')')) !!}
-                                {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
-                                {!! Form::close() !!}
-                            @endif
-                            {{--@endif--}}
-                            <a href="{{route('staff.properties.show', $property->id)}}">Detail</a>
-                        </td>
-                    </tr>
+                                @if($user->can('update','property',$property))
+                                    <a href="{{ route('property/edit', $property->id) }}" class="btn btn-info btn-xs">Update</a>
+                                @endif
+                                @if($user->can('delete','property',$property))
+                                    {!! Form::open(array('route' => array('staff.properties.destroy', $property->id), 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return window.confirm(\'Are you sure, you want to delete this record?\')')) !!}
+                                    {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
+                                    {!! Form::close() !!}
+                                @endif
+                                {{--@endif--}}
+                                <a href="{{route('staff.properties.show', $property->id)}}">Detail</a>
+                            </td>
+                        </tr>
+                    @endforeach
                 @endforeach
                 </tbody>
             </table>
-
-
-            {!! $properties->render() !!}
 
             <div class="text-center">
                 <?php
@@ -260,6 +261,11 @@
                     echo "<b style='color:#ff3920' >No record Found!</b>"
                 ?>
             </div>
+            <?php
+                $temp_prop = $properties;
+                echo $pagination;
+            ?>
+
 
         </div>
     </div>
