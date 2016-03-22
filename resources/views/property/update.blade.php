@@ -35,29 +35,29 @@
     </div>
     <div class="form-group">
         {!! Form::label('group', 'Property Type:') !!}
-        {!! Form::select('type', $group, $property->group, ['class'=>'form-control', 'required']) !!}
+        {!! Form::select('type', $data['group'], $property->group, ['class'=>'form-control', 'required']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('location', 'Location:') !!}
-        {!! Form::select('location', $location, $property->location,['class'=>'form-control', 'required']) !!}
+        {!! Form::select('location', $data['location'], $property->location,['class'=>'form-control', 'required']) !!}
     </div>
 
     {!! Form::hidden('city', 10, null,['class'=>'form-control', 'onchange' => 'property_data(this.value, \'society_id\')', 'required','city'=>'city_id']) !!}
 
     <div class="form-group">
         {!! Form::label('society', 'Society:') !!}
-        {!! Form::select('society', $societies, $property->society_id,['class'=>'form-control', 'onchange' => 'property_data(this.value, \'block_id\')', 'required','id'=>'society_id']) !!}
+        {!! Form::select('society', $data['societies'], $property->society_id,['class'=>'form-control', 'onchange' => 'property_data(this.value, \'block_id\')', 'required','id'=>'society_id']) !!}
     </div>
 
     <div class="form-group" id="">
         {!! Form::label('block_id', 'Block:') !!}
-        {!! Form::select('block', $blocks, $property->block_id, ['class' => 'form-control', 'required' => 'required','id'=>'block_id']) !!}
+        {!! Form::select('block', $data['blocks'], $property->block_id, ['class' => 'form-control', 'required' => 'required','id'=>'block_id']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('category_id', 'Property Category:') !!}
-        {!! Form::select('category', $categories, $property->category_id,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
+        {!! Form::select('category', $data['categories'], $property->category_id,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
     </div>
     <div id="apartment_features" class="form-group">
         <label for="">Type Beds</label>
@@ -71,7 +71,7 @@
 
     <div class="form-group">
         {!! Form::label('type', 'Lead Type:') !!}
-        {!! Form::select('lead_type', $type, $property->type, ['class'=>'form-control', 'onchange' => 'set_property_type(this.value);', 'required']) !!}
+        {!! Form::select('lead_type', $data['lead_type'], $property->type, ['class'=>'form-control', 'onchange' => 'set_property_type(this.value);', 'required']) !!}
     </div>
 
     <div class="form-group {{($property->type == '')?'hidden':''}}" id="propertyContactInfo" >

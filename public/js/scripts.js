@@ -209,7 +209,12 @@ function societyChangedInPropertySearch(societies_id){
     var value = $( "#"+societies_id+" option:selected" ).val();
     updateBlock(value, 'block_id');
 }
-
+function lead_type_changed(lead_type_id)
+{
+    lead_type_id = (lead_type_id === undefined)?'lead_type':lead_type_id;
+    var lead_type_val = $( "#"+lead_type_id+" option:selected" ).val();
+    set_property_type(lead_type_val);
+}
 $(document).ready(function(){
 
 });

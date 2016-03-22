@@ -15,24 +15,24 @@
 
     <div class="form-group">
             {!! Form::label('purpose', 'Purpose:') !!}
-            {!! Form::select('purpose', $purpose, null,['class'=>'form-control', 'required']) !!}
+            {!! Form::select('purpose', $data['purpose'], null,['class'=>'form-control', 'required']) !!}
         </div>
 		
 		 <div class="form-group">
             {!! Form::label('society', 'Society:') !!}
-            {!! Form::select('society', $societies, 16,['class'=>'form-control', 'onchange' => 'property_data(this.value, \'block_id\')', 'required','id'=>'society_id']) !!}
+            {!! Form::select('society', $data['societies'], 16,['class'=>'form-control', 'onchange' => 'property_data(this.value, \'block_id\')', 'required','id'=>'society_id']) !!}
         </div>
 
 		
 		<div class="form-group">
         {!! Form::label('group', 'Property Type:') !!}
-        {!! Form::select('type', $group, 'residential', ['class'=>'form-control', 'required']) !!}
+        {!! Form::select('type', $data['group'], 'residential', ['class'=>'form-control', 'required']) !!}
 		</div>
 
 
 	   <div class="form-group">
         {!! Form::label('location', 'Location:') !!}
-        {!! Form::select('location', $location, 'average',['class'=>'form-control', 'required']) !!}
+        {!! Form::select('location', $data['location'], 'average',['class'=>'form-control', 'required']) !!}
 		</div>
 
             {!! Form::hidden('city', 10, null,['class'=>'form-control', 'onchange' => 'property_data(this.value, \'society_id\')', 'required','city'=>'city_id']) !!}
@@ -40,13 +40,13 @@
        
 		<div class="form-group" id="div_block_container">
         {!! Form::label('block_id', 'Block:') !!}
-        {!! Form::select('block', $blocks, null, ['class' => 'form-control', 'required' => 'required','id'=>'block_id']) !!}
+        {!! Form::select('block', $data['blocks'], null, ['class' => 'form-control', 'required' => 'required','id'=>'block_id']) !!}
 		</div>
 
 
 		    <div class="form-group">
         {!! Form::label('category_id', 'Property Category:') !!}
-        {!! Form::select('category', $categories, 2,['class'=>'form-control', 'required', 'id'=>'category_id']) !!}
+        {!! Form::select('category', $data['categories'], 2,['class'=>'form-control', 'required', 'id'=>'category_id']) !!}
 			</div>
         <div id="apartment_features" class="form-group">
             <label for="">Beds</label>
@@ -60,7 +60,7 @@
 
 			<div class="form-group">
         {!! Form::label('type', 'Lead Type:') !!}
-        {!! Form::select('lead_type', $type, null, ['class'=>'form-control', 'onchange' => 'set_property_type(this.value);', 'required']) !!}
+        {!! Form::select('lead_type', $data['lead_type'], null, ['class'=>'form-control', 'onchange' => 'set_property_type(this.value);', 'required', 'id'=>'lead_type']) !!}
 			</div>
 
 <div class="form-group hidden" id="propertyContactInfo" >
@@ -123,7 +123,7 @@
     </div>
 
 
-	   <div class="form-group">
+   <div class="form-group">
         {!! Form::label('price', 'Price:') !!}
         <div class="input-group ">
             <label class="input-group-addon">PKR: </label>
@@ -131,8 +131,6 @@
         </div>
          <span id="priceInWordsContainer">  </span>
     </div>
-
-
 
   <!--
 
@@ -180,7 +178,7 @@
 
     <div class="form-group">
         {!! Form::label('user_id', 'Staff:') !!}
-        {!! Form::select('user_id', $users, null,['class'=>'form-control', 'required']) !!}
+        {!! Form::select('user_id', $data['users'], null,['class'=>'form-control', 'required']) !!}
     </div>
 
 

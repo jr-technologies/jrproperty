@@ -171,29 +171,14 @@ class PropertyController extends StaffController
     public function create()
     {
         $heading = 'Create Property';
-        $purpose = ['' => 'Please Select ...', 'sale' => 'For Sale', 'rent' => 'For Rent', 'wanted' => 'Wanted'];
-        $type = ['' => 'Please Select ...', 'direct' => 'Direct', 'indirect' => 'Indirect'];
-        $group = ['' => 'Please Select ...', 'commercial' => 'Commercial', 'residential' => 'Residential'];
-        $location = [   '' => 'Please Select ...',
-                        'corner' => 'Corner',
-                        'non-corner' => 'Non-Corner',
-                        'facing-park' => 'Facing Park',
-                        'main-boulevard' => 'Main Boulevard',
-                        'average-plot' => 'Average Plot'
-                    ];
-        //$societies = $blocks = ['' => 'Please Select ...'];
 
-        $societies = ['' => 'Please Select ...'] + Society::lists('name', 'id');
-        $blocks = ['' => 'Please Select ...'] + Block::lists('name', 'id');
-        $users = Auth::user()->id;
-
-        $cities = ['' => 'Please Select ...'] + City::lists('name', 'id');
-        $categories = ['' => 'Please Select ...'] + Category::lists('name', 'id');
         $house_type = ['' => 'Please Select ...', 'new' => 'Brand New House', 'old' => 'Old House'];
         $bedrooms = ['' => 'Please Select ...', 1 => '1 Bedroom', 2 => '2 Bedrooms', 3 => '3 Bedrooms', 4 => '4 Bedrooms', 5 => '5 Bedrooms', 6 => '6 Bedrooms', 7 => '6+ Bedrooms'];
         $features = ['TV Lounge', 'Drawing Room', 'Dinning Room', 'Servant Quarters', 'Study Room', 'Garage', 'Store Room', 'Balcony'];
 
-        return view('property.create', compact('users', 'house_type', 'bedrooms', 'features', 'group', 'purpose', 'categories', 'societies', 'blocks', 'type', 'location', 'cities', 'heading'))->with('section', $this->section)->with('data',$this->computeData());
+        return view('property.create', compact('house_type', 'bedrooms', 'features', 'heading'))
+            ->with('section', $this->section)
+            ->with('data',$this->computeData());
     }
 
 
