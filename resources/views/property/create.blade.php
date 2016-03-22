@@ -39,12 +39,14 @@
             $('#size_unit_marla').attr('checked', true);
             $('#price_unit_lakh').attr('checked', true);
         });
+        $(document).on('change','#category_id',function(){
+            category_changed();
+        });
+
         $(document).ready(function(){
             societyChangedInPropertySearch('society_id');
             category_changed();
-        });
-        $(document).on('change','#category_id',function(){
-            category_changed();
+            lead_type_changed('lead_type');
         });
 
     </script>
