@@ -109,21 +109,23 @@ class PropertyController extends StaffController
 
     public function myProperties()
     {
-        $properties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))
+        $paginatedProperties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))
             ->orderBy('properties.id','DESC')
-            ->paginate(config('constants.PROPERTIES_PER_PAGE'))->setPath(Route::getCurrentRoute()->getPath());
+            ->paginate(config('constants.PROPERTIES_PER_PAGE'))
+            ->setPath(Route::getCurrentRoute()->getPath());
+        $pagination = $paginatedProperties->appends($this->request->all())->render();
 
-        $properties = $properties->each(function ($item, $key) {
-            $item->date = $item->created_at->toDateString();
-        })->groupBy('date');
+        /* grouping properties by date */
+        $propertiesByDate = $this->groupPropertiesByDate($paginatedProperties);
 
         $view = 'property.listing';
         if($this->request->get('print') == true)
             $view = 'print.property.listing';
         return view($view, ['heading'=>'My Properties'])
-            ->with('properties',$properties)
+            ->with('properties',$propertiesByDate)
             ->with('data',$this->computeData())
-            ->with('previousSearch', $this->request->all());
+            ->with('previousSearch', $this->request->all())
+            ->with('pagination',$pagination);
     }
 
     public function search()
