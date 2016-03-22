@@ -8,6 +8,7 @@ use App\Notifications;
 use App\Society;
 use App\Property;
 use App\User;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Redirect;
 use \Illuminate\Http\Request;
@@ -54,7 +55,9 @@ class PropertyController extends StaffController
     }
     public function index()
     {
-        $properties = Property::search($this->createSearchParams())->orderBy('properties.id','DESC')->get();
+        $properties = Property::search($this->createSearchParams())
+            ->orderBy('properties.id','DESC')->get();
+
         $view = 'property.listing';
         if($this->request->get('print') == true)
             $view = 'print.property.listing';
@@ -66,7 +69,8 @@ class PropertyController extends StaffController
 
     public function myProperties()
     {
-        $properties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))->orderBy('properties.id','DESC')->get();
+        $properties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))
+            ->orderBy('properties.id','DESC')->get();
 
         $view = 'property.listing';
         if($this->request->get('print') == true)
@@ -77,8 +81,12 @@ class PropertyController extends StaffController
             ->with('previousSearch', $this->request->all());
     }
 
-    public function search(){
-        $properties = Property::search($this->createSearchParams($this->request->all()))->orderBy('properties.id','DESC')->get();
+    public function search()
+    {
+
+        $properties = Property::search($this->createSearchParams($this->request->all()))
+            ->orderBy('properties.id','DESC')
+            ->paginate(config('constants.PROPERTIES_PER_PAGE'))->setPath(Route::getCurrentRoute()->getPath());
 
         $view = 'property.listing';
         if($this->request->get('print') == true)
@@ -93,11 +101,12 @@ class PropertyController extends StaffController
     private function createSearchParams($params = [])
     {
         $searchParams = $params;
-        $searchParams['bedrooms'] =($params['bedrooms'] == 3)? $params['bedrooms']:null;
+
+        $searchParams['bedrooms']  =($params['bedrooms'] == 3)? $params['bedrooms']:null;
         $searchParams['size_from'] = ($params['size_from'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_from']) :null;
-        $searchParams['size_to'] = ($params['size_to'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_to']) :null;
-        $searchParams['size_to'] = ($searchParams['size_to'] == null)?$searchParams['size_from']:$searchParams['size_to'];
-        $searchParams['price_to'] = ($searchParams['price_to'] == null)?$searchParams['price_from']:$searchParams['price_to'];
+        $searchParams['size_to']   = ($params['size_to'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_to']) :null;
+        $searchParams['size_to']   = ($searchParams['size_to'] == null)?$searchParams['size_from']:$searchParams['size_to'];
+        $searchParams['price_to']  = ($searchParams['price_to'] == null)?$searchParams['price_from']:$searchParams['price_to'];
 
         $searchParams['authenticated_user'] = $this->authenticatedUser;
         return $searchParams;

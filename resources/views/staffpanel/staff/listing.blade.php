@@ -11,18 +11,21 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($staffs as $staff)
+        @foreach($staffs as $member)
         <tr>
-          <th scope="row">{{ $staff->id }}</th>
-          <td>{{ $staff->name }}</td>
-          <td>{{ $staff->email }}</td>
+          <th scope="row">{{ $member->id }}</th>
+          <td>{{ $member->name }}</td>
+          <td>{{ $member->email }}</td>
           <td>
-          <a href="{{ route('staff.staff.edit', $staff->id) }}" class="btn btn-info btn-xs">Update</a>
-          @if($staff->type == 'staff')
-              {!! Form::open(array('route' => array('staff.staff.destroy', $staff->id), 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return window.confirm(\'Are you sure, you want to delete this record?\')')) !!}
+              @if($user->can('update','user', $member))
+                <a href="{{ route('staff.staff.edit', $member->id) }}" class="btn btn-info btn-xs">Update</a>
+              @endif
+
+              @if($user->can('delete','user', $member))
+                {!! Form::open(array('route' => array('staff.staff.destroy', $member->id), 'method' => 'delete', 'style' => 'display:inline', 'onsubmit' => 'return window.confirm(\'Are you sure, you want to delete this record?\')')) !!}
                       {!! Form::submit('Delete', ['class'=>'btn btn-danger btn-xs']) !!}
-              {!! Form::close() !!}
-          @endif
+                {!! Form::close() !!}
+              @endif
           </td>
         </tr>
         @endforeach

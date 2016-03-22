@@ -252,6 +252,8 @@
             </table>
 
 
+            {!! $properties->render() !!}
+
             <div class="text-center">
                 <?php
                 if(sizeof($properties) == 0)
