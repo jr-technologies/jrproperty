@@ -189,7 +189,6 @@ class PropertyController extends StaffController
      */
     public function store()
     {
-        dd($this->request->all());
         $validator = Validator::make($this->request->all(),
             [
                 'category'=>'required',
