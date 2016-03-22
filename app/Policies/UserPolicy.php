@@ -27,7 +27,8 @@ class UserPolicy extends Policy
     public function delete(User $object, User $subject)
     {
         if(strtolower($object->type) == strtolower('admin')) {
-            return true;
+            if($subject->id != $object->id)
+                return true;
         }
         return false;
     }
