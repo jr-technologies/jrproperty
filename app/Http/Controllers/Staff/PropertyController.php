@@ -53,49 +53,101 @@ class PropertyController extends StaffController
 
         return $data;
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $property = Property::find($id);
+
+        $checks = ['share_contact_info', 'share_property', 'sold'];
+        foreach($checks as $check)
+              if($property->{$check} == 'N')
+                   $property->{$check} = false;
+
+        $heading    ='Update Property';
+        $house_type =['' => 'Please Select ...', 'new' => 'Brand New House', 'old' => 'Old House'];
+        $bedrooms   =['' => 'Please Select ...', 1 => '1 Bedroom', 2 => '2 Bedrooms', 3 => '3 Bedrooms', 4 => '4 Bedrooms', 5 => '5 Bedrooms', 6 => '6 Bedrooms', 7 => '6+ Bedrooms'];
+        $features   =['TV Lounge', 'Drawing Room', 'Dinning Room', 'Servant Quarters', 'Study Room', 'Garage', 'Store Room', 'Balcony'];
+        $features_selected = explode(',', $property->features);
+
+        return view('property.update', compact('property','users', 'house_type', 'bedrooms', 'features', 'features_selected', 'group', 'purpose', 'categories', 'societies', 'blocks', 'type', 'location', 'cities', 'heading'))
+            ->with('section', $this->section)
+            ->with('data', $this->computeData());
+    }
+
+    public function groupPropertiesByDate($properties)
+    {
+        return $properties->each(function ($item, $key) {
+            $item->date = $item->created_at->toDateString();
+        })->groupBy('date');
+    }
     public function index()
     {
-        $properties = Property::search($this->createSearchParams())
-            ->orderBy('properties.id','DESC')->get();
+        $paginatedProperties = Property::search($this->createSearchParams())
+            ->orderBy('properties.id','DESC')
+            ->paginate(config('constants.PROPERTIES_PER_PAGE'))
+            ->setPath(Route::getCurrentRoute()->getPath());
+        $pagination = $paginatedProperties->appends($this->request->all())->render();
+
+        /* grouping properties by date */
+        $propertiesByDate = $this->groupPropertiesByDate($paginatedProperties);
 
         $view = 'property.listing';
         if($this->request->get('print') == true)
             $view = 'print.property.listing';
         return view($view, ['heading'=>'All Properties'])
-            ->with('properties',$properties)
+            ->with('properties',$propertiesByDate)
             ->with('data',$this->computeData())
-            ->with('previousSearch', $this->request->all());
+            ->with('previousSearch', $this->request->all())
+            ->with('pagination',$pagination);
     }
 
     public function myProperties()
     {
-        $properties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))
-            ->orderBy('properties.id','DESC')->get();
+        $paginatedProperties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))
+            ->orderBy('properties.id','DESC')
+            ->paginate(config('constants.PROPERTIES_PER_PAGE'))
+            ->setPath(Route::getCurrentRoute()->getPath());
+        $pagination = $paginatedProperties->appends($this->request->all())->render();
+
+        /* grouping properties by date */
+        $propertiesByDate = $this->groupPropertiesByDate($paginatedProperties);
 
         $view = 'property.listing';
         if($this->request->get('print') == true)
             $view = 'print.property.listing';
         return view($view, ['heading'=>'My Properties'])
-            ->with('properties',$properties)
+            ->with('properties',$propertiesByDate)
             ->with('data',$this->computeData())
-            ->with('previousSearch', $this->request->all());
+            ->with('previousSearch', $this->request->all())
+            ->with('pagination',$pagination);
     }
 
     public function search()
     {
-
-        $properties = Property::search($this->createSearchParams($this->request->all()))
+        $paginatedProperties = Property::search($this->createSearchParams($this->request->all()))
             ->orderBy('properties.id','DESC')
-            ->paginate(config('constants.PROPERTIES_PER_PAGE'))->setPath(Route::getCurrentRoute()->getPath());
+            ->paginate(config('constants.PROPERTIES_PER_PAGE'))
+            ->setPath(Route::getCurrentRoute()->getPath());
+        $pagination = $paginatedProperties->appends($this->request->all())->render();
+
+        /* grouping properties by date */
+        $propertiesByDate = $this->groupPropertiesByDate($paginatedProperties);
 
         $view = 'property.listing';
         if($this->request->get('print') == true)
             $view = 'print.property.listing';
 
         return view($view, ['heading'=>'Searched Properties'])
-            ->with('properties',$properties)
+            ->with('properties',$propertiesByDate)
             ->with('data',$this->computeData())
-            ->with('previousSearch', $this->request->all());
+            ->with('previousSearch', $this->request->all())
+            ->with('pagination',$pagination);
     }
 
     private function createSearchParams($params = [])
@@ -137,6 +189,7 @@ class PropertyController extends StaffController
      */
     public function store()
     {
+        dd($this->request->all());
         $validator = Validator::make($this->request->all(),
             [
                 'category'=>'required',
@@ -204,33 +257,6 @@ class PropertyController extends StaffController
         $heading .= ' (Added '. date('M h, Y H:i', strtotime($property->created_at)) .')';
 
         return view('property.show', compact('property', 'location', 'heading', 'status', 'purpose', 'group', 'house_type', 'bedrooms'))->with('section', $this->section);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $property = Property::find($id);
-
-        $checks = ['share_contact_info', 'share_property', 'sold'];
-        foreach($checks as $check)
-            if($property->{$check} == 'N') $property->{$check} = false;
-
-        $heading = 'Update Property';
-
-        $users = Auth::user()->id;
-        $house_type = ['' => 'Please Select ...', 'new' => 'Brand New House', 'old' => 'Old House'];
-        $bedrooms = ['' => 'Please Select ...', 1 => '1 Bedroom', 2 => '2 Bedrooms', 3 => '3 Bedrooms', 4 => '4 Bedrooms', 5 => '5 Bedrooms', 6 => '6 Bedrooms', 7 => '6+ Bedrooms'];
-        $features = ['TV Lounge', 'Drawing Room', 'Dinning Room', 'Servant Quarters', 'Study Room', 'Garage', 'Store Room', 'Balcony'];
-        $features_selected = explode(',', $property->features);
-
-        return view('property.update', compact('property','users', 'house_type', 'bedrooms', 'features', 'features_selected', 'heading'))
-            ->with('section', $this->section)
-            ->with('data', $this->computeData());
     }
 
     /**
