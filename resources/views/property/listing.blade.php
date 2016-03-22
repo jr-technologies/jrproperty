@@ -22,13 +22,24 @@
 			<div class="modal-content">
 	       <div class="search-parent-container">
             {!! Form::open(array('route' => 'search-properties', 'method' => 'get')) !!}
-            <div class="search-tabs">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Search Your Desired Property</h4>
-				</div>
-			</div>
-			<div class="search-body">
+               <div class="search-tabs">
+                   <div class="modal-header col-xs-12">
+
+                       <div class="">
+                           <div class="col-xs-4">
+                             <label class="caption">  Search: </label>
+                           </div>
+                           <div class="form-group col-xs-6">
+                               <input type="text" name="property_id" class="form-control" placeholder="Search By ID">
+                           </div>
+                           <div class="col-xs-2">
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                           </div>
+                       </div>
+
+                   </div>
+               </div>
+			<div class="search-body col-xs-12">
 				<div class="modal-body">
 					<?php $form_data = $previousSearch; ?>
                 <div class="form-group">
