@@ -31,7 +31,7 @@
     {!! Form::hidden('property_id',$property->id,['class'=>'form-control']) !!}
     <div class="form-group">
         {!! Form::label('purpose', 'Purpose:') !!}
-        {!! Form::select('purpose', $purpose, $property->purpose,['class'=>'form-control', 'required']) !!}
+        {!! Form::select('purpose', $data['purpose'], $property->purpose,['class'=>'form-control', 'required']) !!}
     </div>
     <div class="form-group">
         {!! Form::label('group', 'Property Type:') !!}
