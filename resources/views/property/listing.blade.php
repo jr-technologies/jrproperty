@@ -29,8 +29,11 @@
                            <div class="col-xs-4">
                              <label class="caption">  Search: </label>
                            </div>
+                           <?php $form_data = $previousSearch;
+
+                           ?>
                            <div class="form-group col-xs-6">
-                               <input type="text" name="property_id" class="form-control" placeholder="Search By ID">
+                               <input type="text" name="property_id" value = "<?php echo $form_data['property_id'] ?>  class="form-control" placeholder="Search By ID">
                            </div>
                            <div class="col-xs-2">
                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -41,7 +44,7 @@
                </div>
 			<div class="search-body col-xs-12">
 				<div class="modal-body">
-					<?php $form_data = $previousSearch; ?>
+
                 <div class="form-group">
                     {!! Form::label('society', 'Society:') !!}
                     {!! Form::select('society', Helper::prependArray([''=>'Select All...'],$data['societies']), $form_data['society'], ['class'=>'form-control', 'onchange' => 'updateBlock(this.value, \'block_id\')', 'required']) !!}
@@ -180,6 +183,7 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
+                    <th width="10%">Property ID</th>
                     <th width="10%">Owner</th>
                     <th width="15%">Society</th>
                     <th width="10%">Block</th>
@@ -203,13 +207,18 @@
                         ?>
 
                         <tr class="{{$updateAble}}">
-                            <td>
-                                @if($property->isPrivate())
+                            <td>@if($property->isPrivate())
                                     <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
                                 @endif
+                                {{ $property->id }}</td>
+                            <td>
+
+
                                 {{ $property->user_name }}
                             </td>
+
                             <td>{{ $property->society_name }}</td>
+
                             <td>
                                 @if($property->category_id == 4)
                                     N/A
