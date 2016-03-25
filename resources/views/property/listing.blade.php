@@ -53,7 +53,7 @@
 
                 <div class="form-group">
                     {!! Form::label('society', 'Society:') !!}
-                    {!! Form::select('society', Helper::prependArray([''=>'Select All...'],$data['societies']), $form_data['society'], ['class'=>'form-control', 'onchange' => 'updateBlock(this.value, \'block_id\')', 'required']) !!}
+                    {!! Form::select('society', Helper::prependArray([''=>'Select All...'],$data['societies']),(isset($_GET['society']))?(($_GET['society'] != '')?$form_data['society']:''):16, ['class'=>'form-control', 'onchange' => 'updateBlock(this.value, \'block_id\')', 'required']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::label('group', 'Property Type:') !!}

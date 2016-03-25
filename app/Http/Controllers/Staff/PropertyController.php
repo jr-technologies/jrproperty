@@ -196,7 +196,7 @@ class PropertyController extends StaffController
                 'category'=>'required', 'city'=>'required', 'society'=>'required',
                 'block'=>'required', 'location'=>'required', 'lead_type'=>'required',
                 'size'=>'required', 'size_unit'=>'required', 'type' =>'required',
-                'purpose' => 'required', 'price' => 'required'
+                'purpose' => 'required', 'price' => 'required','property_number' => 'required'
             ]
         );
         if($validator->fails())
@@ -274,6 +274,7 @@ class PropertyController extends StaffController
                 'type' =>'required',
                 'purpose' => 'required',
                 'price' => 'required',
+                'property_number' => 'required',
             ]
         );
         if($validator->fails()){

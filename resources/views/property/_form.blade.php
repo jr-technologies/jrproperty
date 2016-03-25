@@ -57,7 +57,7 @@
 
 		<div class="form-group">
         {!! Form::label('property_no', 'Property Number:') !!}
-        {!! Form::text('property_number', null,['class'=>'form-control']) !!}
+        {!! Form::text('property_number', null,['class'=>'form-control','required']) !!}
 		</div>
 
 			<div class="form-group">
