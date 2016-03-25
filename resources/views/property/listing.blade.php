@@ -1,5 +1,8 @@
 @extends('app')
 @section('content')
+
+<?php $form_data = $previousSearch; ?>
+
         <!-- Modal -->
 <script>
     $(document).ready(function(){
@@ -12,6 +15,12 @@
     }
     .buttons a{
         float: left;
+    }
+    .modal-content [class*="-12"] {
+        padding-left:0;
+    }
+    .modal-content [class*="-group"] {
+        padding-left:0;
     }
 </style>
 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -29,11 +38,8 @@
                            <div class="col-xs-4">
                              <label class="caption">  Search: </label>
                            </div>
-                           <?php $form_data = $previousSearch;
-
-                           ?>
                            <div class="form-group col-xs-6">
-                               <input type="text" name="property_id" value = "<?php echo $form_data['property_id'] ?>  class="form-control" placeholder="Search By ID">
+                               <input type="text" name="property_id" value = "<?php echo $form_data['property_id'] ?>"  class="form-control" placeholder="Search By ID">
                            </div>
                            <div class="col-xs-2">
                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

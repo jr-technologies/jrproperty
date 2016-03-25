@@ -204,7 +204,7 @@ function category_changed(category_id, feature_id){
         $('#bedrooms').removeAttr('required');
     }
 }
-function societyChangedInPropertySearch(societies_id){
+function societyChangedInPropertySearch(societies_id, selected_block){
     var societies_id = (societies_id === undefined)?'society':societies_id;
     var value = $( "#"+societies_id+" option:selected" ).val();
     updateBlock(value, 'block_id');

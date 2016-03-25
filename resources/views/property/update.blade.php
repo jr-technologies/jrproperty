@@ -93,22 +93,22 @@
 
         <div class="form-group">
             {!! Form::label('contact_person', 'Contact Person:') !!}
-            {!! Form::text('owner_name', $property->contact_person,['class'=>'form-control', 'required']) !!}
+            {!! Form::text('owner_name', $property->contact_person,['class'=>'form-control']) !!}
         </div>
 
         <div class="form-group">
             {!! Form::label('mobile', 'Mobile:') !!}
-            {!! Form::text('owner_mobile', $property->mobile,['class'=>'form-control', 'required']) !!}
+            {!! Form::text('owner_mobile', $property->mobile,['class'=>'form-control']) !!}
         </div>
 
         <div class="form-group">
             {!! Form::label('phone', 'Phone:') !!}
-            {!! Form::text('owner_phone', $property->phone,['class'=>'form-control', 'required']) !!}
+            {!! Form::text('owner_phone', $property->phone,['class'=>'form-control']) !!}
         </div>
 
         <div class="form-group">
             {!! Form::label('address', 'Address:') !!}
-            {!! Form::text('owner_address', $property->address,['class'=>'form-control', 'required']) !!}
+            {!! Form::text('owner_address', $property->address,['class'=>'form-control']) !!}
         </div>
 
         <div class="form-group">

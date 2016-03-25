@@ -12,10 +12,12 @@
     </div>
 
 @endif
-
+<?php
+//dd(old('purpose'));
+?>
     <div class="form-group">
             {!! Form::label('purpose', 'Purpose:') !!}
-            {!! Form::select('purpose', $data['purpose'], null,['class'=>'form-control', 'required']) !!}
+            {!! Form::select('purpose', $data['purpose'], null, ['class'=>'form-control', 'required']) !!}
         </div>
 		
 		 <div class="form-group">
@@ -82,22 +84,22 @@
 
     <div class="form-group">
         {!! Form::label('contact_person', 'Contact Person:') !!}
-        {!! Form::text('owner_name', null,['class'=>'form-control', 'required']) !!}
+        {!! Form::text('owner_name', null,['class'=>'form-control']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('mobile', 'Mobile:') !!}
-        {!! Form::text('owner_mobile', null,['class'=>'form-control', 'required']) !!}
+        {!! Form::text('owner_mobile', null,['class'=>'form-control']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('phone', 'Phone:') !!}
-        {!! Form::text('owner_phone', null,['class'=>'form-control', 'required']) !!}
+        {!! Form::text('owner_phone', null,['class'=>'form-control']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('address', 'Address:') !!}
-        {!! Form::text('owner_address', null,['class'=>'form-control', 'required']) !!}
+        {!! Form::text('owner_address', null,['class'=>'form-control']) !!}
     </div>
 
     <div class="form-group">

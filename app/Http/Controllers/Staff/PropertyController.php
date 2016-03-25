@@ -75,9 +75,11 @@ class PropertyController extends StaffController
         $features   =['TV Lounge', 'Drawing Room', 'Dinning Room', 'Servant Quarters', 'Study Room', 'Garage', 'Store Room', 'Balcony'];
         $features_selected = explode(',', $property->features);
 
+        $computedData = $this->computeData();
+        $computedData['blocks'] = Block::where('society_id','=',$property->society_id)->lists('name', 'id');
         return view('property.update', compact('property','users', 'house_type', 'bedrooms', 'features', 'features_selected', 'group', 'purpose', 'categories', 'societies', 'blocks', 'type', 'location', 'cities', 'heading'))
             ->with('section', $this->section)
-            ->with('data', $this->computeData());
+            ->with('data', $computedData);
     }
 
     public function groupPropertiesByDate($properties)
@@ -191,27 +193,14 @@ class PropertyController extends StaffController
     {
         $validator = Validator::make($this->request->all(),
             [
-                'category'=>'required',
-                'city'=>'required',
-                'society'=>'required',
-                'block'=>'required',
-                'location'=>'required',
-                'lead_type'=>'required',
-                'size'=>'required',
-                'size_unit'=>'required',
-                'type' =>'required',
-                'purpose' => 'required',
-                'price' => 'required',
-                'owner_estate' => ($this->request->get('lead_type') == 'indirect')?'required':null,
-                'owner_name' =>'required',
-                'owner_phone' => 'required',
-                'owner_mobile' =>'required',
-                'owner_address' =>'required',
-             ]
+                'category'=>'required', 'city'=>'required', 'society'=>'required',
+                'block'=>'required', 'location'=>'required', 'lead_type'=>'required',
+                'size'=>'required', 'size_unit'=>'required', 'type' =>'required',
+                'purpose' => 'required', 'price' => 'required'
+            ]
         );
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator);
-        }
+        if($validator->fails())
+            return redirect()->back()->withInput()->withErrors($validator);
 
         $newPropertyInfo = $this->getNewPropertyInfo();
        if(!Property::create($newPropertyInfo))
@@ -285,15 +274,10 @@ class PropertyController extends StaffController
                 'type' =>'required',
                 'purpose' => 'required',
                 'price' => 'required',
-                'owner_estate' => ($this->request->get('lead_type') == 'indirect')?'required':null,
-                'owner_name' =>'required',
-                'owner_phone' => 'required',
-                'owner_mobile' =>'required',
-                'owner_address' =>'required',
             ]
         );
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator);
+            return redirect()->back()->withInput()->withErrors($validator);
         }
 
         $request = $this->getNewPropertyInfo();
