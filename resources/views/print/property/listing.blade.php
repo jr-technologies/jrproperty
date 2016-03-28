@@ -13,8 +13,8 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($properties as $property)
-
+        @foreach($properties as $date => $group)
+            @foreach($group as $property)
             <?php
             $updateAble = '';
             if(Helper::daysDiffInTimes(date('Y-m-d H:i:s'), $property->updated_at) > 14 && $property->sold == 'N')
@@ -54,6 +54,7 @@
                 <td style="text-align: center">{{ $data['status'][$property->sold] }}</td>
 
             </tr>
+            @endforeach
         @endforeach
         </tbody>
     </table>

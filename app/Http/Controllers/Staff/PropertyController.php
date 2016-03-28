@@ -90,18 +90,26 @@ class PropertyController extends StaffController
     }
     public function index()
     {
-        $paginatedProperties = Property::search($this->createSearchParams())
-            ->orderBy('properties.id','DESC')
-            ->paginate(config('constants.PROPERTIES_PER_PAGE'))
-            ->setPath(Route::getCurrentRoute()->getPath());
-        $pagination = $paginatedProperties->appends($this->request->all())->render();
+        $view = 'property.listing';
+
+        $properties = Property::search($this->createSearchParams())
+            ->orderBy('properties.id','DESC');
+        if($this->request->get('print') == true)
+        {
+            $properties = $properties->get();
+            $view = 'print.property.listing';
+        }
+        else
+        {
+            $properties = $properties->paginate(config('constants.PROPERTIES_PER_PAGE'))
+                ->setPath(Route::getCurrentRoute()->getPath());
+
+            $pagination = $properties->appends($this->request->all())->render();
+        }
 
         /* grouping properties by date */
-        $propertiesByDate = $this->groupPropertiesByDate($paginatedProperties);
+        $propertiesByDate = $this->groupPropertiesByDate($properties);
 
-        $view = 'property.listing';
-        if($this->request->get('print') == true)
-            $view = 'print.property.listing';
         return view($view, ['heading'=>'All Properties'])
             ->with('properties',$propertiesByDate)
             ->with('data',$this->computeData())
