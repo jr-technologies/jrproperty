@@ -23,9 +23,12 @@ Route::get('where-to-go-after-login', [
     },
     'as' => 'where-to-go-after-login'
 ]);
+Route::post('notification/create',[
+        'uses'=>'NotificationController@create',
+        'as' =>'notification/create'
+]);
 
 Route::post('property/store', [
-
     'uses' => 'Staff\PropertyController@store',
     'as' => 'property/store'
 ]);
