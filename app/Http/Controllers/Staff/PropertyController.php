@@ -92,8 +92,7 @@ class PropertyController extends StaffController
     {
         $view = 'property.listing';
 
-        $properties = Property::search($this->createSearchParams())
-            ->orderBy('properties.id','DESC');
+        $properties = Property::search($this->createSearchParams())->orderBy('properties.id','DESC');
         if($this->request->get('print') == true)
         {
             $properties = $properties->get();
@@ -262,35 +261,32 @@ class PropertyController extends StaffController
      */
     public function update()
     {
-
         $property = Property::find($this->request->get('property_id'));
 
-        if($this->authenticatedUser->cannot('update','property',$property))
+            if($this->authenticatedUser->cannot('update','property',$property))
             return redirect('my-properties');
 
-        $validator = Validator::make($this->request->all(),
-            [
-
-                'category'=>'required',
-                'city'=>'required',
-                'society'=>'required',
-                'block'=>'required',
-                'location'=>'required',
-                'lead_type'=>'required',
-                'size'=>'required',
-                'size_unit'=>'required',
-                'type' =>'required',
-                'purpose' => 'required',
-                'price' => 'required',
-                'property_number' => 'required',
-            ]
+            $validator = Validator::make($this->request->all(),
+                [
+                    'category'=>'required',
+                    'city'=>'required',
+                    'society'=>'required',
+                    'block'=>'required',
+                    'location'=>'required',
+                    'lead_type'=>'required',
+                    'size'=>'required',
+                    'size_unit'=>'required',
+                    'type' =>'required',
+                    'purpose' => 'required',
+                    'price' => 'required',
+                    'property_number' => 'required',
+                ]
         );
-        if($validator->fails()){
-            return redirect()->back()->withInput()->withErrors($validator);
+                    if($validator->fails()){
+                    return redirect()->back()->withInput()->withErrors($validator);
         }
-
-        $request = $this->getNewPropertyInfo();
-        $property->update($request);
+                $request = $this->getNewPropertyInfo();
+                $property->update($request);
 
         Flash::success('Property updated successfully.');
         return redirect::route('my-properties');

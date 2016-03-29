@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 
-class NotificationController extends Controller {
+class NotificationsController extends Controller {
 
 	public $request = null;
 	public $notifications = null;
@@ -25,7 +25,8 @@ class NotificationController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		$notifications = Notifications::all();
+		print_r($notifications);
 	}
 
 	/**
@@ -39,16 +40,12 @@ class NotificationController extends Controller {
 			[
 				'notification'=>'required'
 			]);
-
-		if($validator->fails())
+			if($validator->fails())
 			return redirect()->bakc()->withinput()->witherrors($validator);
-		$NewNotification = $this->getNewNotificationInfo();
-
-		if(!$this->notifications->create($NewNotification))
+		 			$NewNotification = $this->getNewNotificationInfo();
+			if(!$this->notifications->create($NewNotification))
 			return redirect()->back()->withInputs();
-
-		echo 'Notification is ok';
-
+			echo 'Notification is ok';
 	}
 
 	/**
@@ -85,13 +82,25 @@ class NotificationController extends Controller {
 
 	/**
 	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update()
 	{
-		//
+
+		$notification = Notifications::find($this->request->notifications_id);
+		$validator = Validator::make($this->request->all(),
+			[
+				'notification'=>'required'
+			]);
+		 if($validator->fails())
+		 {
+			return redirect()->back()->withInput()->withErrors();
+		 }
+		$request = $this->getNewNotificationInfo();
+
+		$notification->update($request);
+
+		echo 'Notification is update ok';
 	}
 
 	/**
