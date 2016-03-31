@@ -85,15 +85,15 @@ class PropertyController extends StaffController
     public function groupPropertiesByDate($properties)
     {
         return $properties->each(function ($item, $key) {
-            $item->date = $item->created_at->toDateString();
+            $item->date = $item->updated_at->toDateString();
         })->groupBy('date');
     }
     public function index()
     {
         $view = 'property.listing';
-
+        $pagination = null;
         $properties = Property::search($this->createSearchParams())
-            ->orderBy('properties.id','DESC');
+            ->orderBy('properties.updated_at','DESC');
         if($this->request->get('print') == true)
         {
             $properties = $properties->get();
@@ -103,7 +103,6 @@ class PropertyController extends StaffController
         {
             $properties = $properties->paginate(config('constants.PROPERTIES_PER_PAGE'))
                 ->setPath(Route::getCurrentRoute()->getPath());
-
             $pagination = $properties->appends($this->request->all())->render();
         }
 
@@ -119,18 +118,25 @@ class PropertyController extends StaffController
 
     public function myProperties()
     {
-        $paginatedProperties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))
-            ->orderBy('properties.id','DESC')
-            ->paginate(config('constants.PROPERTIES_PER_PAGE'))
-            ->setPath(Route::getCurrentRoute()->getPath());
-        $pagination = $paginatedProperties->appends($this->request->all())->render();
+        $view = 'property.listing';
+        $pagination = null;
+        $properties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))
+            ->orderBy('properties.updated_at','DESC');
+        if($this->request->get('print') == true)
+        {
+            $properties = $properties->get();
+            $view = 'print.property.listing';
+        }
+        else
+        {
+            $properties = $properties->paginate(config('constants.PROPERTIES_PER_PAGE'))
+                ->setPath(Route::getCurrentRoute()->getPath());
+            $pagination = $properties->appends($this->request->all())->render();
+        }
 
         /* grouping properties by date */
-        $propertiesByDate = $this->groupPropertiesByDate($paginatedProperties);
+        $propertiesByDate = $this->groupPropertiesByDate($properties);
 
-        $view = 'property.listing';
-        if($this->request->get('print') == true)
-            $view = 'print.property.listing';
         return view($view, ['heading'=>'My Properties'])
             ->with('properties',$propertiesByDate)
             ->with('data',$this->computeData())
@@ -140,20 +146,26 @@ class PropertyController extends StaffController
 
     public function search()
     {
-        $paginatedProperties = Property::search($this->createSearchParams($this->request->all()))
-            ->orderBy('properties.id','DESC')
-            ->paginate(config('constants.PROPERTIES_PER_PAGE'))
-            ->setPath(Route::getCurrentRoute()->getPath());
-        $pagination = $paginatedProperties->appends($this->request->all())->render();
+        $view = 'property.listing';
+        $pagination = null;
+        $properties = Property::search($this->createSearchParams($this->request->all()))
+            ->orderBy('properties.updated_at','DESC');
+        if($this->request->get('print') == true)
+        {
+            $properties = $properties->get();
+            $view = 'print.property.listing';
+        }
+        else
+        {
+            $properties = $properties->paginate(config('constants.PROPERTIES_PER_PAGE'))
+                ->setPath(Route::getCurrentRoute()->getPath());
+            $pagination = $properties->appends($this->request->all())->render();
+        }
 
         /* grouping properties by date */
-        $propertiesByDate = $this->groupPropertiesByDate($paginatedProperties);
+        $propertiesByDate = $this->groupPropertiesByDate($properties);
 
-        $view = 'property.listing';
-        if($this->request->get('print') == true)
-            $view = 'print.property.listing';
-
-        return view($view, ['heading'=>'Searched Properties'])
+        return view($view, ['heading'=>'My Properties'])
             ->with('properties',$propertiesByDate)
             ->with('data',$this->computeData())
             ->with('previousSearch', $this->request->all())
@@ -336,6 +348,7 @@ class PropertyController extends StaffController
             'share_contact_info'=>($this->request->get('share_contact_info') != null)?$this->request->get('share_contact_info'):'N',
             'sold'=>($this->request->get('sold') != null)?$this->request->get('sold'):'N',
             'share_property'=>($this->request->get('share_property') != null)?$this->request->get('share_property'):'N',
+            'updated_at' => date('Y-m-d h:i:s')
         ];
 
         return $propertyInfo;

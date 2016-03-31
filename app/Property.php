@@ -10,7 +10,7 @@ class Property extends Model {
 	public $timestamps = true;
 	protected $fillable = array('category_id', 'city_id', 'society_id', 'block_id', 'user_id', 'title', 'type', 'group',
         'estate_name', 'contact_person', 'mobile', 'phone', 'address', 'property_no', 'purpose', 'size', 'size_unit',
-        'location', 'price', 'price_converted','picture', 'detail', 'house_type', 'bedrooms', 'features', 'share_contact_info', 'share_property', 'sold');
+        'location', 'price', 'price_converted','picture', 'detail', 'house_type', 'bedrooms', 'features', 'share_contact_info', 'share_property', 'sold', 'updated_at');
     protected $dates = ['created_at'];
 
     /*public static function search($params)

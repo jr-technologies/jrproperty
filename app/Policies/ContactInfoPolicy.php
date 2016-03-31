@@ -12,9 +12,12 @@ use App\User;
 class ContactInfoPolicy extends Policy
 {
     public function see(User $user, $property){
-        if(strtolower($property->share_contact_info) == 'y'){
+        if($user->id == $property->user_id)
             return true;
-        }
+
+        if(strtolower($property->share_contact_info) == 'y')
+            return true;
+
         return false;
     }
 }
