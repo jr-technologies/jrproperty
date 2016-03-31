@@ -226,6 +226,7 @@ class PropertyController extends StaffController
        if(!Property::create($newPropertyInfo))
             return redirect()->back()->withInputs();
 
+        Flash::success('Property added successfully.');
         return redirect('my-properties');
 
     }
