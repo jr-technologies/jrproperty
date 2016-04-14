@@ -85,15 +85,14 @@ class PropertyController extends StaffController
     public function groupPropertiesByDate($properties)
     {
         return $properties->each(function ($item, $key) {
-            $item->date = $item->updated_at->toDateString();
+            $item->date = $item->created_at->toDateString();
         })->groupBy('date');
     }
     public function index()
     {
         $view = 'property.listing';
-        $pagination = null;
-        $properties = Property::search($this->createSearchParams())
-            ->orderBy('properties.updated_at','DESC');
+
+        $properties = Property::search($this->createSearchParams())->orderBy('properties.id','DESC');
         if($this->request->get('print') == true)
         {
             $properties = $properties->get();
@@ -103,6 +102,7 @@ class PropertyController extends StaffController
         {
             $properties = $properties->paginate(config('constants.PROPERTIES_PER_PAGE'))
                 ->setPath(Route::getCurrentRoute()->getPath());
+
             $pagination = $properties->appends($this->request->all())->render();
         }
 
@@ -118,25 +118,18 @@ class PropertyController extends StaffController
 
     public function myProperties()
     {
-        $view = 'property.listing';
-        $pagination = null;
-        $properties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))
-            ->orderBy('properties.updated_at','DESC');
-        if($this->request->get('print') == true)
-        {
-            $properties = $properties->get();
-            $view = 'print.property.listing';
-        }
-        else
-        {
-            $properties = $properties->paginate(config('constants.PROPERTIES_PER_PAGE'))
-                ->setPath(Route::getCurrentRoute()->getPath());
-            $pagination = $properties->appends($this->request->all())->render();
-        }
+        $paginatedProperties = Property::search($this->createSearchParams(['user'=>$this->authenticatedUser->id]))
+            ->orderBy('properties.id','DESC')
+            ->paginate(config('constants.PROPERTIES_PER_PAGE'))
+            ->setPath(Route::getCurrentRoute()->getPath());
+        $pagination = $paginatedProperties->appends($this->request->all())->render();
 
         /* grouping properties by date */
-        $propertiesByDate = $this->groupPropertiesByDate($properties);
+        $propertiesByDate = $this->groupPropertiesByDate($paginatedProperties);
 
+        $view = 'property.listing';
+        if($this->request->get('print') == true)
+            $view = 'print.property.listing';
         return view($view, ['heading'=>'My Properties'])
             ->with('properties',$propertiesByDate)
             ->with('data',$this->computeData())
@@ -146,26 +139,20 @@ class PropertyController extends StaffController
 
     public function search()
     {
-        $view = 'property.listing';
-        $pagination = null;
-        $properties = Property::search($this->createSearchParams($this->request->all()))
-            ->orderBy('properties.updated_at','DESC');
-        if($this->request->get('print') == true)
-        {
-            $properties = $properties->get();
-            $view = 'print.property.listing';
-        }
-        else
-        {
-            $properties = $properties->paginate(config('constants.PROPERTIES_PER_PAGE'))
-                ->setPath(Route::getCurrentRoute()->getPath());
-            $pagination = $properties->appends($this->request->all())->render();
-        }
+        $paginatedProperties = Property::search($this->createSearchParams($this->request->all()))
+            ->orderBy('properties.id','DESC')
+            ->paginate(config('constants.PROPERTIES_PER_PAGE'))
+            ->setPath(Route::getCurrentRoute()->getPath());
+        $pagination = $paginatedProperties->appends($this->request->all())->render();
 
         /* grouping properties by date */
-        $propertiesByDate = $this->groupPropertiesByDate($properties);
+        $propertiesByDate = $this->groupPropertiesByDate($paginatedProperties);
 
-        return view($view, ['heading'=>'My Properties'])
+        $view = 'property.listing';
+        if($this->request->get('print') == true)
+            $view = 'print.property.listing';
+
+        return view($view, ['heading'=>'Searched Properties'])
             ->with('properties',$propertiesByDate)
             ->with('data',$this->computeData())
             ->with('previousSearch', $this->request->all())
@@ -176,7 +163,7 @@ class PropertyController extends StaffController
     {
         $searchParams = $params;
 
-        $searchParams['bedrooms']  =($params['bedrooms'] == 3)? $params['bedrooms']:null;
+        $searchParams['bedrooms']  =($params['category'] == 3)? $params['bedrooms']:null;
         $searchParams['size_from'] = ($params['size_from'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_from']) :null;
         $searchParams['size_to']   = ($params['size_to'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_to']) :null;
         $searchParams['size_to']   = ($searchParams['size_to'] == null)?$searchParams['size_from']:$searchParams['size_to'];
@@ -226,7 +213,6 @@ class PropertyController extends StaffController
        if(!Property::create($newPropertyInfo))
             return redirect()->back()->withInputs();
 
-        Flash::success('Property added successfully.');
         return redirect('my-properties');
 
     }
@@ -275,35 +261,32 @@ class PropertyController extends StaffController
      */
     public function update()
     {
-
         $property = Property::find($this->request->get('property_id'));
 
-        if($this->authenticatedUser->cannot('update','property',$property))
+            if($this->authenticatedUser->cannot('update','property',$property))
             return redirect('my-properties');
 
-        $validator = Validator::make($this->request->all(),
-            [
-
-                'category'=>'required',
-                'city'=>'required',
-                'society'=>'required',
-                'block'=>'required',
-                'location'=>'required',
-                'lead_type'=>'required',
-                'size'=>'required',
-                'size_unit'=>'required',
-                'type' =>'required',
-                'purpose' => 'required',
-                'price' => 'required',
-                'property_number' => 'required',
-            ]
+            $validator = Validator::make($this->request->all(),
+                [
+                    'category'=>'required',
+                    'city'=>'required',
+                    'society'=>'required',
+                    'block'=>'required',
+                    'location'=>'required',
+                    'lead_type'=>'required',
+                    'size'=>'required',
+                    'size_unit'=>'required',
+                    'type' =>'required',
+                    'purpose' => 'required',
+                    'price' => 'required',
+                    'property_number' => 'required',
+                ]
         );
-        if($validator->fails()){
-            return redirect()->back()->withInput()->withErrors($validator);
+                    if($validator->fails()){
+                    return redirect()->back()->withInput()->withErrors($validator);
         }
-
-        $request = $this->getNewPropertyInfo();
-        $property->update($request);
+                $request = $this->getNewPropertyInfo();
+                $property->update($request);
 
         Flash::success('Property updated successfully.');
         return redirect::route('my-properties');
@@ -349,7 +332,6 @@ class PropertyController extends StaffController
             'share_contact_info'=>($this->request->get('share_contact_info') != null)?$this->request->get('share_contact_info'):'N',
             'sold'=>($this->request->get('sold') != null)?$this->request->get('sold'):'N',
             'share_property'=>($this->request->get('share_property') != null)?$this->request->get('share_property'):'N',
-            'updated_at' => date('Y-m-d h:i:s')
         ];
 
         return $propertyInfo;

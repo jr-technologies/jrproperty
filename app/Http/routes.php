@@ -11,7 +11,7 @@
   |
  */
 
-
+error_reporting(0);
 Route::get('where-to-go-after-login', [
     'middleware' => ['auth'],function(){
         $user = Auth::user();

@@ -208,21 +208,19 @@
                     @foreach($group as $property)
                         <?php
                         $updateAble = '';
-                        if(Helper::daysDiffInTimes(date('Y-m-d H:i:s'), $property->updated_at) > 14 && $property->sold == 'N')
+                        if(Helper::daysDiffInTimes(date('Y-m-d H:i:s'), $property->updated_at) > 29 && $property->sold == 'N')
                             $updateAble = 'update-able';
                         ?>
 
                         <tr class="{{$updateAble}}">
-                            <td>@if($property->isPrivate())
+                            <td>
+                                @if($property->isPrivate())
                                     <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
                                 @endif
-                                {{ $property->id }}</td>
-                            <td>
-
-
-                                {{ $property->user_name }}
+                                {{ $property->id }}
                             </td>
 
+                            <td>{{ $property->user_name }}</td>
                             <td>{{ $property->society_name }}</td>
 
                             <td>

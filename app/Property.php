@@ -57,7 +57,7 @@ class Property extends Model {
             $query = $query->where('properties.block_id' , '=', $params['block']);
         if($params['group'] != null || $params['group'] != '')
             $query = $query->where('group' , '=', $params['group']);
-        if($params['category_id'] != null || $params['category'] != '')
+        if($params['category'] != null || $params['category'] != '')
             $query = $query->where('properties.category_id' , '=', $params['category']);
         /*if($params['land'] != null || $params['land'] != '')
             $query = $query->where('properties.size_unit', '=', $params['land']);*/

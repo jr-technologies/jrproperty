@@ -30,18 +30,20 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					@if($user->type == 'staff')
-						<li @if($section == 'staffpanel/property') class="active" @endif><a href="{{ url('my-properties') }}">Property Listing</a></li>
-					    <li @if($section == 'staffpanel/staff') class="active" @endif><a href="{{ route('staff.staff.edit', $user->id) }}">Update Profile</a></li>
-					@endif
-					@if($user->type == 'admin')
-						<li @if($section == 'home') class="active" @endif><a href="{{ url('all-properties') }}">Property Listing</a></li>
-						<li @if($section == 'city') class="active" @endif><a href="{{ url('admin/city') }}">Manage Cities</a></li>
-						<li @if($section == 'society') class="active" @endif><a href="{{ url('admin/societies') }}">Manage Societies</a></li>
-						<li @if($section == 'block') class="active" @endif><a href="{{ url('admin/blocks') }}">Manage Blocks</a></li>
-						<li @if($section == 'category') class="active" @endif><a href="{{ url('admin/categories') }}">Manage Property Types</a></li>
-						{{--<li @if($section == 'property') class="active" @endif><a href="{{ url('admin/properties') }}">Manage Property Listings</a></li>--}}
-						<li @if($section == 'staff') class="active" @endif><a href="{{ url('admin/staff') }}">Manage Staff</a></li>
+					@if(!Auth::guest())
+						@if($user->type == 'staff')
+							<li @if($section == 'staffpanel/property') class="active" @endif><a href="{{ url('my-properties') }}">Property Listing</a></li>
+							<li @if($section == 'staffpanel/staff') class="active" @endif><a href="{{ route('staff.staff.edit', $user->id) }}">Update Profile</a></li>
+						@endif
+						@if($user->type == 'admin')
+							<li @if($section == 'home') class="active" @endif><a href="{{ url('all-properties') }}">Property Listing</a></li>
+							<li @if($section == 'city') class="active" @endif><a href="{{ url('admin/city') }}">Manage Cities</a></li>
+							<li @if($section == 'society') class="active" @endif><a href="{{ url('admin/societies') }}">Manage Societies</a></li>
+							<li @if($section == 'block') class="active" @endif><a href="{{ url('admin/blocks') }}">Manage Blocks</a></li>
+							<li @if($section == 'category') class="active" @endif><a href="{{ url('admin/categories') }}">Manage Property Types</a></li>
+							{{--<li @if($section == 'property') class="active" @endif><a href="{{ url('admin/properties') }}">Manage Property Listings</a></li>--}}
+							<li @if($section == 'staff') class="active" @endif><a href="{{ url('admin/staff') }}">Manage Staff</a></li>
+						@endif
 					@endif
 				</ul>
 
