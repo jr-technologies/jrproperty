@@ -63,20 +63,21 @@
                     {!! Form::label('Land', 'Land Area:') !!}
                     {!! Form::select('land',Helper::prependArray([''=>'Select All...'], $data['size_units']),(isset($_GET['land']))?(($_GET['land'] != '')?$form_data['land']:''):'marla',['class'=>'form-control']) !!}
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        {!! Form::text('size_from', $form_data['size_from'], ['class'=>'col-xs-6', 'placeholder'=>'From']) !!}
-                        {!! Form::text('size_to',  $form_data['size_to'], ['class'=>'col-xs-6', 'placeholder'=>'To']) !!}
-                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            {!! Form::text('size_from', $form_data['size_from'], ['class'=>'col-xs-6', 'placeholder'=>'From']) !!}
+                            {!! Form::text('size_to',  $form_data['size_to'], ['class'=>'col-xs-6', 'placeholder'=>'To']) !!}
+                        </div>
 
-					      <div class="form-group">
-                    {!! Form::label('block_id', 'Block:') !!}
-                    {!! Form::select('block', Helper::prependArray([''=>'Select All...'], []), $form_data['block'], ['class' => 'form-control', 'required' => 'required', 'id'=>'block_id']) !!}
-                </div>
-                <div class="form-group">
-                    {!! Form::label('category', 'Property Category:') !!}
-                    {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), (isset($_GET['category']))?(($_GET['category'] != '')?$form_data['category']:''):2,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
-                </div>
+                        <div class="form-group">
+                            {!! Form::label('block_id', 'Block:') !!}
+                            {!! Form::select('block', Helper::prependArray([''=>'Select All...'], []), $form_data['block'], ['class' => 'form-control', 'required' => 'required', 'id'=>'block_id']) !!}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {!! Form::label('category', 'Property Category:') !!}
+                        {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), (isset($_GET['category']))?(($_GET['category'] != '')?$form_data['category']:''):2,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
+                    </div>
                     <div class="form-group" id="apartment_features">
                         {!! Form::label('bedrooms', 'Bedrooms:') !!}
                         <input name="bedrooms" type="number" class="form-control" max="5" value="<?= $form_data['bedrooms'] ?>" id="bedrooms" >
@@ -85,10 +86,10 @@
                         {!! Form::label('location', 'Location:') !!}
                         {!! Form::select('location', Helper::prependArray([''=>'Select All...'],$data['location']), (isset($_GET['location']))?(($_GET['location'] != '')?$form_data['location']:''):'average',['class'=>'form-control', 'required']) !!}
                     </div>
-                <div class="form-group">
-                    {!! Form::label('lead', 'Lead Type:') !!}
-                    {!! Form::select('lead', Helper::prependArray([''=>'Select All...'],$data['lead_type']), $form_data['lead'],['class'=>'form-control', 'required', 'onchange' => 'show_house_options(this.value);']) !!}
-                </div>
+                    <div class="form-group">
+                        {!! Form::label('lead', 'Lead Type:') !!}
+                        {!! Form::select('lead', Helper::prependArray([''=>'Select All...'],$data['lead_type']), $form_data['lead'],['class'=>'form-control', 'required', 'onchange' => 'show_house_options(this.value);']) !!}
+                    </div>
                 <!--
 					  <div class="form-group">
                         {!! Form::label('city', 'City:') !!}
@@ -203,7 +204,7 @@
                 <tbody>
                 @foreach($properties as $date => $group)
                     <tr>
-                        <td colspan="8" style="text-align: left; font-size: 12px; color:grey;">{{Carbon::createFromFormat('Y-m-d', $date)->toFormattedDateString()}}</td>
+                        <td colspan="9" style="text-align: left; font-size: 12px; color:grey;">{{Carbon::createFromFormat('Y-m-d', $date)->toFormattedDateString()}}</td>
                     </tr>
                     @foreach($group as $property)
                         <?php

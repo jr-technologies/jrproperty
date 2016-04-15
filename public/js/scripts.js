@@ -196,7 +196,7 @@ function category_changed(category_id, feature_id){
     var feature_id = (feature_id === undefined)?'apartment_features':feature_id;
     var category = $( "#"+category_id+" option:selected" ).val();
 
-    if(category == 3){
+    if(category == 3 || category == 1){
         $('#'+feature_id).attr('style', 'display:block!important;');
         $('#bedrooms').attr('required', 'required');
     }else{
