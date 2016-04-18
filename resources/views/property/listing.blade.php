@@ -225,7 +225,8 @@
                                 @if($property->isPrivate())
                                     <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
                                 @endif
-                                {{ $property->id }}
+
+                                <span class="{{($property->type == 'direct')?'direct_property':'indirect_property'}}">{{ $property->id }}</span>
                             </td>
 
                             <td>{{ $property->user_name }}</td>
