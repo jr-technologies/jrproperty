@@ -10,9 +10,8 @@
   | and give it the controller to call when that URI is requested.
   |
  */
+
 error_reporting(0);
-
-
 Route::get('where-to-go-after-login', [
     'middleware' => ['auth'],function(){
         $user = Auth::user();
@@ -23,6 +22,7 @@ Route::get('where-to-go-after-login', [
     },
     'as' => 'where-to-go-after-login'
 ]);
+
 Route::post('notification/create',[
         'uses'=>'NotificationsController@create',
         'as' =>'notification/create'

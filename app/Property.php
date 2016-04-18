@@ -10,7 +10,8 @@ class Property extends Model {
 	public $timestamps = true;
 	protected $fillable = array('category_id', 'city_id', 'society_id', 'block_id', 'user_id', 'title', 'type', 'group',
         'estate_name', 'contact_person', 'mobile', 'phone', 'address', 'property_no', 'purpose', 'size', 'size_unit',
-        'location', 'price', 'price_converted','picture','floor','detail', 'house_type', 'bedrooms', 'features', 'share_contact_info', 'share_property', 'sold');
+        'location', 'price', 'price_converted','picture','floor', 'detail', 'house_type', 'bedrooms', 'features', 'share_contact_info', 'share_property', 'sold', 'updated_at');
+
     protected $dates = ['created_at'];
 
     /*public static function search($params)
@@ -57,7 +58,7 @@ class Property extends Model {
             $query = $query->where('properties.block_id' , '=', $params['block']);
         if($params['group'] != null || $params['group'] != '')
             $query = $query->where('group' , '=', $params['group']);
-        if($params['category_id'] != null || $params['category'] != '')
+        if($params['category'] != null || $params['category'] != '')
             $query = $query->where('properties.category_id' , '=', $params['category']);
         /*if($params['land'] != null || $params['land'] != '')
             $query = $query->where('properties.size_unit', '=', $params['land']);*/

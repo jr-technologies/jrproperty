@@ -164,7 +164,7 @@ class PropertyController extends StaffController
     {
         $searchParams = $params;
 
-        $searchParams['bedrooms']  =($params['bedrooms'] == 3)? $params['bedrooms']:null;
+        $searchParams['bedrooms']  =($params['category'] == 3 || $params['category'] == 1)? $params['bedrooms']:null;
         $searchParams['size_from'] = ($params['size_from'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_from']) :null;
         $searchParams['size_to']   = ($params['size_to'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_to']) :null;
         $searchParams['size_to']   = ($searchParams['size_to'] == null)?$searchParams['size_from']:$searchParams['size_to'];
@@ -173,6 +173,7 @@ class PropertyController extends StaffController
         $searchParams['authenticated_user'] = $this->authenticatedUser;
         return $searchParams;
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -312,7 +313,7 @@ class PropertyController extends StaffController
     {
         $propertyInfo = [
             'category_id'=>$this->request->get('category'),
-            'bedrooms' =>($this->request->get('category') == 3)? $this->request->get('bedrooms'):null,
+            'bedrooms' =>($this->request->get('category') == 3 || $this->request->get('category') == 1)? $this->request->get('bedrooms'):null,
             'city_id'=>$this->request->get('city'),
             'society_id'=>$this->request->get('society'),
             'block_id'=>$this->request->get('block'),
