@@ -196,12 +196,29 @@ function category_changed(category_id, feature_id){
     var feature_id = (feature_id === undefined)?'apartment_features':feature_id;
     var category = $( "#"+category_id+" option:selected" ).val();
 
-    if(category == 3 || category == 1){
-        $('#'+feature_id).attr('style', 'display:block!important;');
+    if(category == 3)
+    {
+        $('#floor_container').attr('style', 'display:block!important;');
+        $('#beds_container').attr('style', 'display:block!important;');
         $('#bedrooms').attr('required', 'required');
-    }else{
-        $('#'+feature_id).attr('style', 'display:none!important;');
+        $('#floor').attr('required', 'required');
+    }
+    else if(category == 1)
+    {
+        /* displaying beds option */
+        $('#beds_container').attr('style', 'display:block!important;');
+        $('#bedrooms').attr('required', 'required');
+
+        /* hiding floor container */
+        $('#floor_container').attr('style', 'display:none!important;');
+        $('#floor').removeAttr('required');
+    }
+    else
+    {
+        $('#beds_container').attr('style', 'display:none!important;');
+        $('#floor_container').attr('style', 'display:none!important;');
         $('#bedrooms').removeAttr('required');
+        $('#floor').removeAttr('required');
     }
 }
 function societyChangedInPropertySearch(societies_id, selected_block){
