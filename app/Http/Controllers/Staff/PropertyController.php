@@ -211,7 +211,7 @@ class PropertyController extends StaffController
             return redirect()->back()->withInput()->withErrors($validator);
 
         $newPropertyInfo = $this->getNewPropertyInfo();
-       if(!Property::create($newPropertyInfo))
+        if(!Property::create($newPropertyInfo))
             return redirect()->back()->withInputs();
 
         return redirect('my-properties');
@@ -324,6 +324,7 @@ class PropertyController extends StaffController
             'size_unit'=>$this->request->get('size_unit'),
             'group' =>$this->request->get('type'),
             'purpose' => $this->request->get('purpose'),
+            'floor' => $this->request->get('floor'),
             'price' => $this->request->get('price'),
             'estate_name' => ($this->request->get('lead_type') == 'indirect')?$this->request->get('owner_estate'):null,
             'contact_person' =>($this->request->get('lead_type') != '')?$this->request->get('owner_name'):null,
