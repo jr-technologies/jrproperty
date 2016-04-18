@@ -95,23 +95,26 @@
         </tr>
 
 
-
-
-
-
         @if($property->house_type != '')
             <tr>
                 <td>House Type:</td>
-                <td>{{ $house_type[$property->house_type] }}</td>
+                <td>{{ $data['house_type'][$property->house_type] }}</td>
             </tr>
         @endif
 
         @if($property->bedrooms != '' && $property->bedrooms != '0')
             <tr>
                 <td>Bedrooms:</td>
-                <td>{{ $bedrooms[$property->bedrooms] }}</td>
+                <td>{{ $property->bedrooms }} bedrooms</td>
             </tr>
         @endif
+        @if($property->floor != '' && $property->floor != '0')
+            <tr>
+                <td>Floor:</td>
+                <td>{{ $data['property_floors'][$property->floor] }} Floor</td>
+            </tr>
+        @endif
+
 
         @if($property->features != '')
             <tr>

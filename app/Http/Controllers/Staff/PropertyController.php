@@ -45,6 +45,8 @@ class PropertyController extends StaffController
             'lead_type' => config('constants.LEAD_TYPES'),
             'size_units' => config('constants.SIZE_UNITS'),
             'property_floors' => config('constants.PROPERTY_FLOORS'),
+            'bedrooms'=>config('constants.BEDROOMS'),
+            'house_type'=>config('constants.HOUSE_TYPE'),
             'users' => User::lists('name', 'id'),
             'cities' => City::lists('name', 'id'),
             'societies' => Society::lists('name','id'),
@@ -238,23 +240,11 @@ class PropertyController extends StaffController
             return redirect('home');*/
         }
 
-        $status = ['Y' => 'Sold', 'N' => 'Available'];
-        $purpose = ['sale' => 'For Sale', 'rent' => 'For Rent', 'wanted' => 'Wanted'];
-        $group = ['commercial' => 'Commercial', 'residential' => 'Residential'];
-        $location = [
-                        'corner' => 'Corner',
-                        'non-corner' => 'Non-Corner',
-                        'facing-park' => 'Facing Park',
-                        'main-boulevard' => 'Main Boulevard',
-                        'average-plot' => 'Average Plot'
-                    ];
-
-        $house_type = ['' => 'N/A', 'new' => 'Brand New House', 'old' => 'Old House'];
-        $bedrooms = [1 => '1 Bedroom', 2 => '2 Bedrooms', 3 => '3 Bedrooms', 4 => '4 Bedrooms', 5 => '5 Bedrooms', 6 => '6 Bedrooms', 7 => '6+ Bedrooms'];
-
         $heading .= ' (Added '. date('M h, Y H:i', strtotime($property->created_at)) .')';
 
-        return view('property.show', compact('property', 'location', 'heading', 'status', 'purpose', 'group', 'house_type', 'bedrooms'))->with('section', $this->section);
+        return view('property.show', compact('property','heading'))
+            ->with('section', $this->section)
+            ->with('data',$this->computeData());
     }
 
     /**
