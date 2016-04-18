@@ -44,6 +44,7 @@ class PropertyController extends StaffController
             'location' => config('constants.PROPERTY_LOCATIONS'),
             'lead_type' => config('constants.LEAD_TYPES'),
             'size_units' => config('constants.SIZE_UNITS'),
+            'property_floors' => config('constants.PROPERTY_FLOORS'),
             'users' => User::lists('name', 'id'),
             'cities' => City::lists('name', 'id'),
             'societies' => Society::lists('name','id'),

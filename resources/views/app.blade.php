@@ -30,7 +30,6 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-
 					@if($user->type == 'staff')
 						<li @if($section == 'staffpanel/property') class="active" @endif><a href="{{ url('my-properties') }}">Property Listing</a></li>
 					    <li @if($section == 'staffpanel/staff') class="active" @endif><a href="{{ route('staff.staff.edit', $user->id) }}">Update Profile</a></li>
