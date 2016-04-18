@@ -24,7 +24,13 @@ return [
         'main-boulevard' => 'Main Boulevard',
         'average' => 'Average'
     ],
-    'PROPERTY_FLOORS'=>['1'=>1,'2'=>2,'3'=>3,'4'=>4,'5'=>5,'6'=>6,'7'=>7,'8'=>8,'9'=>9,'10'=>10],
+     'HOUSE_TYPE'=>['' => 'N/A', 'new' => 'Brand New House', 'old' => 'Old House'],
+     'BEDROOMS' => [1 => '1 Bedroom', 2 => '2 Bedrooms', 3 => '3 Bedrooms',
+        4 => '4 Bedrooms', 5 => '5 Bedrooms', 6 => '6 Bedrooms', 7 => '6+ Bedrooms'
+     ],
+
+    'PROPERTY_FLOORS'=>['1'=>'First','2'=>'Second','3'=>'Third','4'=>'Four',
+        '5'=>'Five','6'=>'Six','7'=>'Seven','8'=>'Eight','9'=>'Nine','10'=>'Ten'],
     'PROPERTIES_PER_PAGE'=>25,
     /*------------------------------------------------------------*/
 ];
