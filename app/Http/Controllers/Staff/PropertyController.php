@@ -164,7 +164,8 @@ class PropertyController extends StaffController
     {
         $searchParams = $params;
 
-        $searchParams['bedrooms']  =($params['category'] == 3 || $params['category'] == 1)? $params['bedrooms']:null;
+        $searchParams['bedrooms']  = ($params['category'] == 3 || $params['category'] == 1)? $params['bedrooms']:null;
+        $searchParams['floor']     = ($params['category'] == 3)? $params['floor']:null;
         $searchParams['size_from'] = ($params['size_from'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_from']) :null;
         $searchParams['size_to']   = ($params['size_to'] != null)? LandHelper::convert($searchParams['land'], 'square feets', $params['size_to']) :null;
         $searchParams['size_to']   = ($searchParams['size_to'] == null)?$searchParams['size_from']:$searchParams['size_to'];
@@ -314,6 +315,7 @@ class PropertyController extends StaffController
         $propertyInfo = [
             'category_id'=>$this->request->get('category'),
             'bedrooms' =>($this->request->get('category') == 3 || $this->request->get('category') == 1)? $this->request->get('bedrooms'):null,
+            'floor'    =>($this->request->get('category') == 3)? $this->request->get('floor'):null,
             'city_id'=>$this->request->get('city'),
             'society_id'=>$this->request->get('society'),
             'block_id'=>$this->request->get('block'),
@@ -325,7 +327,6 @@ class PropertyController extends StaffController
             'size_unit'=>$this->request->get('size_unit'),
             'group' =>$this->request->get('type'),
             'purpose' => $this->request->get('purpose'),
-            'floor' => $this->request->get('floor'),
             'price' => $this->request->get('price'),
             'estate_name' => ($this->request->get('lead_type') == 'indirect')?$this->request->get('owner_estate'):null,
             'contact_person' =>($this->request->get('lead_type') != '')?$this->request->get('owner_name'):null,

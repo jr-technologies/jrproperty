@@ -79,6 +79,9 @@
                         {!! Form::select('category', Helper::prependArray([''=>'Select All...'],$data['categories']), (isset($_GET['category']))?(($_GET['category'] != '')?$form_data['category']:''):2,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
                     </div>
                     <div class="form-group" id="apartment_features">
+                        {!! Form::label('floor', 'floor:') !!}
+                        {!! Form::select('floor', Helper::prependArray([''=>'Please Select...'],$data['property_floors']), (isset($_GET['floor']))?(($_GET['floor'] != '')?$form_data['floor']:''):1,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
+
                         {!! Form::label('bedrooms', 'Bedrooms:') !!}
                         <input name="bedrooms" type="number" class="form-control" max="5" value="<?= $form_data['bedrooms'] ?>" id="bedrooms" >
                     </div>

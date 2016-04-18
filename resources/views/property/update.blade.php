@@ -60,6 +60,9 @@
         {!! Form::select('category', $data['categories'], $property->category_id,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
     </div>
     <div id="apartment_features" class="form-group">
+        <label for="">Floor</label>
+        {!! Form::select('floor', $data['property_floors'],$property->floor, ['class'=>'form-control']) !!}
+
         <label for="">Type Beds</label>
         <input id="bedrooms" value="<?= $property->bedrooms ?>" name="bedrooms" class="form-control form-control-lg" type="number" max="5" placeholder="Number of bedrooms for-example(2,3)">
     </div>

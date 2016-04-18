@@ -46,6 +46,8 @@ class Property extends Model {
 
         if($params['property_id'] != null || $params['property_id'] != '')
             $query = $query->where('properties.id', '=', $params['property_id']);
+        if($params['floor'] !=null || $params['floor' !=''])
+            $query = $query->where('properties.floor', '=', $params['floor']);
         if($params['user'] != null || $params['user'] != '')
             $query = $query->where('user_id', '=', $params['user']);
         if($params['location'] != null || $params['location'] != '')
@@ -90,7 +92,6 @@ class Property extends Model {
                                 ->where('share_property','=','Y');
                         });
                 });
-
 
         return $query;
     }
