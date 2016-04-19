@@ -34,7 +34,7 @@
         </tr>
         <tr>
             <td>Location:</td>
-            <td>{{ $location[$property->location] }}</td>
+            <td>{{ $data['location'][$property->location] }}</td>
         </tr>
         <tr>
             <td>Status:</td>
