@@ -9,3 +9,9 @@
 .update-able > td{
     background-color:rgba(233,23,23,0.2);
 }
+
+
+.direct_property{
+    background-color:#9ce87e !important;
+    padding: 4px 5px;
+}
