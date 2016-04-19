@@ -236,8 +236,9 @@
                                 @if($property->category_id == 4)
                                     N/A
                                 @else
-                                    {{ $property->block_name }}</td>
-                            @endif
+                                    {{ $property->block_name }}
+                                @endif
+                            </td>
                             <td>
                                 @if($property->property_no != '')
                                     {{ $property->property_no }}
@@ -245,6 +246,7 @@
                                     N/A
                                 @endif
                             </td>
+
                             <td>
                                 <?php
                                 $land_unit = $property->size_unit;
@@ -254,6 +256,7 @@
                                 ?>
                                 {{ \App\Libs\Helpers\Land::convert('square feets' , $land_unit, $property->size) . ' ' . ucfirst($land_unit) }}
                             </td>
+
                             <td title="" class="priceListing" price="{{$property->price}}">{{ $property->price}}</td>
                             <td>{{ $data['status'][$property->sold] }}</td>
 
