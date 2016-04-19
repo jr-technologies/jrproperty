@@ -80,7 +80,7 @@
                     </div>
 
                     <div id="floor_container" class="form-group">
-                        {!! Form::label('floor', 'floor:') !!}
+                        {!! Form::label('Floor', 'Floor:') !!}
                         {!! Form::select('floor', Helper::prependArray([''=>'Please Select...'],$data['property_floors']), (isset($_GET['floor']))?(($_GET['floor'] != '')?$form_data['floor']:''):1,['class'=>'form-control', 'required', 'id' => 'category_id']) !!}
                     </div>
 
