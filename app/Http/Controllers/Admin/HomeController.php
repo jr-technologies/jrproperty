@@ -44,6 +44,7 @@ class HomeController extends AdminController
      */
     public function index()
     {
+        return redirect('/');
 
         $heading = 'All Property Listing';
 

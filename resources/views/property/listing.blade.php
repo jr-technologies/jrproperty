@@ -226,7 +226,7 @@
                                     <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
                                 @endif
 
-                                <span class="{{($property->type == 'direct')?'direct_property':'indirect_property'}}">{{ $property->id }}</span>
+                                {{ $property->id }}
                             </td>
 
                             <td>{{ $property->user_name }}</td>
@@ -240,11 +240,13 @@
                                 @endif
                             </td>
                             <td>
-                                @if($property->property_no != '')
-                                    {{ $property->property_no }}
-                                @else
-                                    N/A
-                                @endif
+                                <span class="{{($property->type == 'direct')?'direct_property':'indirect_property'}}">
+                                    @if($property->property_no != '')
+                                        {{ $property->property_no }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </span>
                             </td>
 
                             <td>
