@@ -21,11 +21,13 @@
         <tr>
             <td>Property Number:</td>
             <td>
-                @if($property->property_no != '')
-                    {{ $property->property_no }}
-                @else
-                    N/A
-                @endif
+                <span class="{{($property->type == 'direct')?'direct_property':'indirect_property'}}">
+                    @if($property->property_no != '')
+                        {{ $property->property_no }}
+                    @else
+                        N/A
+                    @endif
+                </span>
             </td>
         </tr>
         <tr>

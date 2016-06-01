@@ -226,7 +226,7 @@
                                     <span data-toggle="tooltip" data-placement="top" title="Private Property"> <span class="lock glyphicon glyphicon-lock"></span> </span>
                                 @endif
 
-                                <span class="{{($property->type == 'direct')?'direct_property':'indirect_property'}}">{{ $property->id }}</span>
+                                {{ $property->id }}
                             </td>
 
                             <td>{{ $property->user_name }}</td>
@@ -236,15 +236,19 @@
                                 @if($property->category_id == 4)
                                     N/A
                                 @else
-                                    {{ $property->block_name }}</td>
-                            @endif
-                            <td>
-                                @if($property->property_no != '')
-                                    {{ $property->property_no }}
-                                @else
-                                    N/A
+                                    {{ $property->block_name }}
                                 @endif
                             </td>
+                            <td>
+                                <span class="{{($property->type == 'direct')?'direct_property':'indirect_property'}}">
+                                    @if($property->property_no != '')
+                                        {{ $property->property_no }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </span>
+                            </td>
+
                             <td>
                                 <?php
                                 $land_unit = $property->size_unit;
@@ -254,6 +258,7 @@
                                 ?>
                                 {{ \App\Libs\Helpers\Land::convert('square feets' , $land_unit, $property->size) . ' ' . ucfirst($land_unit) }}
                             </td>
+
                             <td title="" class="priceListing" price="{{$property->price}}">{{ $property->price}}</td>
                             <td>{{ $data['status'][$property->sold] }}</td>
 

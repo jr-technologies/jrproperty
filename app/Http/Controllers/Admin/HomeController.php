@@ -43,10 +43,11 @@ class HomeController extends AdminController
      * @return Response
      */
     public function index()
-    {/*
-            This redirect routore is chapy on chape
-        */
-        return redirect('my-properties');
+
+    {
+        return redirect('/');
+
+
         $heading = 'All Property Listing';
 
         $search = array();
