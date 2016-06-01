@@ -216,7 +216,7 @@
                     @foreach($group as $property)
                         <?php
                         $updateAble = '';
-                        if(Helper::daysDiffInTimes(date('Y-m-d H:i:s'), $property->updated_at) > 29 && $property->sold == 'N')
+                        if(Helper::daysDiffInTimes(date('Y-m-d H:i:s'), $property->updated_at) > 60 && $property->sold == 'N')
                             $updateAble = 'update-able';
                         ?>
 

@@ -43,8 +43,10 @@ class HomeController extends AdminController
      * @return Response
      */
     public function index()
-    {
-
+    {/*
+            This redirect routore is chapy on chape
+        */
+        return redirect('my-properties');
         $heading = 'All Property Listing';
 
         $search = array();
@@ -56,9 +58,7 @@ class HomeController extends AdminController
 
 
         $properties = Property::search(['authenticated_user'=>Auth::user()])->get();
-
         //$properties->setPath('home');
-
         $status = ['Y' => 'Sold', 'N' => 'Available'];
         $purpose = ['sale' => 'For Sale', 'rent' => 'For Rent', 'wanted' => 'Wanted'];
         $group = ['' => 'Please Select ...', 'commercial' => 'Commercial', 'residential' => 'Residential'];

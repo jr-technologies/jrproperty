@@ -14,9 +14,7 @@ use Redirect;
 use \Illuminate\Http\Request;
 use Laracasts\Flash\Flash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use App\Traits\PropertyRequestTrait;
 use App\Libs\Helpers\Land as LandHelper;
 
 class PropertyController extends StaffController
